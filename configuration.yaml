@@ -1,0 +1,56 @@
+# 魔搭创空间配置文件
+sdk: docker
+python_version: 3.11
+docker_file: Dockerfile
+
+# 应用基本信息
+title: SecondNature - 内在能力减退管理支持系统
+description: |
+  这是一个面向老年人的内在能力减退管理支持系统，提供以下功能：
+  - 🏥 健康记录管理
+  - 📊 健康评估测试
+  - 💬 AI 智能聊天陪伴
+  - 🔊 语音朗读功能
+  - 💡 个性化干预建议
+  - 👥 老人/管理员双模式
+
+author: morewater
+tags:
+  - 健康管理
+  - 老年关怀
+  - AI聊天
+  - Vue3
+  - FastAPI
+
+# 环境变量配置
+environment:
+  - DEEPSEEK_API_KEY
+  - DASHSCOPE_API_KEY
+  - JWT_SECRET_KEY
+
+# 端口配置
+port: 7860
+
+# 许可证
+license: Apache 2.0
+
+# README
+README: |
+  # SecondNature - 内在能力减退管理支持系统
+
+  ## 功能介绍
+  - **健康记录**：记录和管理健康数据
+  - **健康测试**：ICOPE 手足部位评估测试
+  - **AI 陪伴**：基于 RAG 的智能对话系统
+  - **语音朗读**：Edge TTS 语音合成
+  - **干预建议**：个性化健康干预方案
+
+  ## 使用说明
+  1. 注册账号（老人或管理员）
+  2. 完善个人信息
+  3. 开始使用各项功能
+
+  ## 技术栈
+  - 前端：Vue 3 + Vite + Element Plus
+  - 后端：FastAPI + SQLite
+  - AI：DeepSeek + 阿里云百炼

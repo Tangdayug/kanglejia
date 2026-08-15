@@ -1,0 +1,898 @@
+/* CSS变量系统 - 基础样式 */
+:root {
+  /* 字体：优先阿里健康体 */
+  --sn-font-family: AlibabaHealthFont, 'PingFang SC', 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
+  --el-font-family: AlibabaHealthFont, 'PingFang SC', 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
+
+  /* 字体大小基准 */
+  --font-size-base: 16px;
+
+  /* 标题字体 */
+  --font-size-h1: 3.5rem;        /* 56px */
+  --font-size-h2: 2rem;          /* 32px */
+  --font-size-h3: 1.5rem;        /* 24px */
+  --font-size-h4: 1.25rem;       /* 20px */
+
+  /* 正文字体 */
+  --font-size-large: 1.25rem;    /* 20px */
+  --font-size-medium: 1.125rem;  /* 18px */
+  --font-size-normal: 1rem;      /* 16px */
+  --font-size-small: 0.875rem;   /* 14px */
+
+  /* 行高 */
+  --line-height-normal: 1.6;
+  --line-height-relaxed: 1.7;
+
+  /* 品牌主色：专业理性蓝 +  slate 灰 */
+  --sn-primary: #1772F6;
+  --sn-primary-light: #E8F1FE;
+  --sn-primary-soft: #D9E9FD;
+  --sn-primary-dark: #125FCF;
+  --sn-slate: #8491A5;
+  --sn-slate-light: #F0F2F5;
+  --sn-text: #1F2937;
+  --sn-text-secondary: #8491A5;
+  --sn-bg: #F4F6F9;
+  --sn-white: #FFFFFF;
+  --sn-border: #E5E7EB;
+
+  /* 圆角系统：统一收敛，避免过大圆角 */
+  --sn-radius-sm: 8px;
+  --sn-radius-md: 12px;
+  --sn-radius-lg: 16px;
+  --sn-radius-xl: 20px;
+  --sn-radius-full: 9999px;
+
+  /* 覆盖 Element Plus 主题色 */
+  --el-color-primary: #1772F6;
+  --el-color-primary-light-3: #4F91F8;
+  --el-color-primary-light-5: #8AB5FA;
+  --el-color-primary-light-7: #BDD7FC;
+  --el-color-primary-light-8: #D9E9FD;
+  --el-color-primary-light-9: #E8F1FE;
+  --el-color-primary-dark-2: #125FCF;
+}
+
+/* 阿里健康体 */
+@font-face {
+  font-family: AlibabaHealthFont;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/AlibabaHealthFont-CN-45R.ttf') format('truetype');
+}
+@font-face {
+  font-family: AlibabaHealthFont;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/AlibabaHealthFont-CN-85B.ttf') format('truetype');
+}
+
+html {
+  font-size: var(--font-size-base);
+  font-family: AlibabaHealthFont, 'PingFang SC', 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    scrollbar-width: none !important;      /* Firefox */
+    -ms-overflow-style: none !important;   /* IE 10+ */
+}
+
+/* WebKit 内核：彻底隐藏滚动条但保留滚动能力 */
+::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+    display: none !important;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    color: #252424;
+    font-size: var(--font-size-normal);
+    line-height: var(--line-height-normal);
+}
+
+a {
+    text-decoration: none;
+}
+
+.card {
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+}
+
+/* ==================== 老年人模式 - 全局字体与组件无损放大 ==================== */
+
+html[data-accessibility="elderly"] {
+  /* 1. 🌟 核心魔法：覆盖 Element Plus 全局字体变量，所有组件文字自动变大 */
+  --el-font-size-extra-small: 16px !important;
+  --el-font-size-small: 18px !important;
+  --el-font-size-base: 20px !important;      /* 基础字号飙升到 20px */
+  --el-font-size-large: 24px !important;
+  --el-font-size-extra-large: 28px !important;
+
+  /* 2. 🌟 放大所有组件(输入框/按钮/选择器)的物理高度，防止大字被上下切边 */
+  --el-component-size: 50px !important;
+  --el-component-size-large: 60px !important;
+  --el-component-size-small: 42px !important;
+
+  /* 3. 基础网页字号 */
+  font-size: 20px !important;
+}
+
+/* --- 针对核心区域的精准强制放大 --- */
+
+html[data-accessibility="elderly"] .el-menu {
+  /* 🌟 核心调优：行高从 70px 进一步拉长到 85px，完美填补下方空白 */
+  --el-menu-item-height: 85px !important;
+  --el-menu-sub-item-height: 85px !important;
+}
+
+/* 一级菜单放大 */
+html[data-accessibility="elderly"] .el-menu-item,
+html[data-accessibility="elderly"] .el-sub-menu__title,
+html[data-accessibility="elderly"] .el-menu-item span,
+html[data-accessibility="elderly"] .el-sub-menu__title span {
+  font-size: 24px !important;   /* 🌟 字体从 22px 放大到 24px */
+  height: 85px !important;
+  line-height: 85px !important;
+}
+
+/* 二级子菜单放大 */
+html[data-accessibility="elderly"] .el-sub-menu .el-menu-item {
+  font-size: 24px !important;
+  height: 85px !important;
+  line-height: 85px !important;
+  padding-left: 55px !important;
+}
+
+/* 图标同步放大 */
+html[data-accessibility="elderly"] .el-menu-item .el-icon,
+html[data-accessibility="elderly"] .el-sub-menu__title .el-icon {
+  font-size: 28px !important;
+  width: 34px !important;
+  margin-right: 15px !important;
+}
+
+
+/* ==================== 修复：顶部导航栏拥挤问题 ==================== */
+
+/* 🌟 将顶部导航栏的高度从 60px 撑大到 80px，给 30px 的大标题留下充足的上下呼吸空间 */
+html[data-accessibility="elderly"] .app-top-header {
+  height: 80px !important;
+}
+
+/* 🌟 同步修正下方布局的高度计算，防止顶部变高后挤出难看的垂直滚动条 */
+html[data-accessibility="elderly"] .app-sidebar {
+  min-height: calc(100vh - 80px) !important;
+}
+html[data-accessibility="elderly"] .home-page-wrapper {
+  min-height: calc(100vh - 80px) !important;
+  height: auto !important; /* 🌟 解除高度封印，允许它无限向下延伸 */
+}
+
+/* Home页面：中间的欢迎标题 */
+html[data-accessibility="elderly"] .welcome-title {
+  font-size: 46px !important;
+  margin-bottom: 30px !important;
+}
+html[data-accessibility="elderly"] .welcome-text.slogan {
+  font-size: 32px !important;
+}
+
+/* 弹窗(Dialog)标题放大 */
+html[data-accessibility="elderly"] .el-dialog__title {
+  font-size: 24px !important;
+  font-weight: bold !important;
+}
+/* 给卡片加上丝滑的缩放动画过渡 */
+.login-card,
+.register-card {
+  transition: transform 0.3s ease !important;
+}
+
+/* 🌟 核心魔法：在老年人模式下，直接将整个卡片连同插画放大 1.5 倍 */
+html[data-accessibility="elderly"] .login-card,
+html[data-accessibility="elderly"] .register-card {
+  transform: scale(1.5) !important;
+  transform-origin: center center !important; /* 确保从正中心向四周等比放大 */
+}
+/* ==================== 1. 健康档案导航页 (Index.vue) ==================== */
+html[data-accessibility="elderly"] .welcome-content h2 {
+  font-size: 46px !important;
+}
+html[data-accessibility="elderly"] .welcome-content p {
+  font-size: 24px !important;
+}
+html[data-accessibility="elderly"] .card-content h3 {
+  font-size: 32px !important;
+  margin-bottom: 20px !important;
+}
+html[data-accessibility="elderly"] .card-content p {
+  font-size: 20px !important;
+  line-height: 1.6;
+}
+html[data-accessibility="elderly"] .card-icon {
+  width: 100px !important;
+  height: 100px !important;
+}
+html[data-accessibility="elderly"] .card-icon .el-icon {
+  font-size: 50px !important;
+}
+
+/* ==================== 2. 信息录入页 (Info.vue) ==================== */
+html[data-accessibility="elderly"] .card-title {
+  font-size: 24px !important;
+}
+html[data-accessibility="elderly"] .question-text {
+  font-size: 24px !important;
+  font-weight: bold;
+  padding: 12px;
+}
+html[data-accessibility="elderly"] .support-label {
+  font-size: 22px !important;
+}
+/* 运动偏好的图片和文字放大 */
+html[data-accessibility="elderly"] .exercise-image {
+  height: 140px !important;
+}
+html[data-accessibility="elderly"] .exercise-label {
+  font-size: 20px !important;
+  padding: 10px 0 !important;
+}
+
+/* 1. 答题页核心文字 (加上父容器前缀) */
+html[data-accessibility="elderly"] .health-test-container .question-text {
+  font-size: 32px !important;
+  line-height: 1.6 !important;
+  margin-bottom: 20px !important;
+}
+
+/* 2. 修复“第 X 题”字号偏小的问题 */
+html[data-accessibility="elderly"] .health-test-container .question-number {
+  font-size: 24px !important;
+  margin-bottom: 12px !important;
+}
+
+/* 3. 修复 Q2 (起立测试) 等使用说明文本偏小的问题 */
+html[data-accessibility="elderly"] .health-test-container .timer-instructions {
+  font-size: 28px !important;
+  line-height: 1.6 !important;
+}
+html[data-accessibility="elderly"] .health-test-container .timer-instructions p,
+html[data-accessibility="elderly"] .health-test-container .timer-instructions li {
+  font-size: 26px !important;
+  margin-bottom: 12px !important;
+}
+
+/* 4. 修复“点击录音”、“我不知道”等按钮字号偏小 */
+html[data-accessibility="elderly"] .health-test-container .el-button {
+  font-size: 22px !important;
+  height: auto !important;
+  padding: 12px 24px !important;
+}
+
+/* 5. 🌟 修复顶部进度条 (1~13题) 挤压重叠的问题 */
+html[data-accessibility="elderly"] .health-test-container .progress-bar {
+  overflow-x: auto !important; /* 允许横向滑动 */
+  padding-bottom: 20px !important;
+}
+html[data-accessibility="elderly"] .health-test-container .el-steps {
+  min-width: 900px !important; /* 强制拉宽，防止圆圈被挤扁 */
+}
+/* ==================== 4. 历史评估 & 干预日志 (History.vue & Intervention.vue) ==================== */
+html[data-accessibility="elderly"] .score-item .value {
+  font-size: 36px !important; /* 历史得分变大 */
+}
+html[data-accessibility="elderly"] .dim-label,
+html[data-accessibility="elderly"] .dim-score {
+  font-size: 20px !important;
+}
+html[data-accessibility="elderly"] .log-title span {
+  font-size: 22px !important;
+}
+html[data-accessibility="elderly"] .section h4 {
+  font-size: 20px !important;
+  margin-bottom: 12px !important;
+}
+html[data-accessibility="elderly"] .section p {
+  font-size: 20px !important;
+  padding: 16px 20px !important;
+}
+
+/* ==================== 5. 健康科普 (HealthEducation.vue) ==================== */
+html[data-accessibility="elderly"] .article-title {
+  font-size: 24px !important;
+  margin-bottom: 12px !important;
+}
+html[data-accessibility="elderly"] .article-summary {
+  font-size: 18px !important;
+  line-height: 1.6;
+}
+/* 文章详情弹窗 */
+html[data-accessibility="elderly"] .detail-content {
+  font-size: 24px !important;
+  line-height: 1.8 !important;
+}
+html[data-accessibility="elderly"] .detail-date {
+  font-size: 18px !important;
+}
+
+/* ==================== 6. AI智能问答 (ChatAI.vue) ==================== */
+html[data-accessibility="elderly"] .empty-state h3 {
+  font-size: 28px !important;
+}
+html[data-accessibility="elderly"] .empty-state p {
+  font-size: 22px !important;
+}
+html[data-accessibility="elderly"] .recommendations-title {
+  font-size: 20px !important;
+  margin-bottom: 16px !important;
+}
+html[data-accessibility="elderly"] .recommendation-item {
+  font-size: 20px !important; /* 推荐问答气泡放大 */
+  padding: 12px 24px !important;
+  border-radius: var(--sn-radius-lg) !important;
+}
+/* 如果你的聊天气泡在 ChatMessage.vue 里，也可以在这里全局控制其字体 */
+html[data-accessibility="elderly"] .message-content,
+html[data-accessibility="elderly"] .chat-message-text {
+  font-size: 22px !important;
+  line-height: 1.6 !important;
+}
+/* ==================== 1. 修正复选框：对号居中、加粗且显眼 ==================== */
+/* 放大选框本身的物理尺寸 */
+html[data-accessibility="elderly"] .el-checkbox__inner,
+html[data-accessibility="elderly"] .el-radio__inner {
+  width: 26px !important;  /* 稍微再加大一点点 */
+  height: 26px !important;
+}
+
+
+/* 放大选项旁边的文字 */
+html[data-accessibility="elderly"] .el-checkbox__label,
+html[data-accessibility="elderly"] .el-radio__label {
+  font-size: 20px !important;
+}
+
+
+/* ==================== 2. 统一字体：解决居住地址与下拉框大小不一 ==================== */
+/* 🌟 深度击穿：统一所有表单组件内部的字体大小 */
+html[data-accessibility="elderly"] .el-input__inner,
+html[data-accessibility="elderly"] .el-input__wrapper input,
+html[data-accessibility="elderly"] .el-textarea__inner,
+html[data-accessibility="elderly"] .el-select .el-input__inner,
+html[data-accessibility="elderly"] .el-select .el-input__wrapper,
+html[data-accessibility="elderly"] .el-select-dropdown__item {
+  font-size: 20px !important; /* 🌟 强制将居住地址和下拉框同步为 20px */
+}
+
+/* 统一提示词字号 */
+html[data-accessibility="elderly"] input::placeholder,
+html[data-accessibility="elderly"] textarea::placeholder {
+  font-size: 20px !important;
+}
+
+
+/* ==================== 3. 解决标签换行：针对“家庭人均月收入” ==================== */
+/* 🌟 强力加宽标签区域并禁止换行 */
+html[data-accessibility="elderly"] .health-record-container .el-form-item__label {
+  min-width: 220px !important;    /* 进一步增加宽度到 220px */
+  width: auto !important;
+  white-space: nowrap !important; /* 🌟 绝对禁止“入”字掉下去 */
+  font-size: 22px !important;     /* 标签字体稍微大一点以示区分 */
+  font-weight: bold !important;
+  display: flex !important;
+  align-items: center;
+}
+
+/* 确保右侧输入区能自动填满剩余空间 */
+html[data-accessibility="elderly"] .health-record-container .el-form-item__content {
+  flex: 1 !important;
+  margin-left: 0 !important;
+}
+
+
+/* ==================== 4. 整体布局高度与 AI 模块修复 ==================== */
+/* 修正 AI 模块高度计算 */
+html[data-accessibility="elderly"] .chat-ai-container {
+  height: calc(100vh - 80px) !important;
+  flex: 1 !important;
+}
+
+/* 确保右侧主内容区在老年模式下撑满屏幕 */
+html[data-accessibility="elderly"] .app-main-content {
+  min-height: calc(100vh - 80px) !important;
+}
+/** 1. 强力统一所有表单组件内部的字号：解决居住地址与下拉框不一致 *!*/
+html[data-accessibility="elderly"] .el-input__inner,
+html[data-accessibility="elderly"] .el-input__wrapper input,
+html[data-accessibility="elderly"] .el-textarea__inner,
+html[data-accessibility="elderly"] .el-select .el-input__inner,
+html[data-accessibility="elderly"] .el-select .el-input__wrapper,
+html[data-accessibility="elderly"] .el-select-dropdown__item {
+  font-size: 20px !important; /* 🌟 强制全系 20px */
+}
+
+/* ============================================================
+   老年人模式：复选框对号 (✓) 垂直居中深度修正
+   ============================================================ */
+
+/* 1. 统一复选框尺寸 */
+html[data-accessibility="elderly"] .el-checkbox__inner {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+
+/* 3. 强力解决标签换行：针对“家庭人均月收入”等长文本 */
+html[data-accessibility="elderly"] .health-record-container .el-form-item__label {
+  min-width: 220px !important;    /* 🌟 足够放 8 个大字 */
+  width: auto !important;
+  white-space: nowrap !important; /* 🌟 绝对禁止换行 */
+  font-size: 22px !important;
+  font-weight: bold !important;
+  display: flex !important;
+  align-items: center;
+}
+
+/* 4. 高度补偿：防止右侧内容下方出现悬空 */
+html[data-accessibility="elderly"] .app-main-content {
+  min-height: calc(100vh - 80px) !important;
+}
+/* ============================================================
+   老年人模式：全系统表单“单行化”垂直适配 (类似 image_413a3f.jpg)
+   ============================================================ */
+
+/* 1. 强制栅格系统变为单列堆叠 */
+html[data-accessibility="elderly"] .el-row {
+  display: block !important; /* 放弃 Flex 布局，改为块级堆叠 */
+}
+
+html[data-accessibility="elderly"] .el-col {
+  width: 100% !important;     /* 强制宽度 100% */
+  max-width: 100% !important;
+  flex: 0 0 100% !important;
+  margin-bottom: 25px !important; /* 增加项与项之间的纵向间距 */
+}
+
+/* 2. 强制标签(Label)位于输入框上方 */
+html[data-accessibility="elderly"] .el-form-item {
+  display: flex !important;
+  flex-direction: column !important; /* 轴向转为垂直 */
+  align-items: flex-start !important;
+}
+
+html[data-accessibility="elderly"] .el-form-item__label {
+  width: 100% !important;
+  text-align: left !important;    /* 标签左对齐 */
+  justify-content: flex-start !important;
+  margin-bottom: 12px !important; /* 标签与输入框的间距 */
+  height: auto !important;
+  line-height: 1.2 !important;
+  padding: 0 !important;
+}
+
+/* 3. 修正输入框容器宽度 */
+html[data-accessibility="elderly"] .el-form-item__content {
+  width: 100% !important;
+  margin-left: 0 !important; /* 取消左边距偏移 */
+}
+
+/* 4. 特殊处理：修复您之前提到的“家庭人均月收入”换行 */
+/* 既然现在已经是垂直布局，标签宽度不再受限，我们可以取消之前的 min-width 限制 */
+html[data-accessibility="elderly"] .health-record-container .el-form-item__label {
+  min-width: 0 !important;
+  white-space: normal !important; /* 允许在极窄屏幕下自然换行，不再硬挤 */
+}
+/* ============================================================
+   老年人模式：复选框对号 (✓) 垂直居中深度修正
+   ============================================================ */
+
+/* 1. 统一复选框尺寸 */
+html[data-accessibility="elderly"] .el-checkbox__inner {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+/* 2. 精准定位内部对号（增加 .el-checkbox__input.is-checked 提升绝对权重） */
+html[data-accessibility="elderly"] .el-checkbox__input.is-checked .el-checkbox__inner::after {
+  box-sizing: content-box !important;
+  width: 6px !important;       /* 宽度收缩，防止挤胖 */
+  height: 14px !important;     /* 高度拉长，显得修长 */
+  border-width: 3px !important;/* 边框变细，3px 最有高级感 */
+  border-color: #ffffff !important;
+
+  /* 🌟 绝对居中魔法数值 */
+  left: 8px !important;        /* 控制左右（如果还偏右，改成 7px） */
+  top: 4px !important;         /* 控制上下（如果还偏上，改成 5px） */
+
+  /* 🌟 强制锁定旋转，防止被框架自带动画带跑偏 */
+  transform: rotate(45deg) scaleY(1) !important;
+}
+
+/* 3. 针对单选框（Radio）也进行同步加粗处理 */
+html[data-accessibility="elderly"] .el-radio__inner {
+  width: 28px !important;
+  height: 28px !important;
+}
+html[data-accessibility="elderly"] .el-radio__inner::after {
+  width: 12px !important;
+  height: 12px !important;
+}
+
+/* ============================================================
+   全站专业理性配色主题（Primary #1772F6 / Slate #8491A5）
+   ============================================================ */
+
+/* 主要操作按钮统一为品牌蓝 */
+.modern-confirm-btn,
+.next-primary-btn,
+.r-btn.primary,
+.modern-btn-submit,
+.test-voice-btn:hover,
+.r-btn.primary {
+  background-color: var(--sn-primary) !important;
+  border-color: var(--sn-primary) !important;
+  color: var(--sn-white) !important;
+}
+.modern-confirm-btn:hover,
+.next-primary-btn:hover,
+.r-btn.primary:hover,
+.modern-btn-submit:hover {
+  background-color: var(--sn-primary-dark) !important;
+  border-color: var(--sn-primary-dark) !important;
+}
+
+/* 大面积按钮改为蓝色线性框 */
+.whoop-btn-primary,
+.cta-black-btn,
+.hero-btn {
+  background-color: transparent !important;
+  border: 1px solid var(--sn-primary) !important;
+  color: var(--sn-primary) !important;
+  box-shadow: none !important;
+}
+.whoop-btn-primary:hover,
+.cta-black-btn:hover,
+.hero-btn:hover {
+  background-color: rgba(23, 114, 246, 0.06) !important;
+}
+
+/* Element Plus 主按钮 */
+.el-button--primary {
+  background-color: var(--sn-primary) !important;
+  border-color: var(--sn-primary) !important;
+}
+.el-button--primary:hover,
+.el-button--primary:focus {
+  background-color: var(--sn-primary-dark) !important;
+  border-color: var(--sn-primary-dark) !important;
+}
+
+/* 侧边栏激活菜单 */
+.saas-menu .el-menu-item.is-active,
+.el-menu-item.is-active {
+  background-color: rgba(23, 114, 246, 0.08) !important;
+  color: #111 !important;
+}
+
+/* 主要标题颜色 */
+.giant-page-title,
+.welcome-title,
+.brand-title-main,
+.guide-title {
+  color: var(--sn-text) !important;
+}
+
+/* 次要文字统一为 slate */
+.subtitle,
+.welcome-text,
+.session-time,
+.empty-text,
+.date-text,
+.card-summary,
+.guide-description,
+.user-role,
+.help-btn,
+.nav-back-btn {
+  color: var(--sn-text-secondary) !important;
+}
+
+/* 首页英雄卡片改为蓝色系 */
+.hero-card {
+  background: linear-gradient(135deg, var(--sn-primary-light) 0%, var(--sn-primary-soft) 100%) !important;
+}
+.hero-btn {
+  background-color: transparent !important;
+  border: 1px solid var(--sn-primary) !important;
+  color: var(--sn-primary) !important;
+  box-shadow: none !important;
+}
+.hero-btn:hover {
+  background-color: rgba(23, 114, 246, 0.06) !important;
+}
+.date-capsule {
+  color: var(--sn-text-secondary) !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* 首页两个快捷入口卡片（同层级，统一品牌蓝） */
+.ai-chat-card,
+.health-test-card {
+  background: var(--sn-primary-light) !important;
+  border-color: var(--sn-primary-soft) !important;
+}
+.ai-chat-card .action-card-icon,
+.health-test-card .action-card-icon {
+  color: #374151 !important;
+}
+.ai-chat-card h3,
+.health-test-card h3 {
+  color: #111 !important;
+}
+.ai-chat-card p,
+.health-test-card p {
+  color: var(--sn-text-secondary) !important;
+}
+
+/* 控制中心按钮激活态 */
+.control-btn.is-active {
+  background: var(--sn-primary) !important;
+  color: var(--sn-white) !important;
+}
+
+/* 咨询页/历史页/科普页主要按钮 */
+.clear-chat-btn:hover,
+.send-button {
+  background-color: var(--sn-primary) !important;
+  border-color: var(--sn-primary) !important;
+}
+.send-button:hover,
+.clear-chat-btn:hover {
+  background-color: var(--sn-primary-dark) !important;
+  border-color: var(--sn-primary-dark) !important;
+}
+
+/* 聊天侧边栏激活项 */
+.session-item.active {
+  background-color: var(--sn-primary-light) !important;
+  border-color: var(--sn-primary) !important;
+}
+
+/* 引导弹窗进度条 */
+.progress-step.is-active {
+  background: var(--sn-primary) !important;
+}
+.guide-illustration {
+  background: var(--sn-primary-light) !important;
+  box-shadow: 0 8px 24px rgba(23, 114, 246, 0.1) !important;
+}
+.slide-icon {
+  color: var(--sn-primary) !important;
+}
+
+/* 科普页标签页 */
+.modern-tabs .el-tabs__item.is-active {
+  color: var(--sn-text) !important;
+  background: var(--sn-primary-light) !important;
+}
+.type-badge.video {
+  background: var(--sn-primary) !important;
+}
+.category-pill {
+  color: var(--sn-primary-dark) !important;
+  background: var(--sn-primary-light) !important;
+}
+
+/* 历史页数据圆环 */
+.score-value {
+  color: var(--sn-primary) !important;
+}
+
+/* 表单聚焦态 */
+.modern-form .el-input__wrapper.is-focus,
+.modern-form .el-textarea__inner:focus,
+.glass-input-wrapper:focus-within {
+  border-color: var(--sn-primary) !important;
+}
+
+/* 全局链接与高亮 */
+a,
+.detail-link,
+.skip-text-btn:hover {
+  color: var(--sn-primary) !important;
+}
+
+/* ============================================================
+   二级页面统一布局（Subpage Shell）
+   ============================================================ */
+
+/* 二级页面外壳：嵌入 Manager 框架，保留左侧边栏 */
+.sn-subpage {
+  min-height: 100%;
+  background: #F9F9F9;
+  font-family: AlibabaHealthFont, 'PingFang SC', 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
+}
+
+/* 顶部毛玻璃导航栏 */
+.sn-subpage-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 16px 40px;
+  background: rgba(249, 249, 249, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.sn-subpage-header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 统一返回按钮 */
+.sn-back-btn {
+  background: transparent;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+.sn-back-btn:hover {
+  background: #EAEAEA;
+  color: #111;
+}
+
+/* 内容容器 */
+.sn-subpage-body {
+  padding: 0 40px 120px 40px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* 页面标题区：统一结构 */
+.sn-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 40px 0;
+  gap: 24px;
+}
+.sn-page-header-main {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sn-page-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: #111;
+  letter-spacing: -1.5px;
+  margin: 0;
+  line-height: 1.2;
+}
+.sn-page-subtitle {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.sn-page-header-meta {
+  margin-top: 4px;
+}
+.sn-page-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* 响应式 */
+@media (max-width: 992px) {
+  .sn-subpage-header { padding: 16px 24px; }
+  .sn-subpage-body { padding: 0 24px 80px 24px; }
+  .sn-page-header { flex-direction: column; align-items: flex-start; padding: 24px 0 32px 0; }
+  .sn-page-title { font-size: 28px; }
+  .sn-page-header-actions { width: 100%; }
+  .sn-page-header-actions > * { flex: 1; justify-content: center; }
+}
+
+@media (max-width: 576px) {
+  .sn-subpage-header { padding: 12px 16px; }
+  .sn-subpage-body { padding: 0 16px 60px 16px; }
+  .sn-page-title { font-size: 24px; }
+}
+
+/* ============================================================
+   玻璃拟态 Loading 动画
+   ============================================================ */
+
+/* 遮罩层：半透明浅灰白 + 毛玻璃模糊 */
+.el-loading-mask {
+  background: rgba(245, 246, 248, 0.52) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* 容器居中，隐藏默认 spinner 和文字 */
+.el-loading-spinner {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: auto !important;
+  margin: 0 !important;
+  text-align: center !important;
+}
+
+.el-loading-spinner .circular,
+.el-loading-spinner .el-loading-text {
+  display: none !important;
+}
+
+/* 玻璃圆盘主体 */
+.el-loading-spinner::after {
+  content: '';
+  display: block;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 45%),
+    rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    inset 0 0 28px rgba(255, 255, 255, 0.6),
+    0 10px 40px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 旋转光影：模拟玻璃折射 */
+.el-loading-spinner::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 88px;
+  height: 88px;
+  margin-top: -44px;
+  margin-left: -44px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.95) 18%,
+    rgba(255, 255, 255, 0.35) 30%,
+    transparent 45%
+  );
+  animation: glass-refraction 1.6s linear infinite;
+  pointer-events: none;
+  filter: blur(1px);
+}
+
+@keyframes glass-refraction {
+  to { transform: rotate(360deg); }
+}
+

@@ -1,0 +1,76 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment variables
+.env.local
+.env.*.local
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Vector Database (generated indices, not source documents)
+backend/rag/indices/faiss/
+backend/rag/indices/chroma/
+backend/rag/data/chroma/
+backend/rag/data/chroma_backup/
+backend/rag/data/chroma_backup_optimization/
+backend/rag/data/faiss/
+!backend/rag/indices/faiss/*.faiss
+!backend/rag/indices/faiss/*_metadata.pkl
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test files (exclude unit tests, keep integration test)
+test_*.py
+*_test.py
+!backend/test_rag.py
+
+# Backup files
+*.bak
+*.backup
+*_backup.*
+.env
+*.key
+secrets.*
+.env
+*.key
+secrets.*

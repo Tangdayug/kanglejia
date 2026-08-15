@@ -1,0 +1,7 @@
+            <div class="row-status">
+              <button class="status-trigger" @click.stop="toggleStatus(log)" :title="log.status === 'completed' ? '重置为待办' : '标记为已完成'">
+                <div class="status-circle" :class="log.status">
+                  <el-icon v-if="log.status === 'completed'" class="check-icon"><Check /></el-icon>
+                </div>
+              </button>
+            </div>

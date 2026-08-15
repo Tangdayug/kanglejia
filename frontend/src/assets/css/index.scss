@@ -1,0 +1,9 @@
+@forward "element-plus/theme-chalk/src/common/var.scss" with ($colors: (
+    "primary": ("base": #0a7fce),
+    "success": ("base": #08b41f),
+    "warning": ("base": #e8af56),
+    "danger": ("base": #ef3030),
+    "info": ("base": #5d66ea),
+));
+
+/* 老年人模式通过 zoom: 1.5 实现整体缩放，无需额外设置组件变量 */

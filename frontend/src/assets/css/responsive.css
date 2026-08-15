@@ -1,0 +1,1917 @@
+/* ============================================================
+   通用响应式与移动端兜底样式（Element Plus 版）
+   ============================================================ */
+
+/* 根元素基准字号 */
+html {
+  font-size: 15px;
+}
+
+@media (min-width: 768px) {
+  html { font-size: 16px; }
+}
+
+@media (max-width: 360px) {
+  html { font-size: 14px; }
+}
+
+/* 防止移动端出现横向滚动条 */
+body, #app {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+* { box-sizing: border-box; }
+
+/* 所有图片不溢出 */
+img, video {
+  max-width: 100%;
+}
+
+/* Element Plus 弹窗/抽屉小屏适配 */
+.el-dialog,
+.el-message-box {
+  max-width: calc(100vw - 32px) !important;
+}
+
+@media (max-width: 768px) {
+  .el-dialog {
+    width: 92vw !important;
+  }
+  .el-dialog__body {
+    padding: 16px !important;
+  }
+  .el-dialog__header {
+    padding: 16px 16px 8px !important;
+  }
+  .el-dialog__footer {
+    padding: 12px 16px 16px !important;
+  }
+}
+
+/* ============================================================
+   Login.vue 移动端适配（适老化大按钮、高对比度、防重叠）
+   ============================================================ */
+@media (max-width: 768px) {
+  .figma-pure-landing {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .figma-pure-landing .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .figma-pure-landing .floating-nav-capsule {
+    padding: 8px 12px;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  .figma-pure-landing .header-left {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* 顶部入口简化：隐藏小字链接，只保留核心操作 */
+  .figma-pure-landing .desktop-links {
+    display: none;
+  }
+
+  .figma-pure-landing .brand-name {
+    font-size: 18px;
+    font-weight: 800;
+  }
+
+  .figma-pure-landing .main-logo {
+    height: 28px;
+  }
+
+  .figma-pure-landing .mode-toggle-pill {
+    padding: 8px 10px;
+    font-size: 12px;
+    margin-right: 6px;
+  }
+
+  .figma-pure-landing .mode-toggle-pill span {
+    display: none;
+  }
+
+  .figma-pure-landing .header-right {
+    gap: 6px;
+  }
+
+  .figma-pure-landing .auth-group {
+    gap: 6px;
+  }
+
+  .figma-pure-landing .login-btn {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 0 10px;
+    min-height: 36px;
+  }
+
+  .figma-pure-landing .cta-black {
+    padding: 9px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 100px;
+  }
+
+  /* 背景图片列：只显示中间一列，降低透明度避免干扰文字 */
+  .figma-pure-landing .case-background {
+    padding: 90px 16px 0;
+    opacity: 0.25;
+  }
+
+  .figma-pure-landing .case-track {
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .figma-pure-landing .case-column:not(.center-col) {
+    display: none;
+  }
+
+  .figma-pure-landing .case-column.center-col {
+    flex: 0 0 80vw !important;
+    max-width: 340px;
+  }
+
+  .figma-pure-landing .case-card {
+    height: 200px;
+    border-radius: 20px;
+  }
+
+  /* 中央输入区 */
+  .figma-pure-landing .hero-interface {
+    height: auto;
+    min-height: 100vh;
+    padding: 90px 16px 120px;
+    align-items: center;
+  }
+
+  .figma-pure-landing .input-focus-area {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .figma-pure-landing .giant-prompt-box {
+    height: auto;
+    min-height: 220px;
+    border-radius: 28px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #FFFFFF;
+    border: 2px solid #E5E7EB;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  .figma-pure-landing .giant-prompt-box.is-active {
+    border-color: #111;
+  }
+
+  .figma-pure-landing .main-prompt-input,
+  .figma-pure-landing .placeholder-animation {
+    font-size: 26px;
+    letter-spacing: -0.5px;
+    line-height: 1.35;
+  }
+
+  .figma-pure-landing .placeholder-animation {
+    position: static;
+    margin-bottom: 20px;
+    min-height: 70px;
+  }
+
+  /* 操作区：文字按钮与箭头合并为一个大按钮条 */
+  .figma-pure-landing .prompt-actions {
+    position: static;
+    width: 100%;
+    display: flex;
+    gap: 0;
+    margin-top: auto;
+  }
+
+  .figma-pure-landing .start-text-btn {
+    flex: 1;
+    padding: 16px 20px;
+    font-size: 17px;
+    font-weight: 800;
+    border-radius: 100px 0 0 100px;
+    text-align: center;
+    box-shadow: none;
+  }
+
+  .figma-pure-landing .submit-action-btn {
+    width: 58px;
+    height: auto;
+    border-radius: 0 100px 100px 0;
+    font-size: 24px;
+    background: #333;
+    color: #FFF;
+  }
+
+  .figma-pure-landing .submit-action-btn.ready {
+    background: #000;
+  }
+
+  /* 底部 slogan 上移并加不透明背景，避免与图片叠加 */
+  .figma-pure-landing .footer-slogan {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 13px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.95);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    z-index: 50;
+  }
+
+  .figma-pure-landing .auth-box {
+    padding: 20px;
+  }
+
+  .figma-pure-landing .auth-field :deep(.el-input__wrapper) {
+    height: 52px;
+  }
+
+  .figma-pure-landing .auth-submit-btn {
+    height: 52px;
+    font-size: 16px;
+  }
+}
+
+/* ============================================================
+   Manager.vue 移动端适配
+   ============================================================ */
+@media (max-width: 768px) {
+  .saas-app-layout {
+    padding-bottom: 70px;
+  }
+
+  .saas-app-layout .saas-top-header {
+    height: 60px;
+    padding: 0 16px;
+  }
+
+  .saas-app-layout .brand-title-main {
+    font-size: 18px;
+  }
+
+  .saas-app-layout .brand-subtitle {
+    display: none;
+  }
+
+  .saas-app-layout .logo-box {
+    width: 36px;
+    height: 36px;
+  }
+
+  .saas-app-layout .main-logo {
+    width: 22px;
+  }
+
+  .saas-app-layout .username-text {
+    display: none;
+  }
+
+  .saas-app-layout .saas-body {
+    flex-direction: column;
+    padding-bottom: 0;
+  }
+
+  .saas-app-layout .saas-floating-sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    width: 100vw;
+    height: calc(70px + env(safe-area-inset-bottom, 0px));
+    margin: 0;
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+    border-radius: 24px 24px 0 0;
+    z-index: 200;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .saas-app-layout .saas-menu {
+    flex-direction: row !important;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+  }
+
+  .saas-app-layout .saas-menu .menu-group-title,
+  .saas-app-layout .saas-menu .spacer,
+  .saas-app-layout .saas-menu .el-menu-item.mobile-hide,
+  .saas-app-layout .saas-menu .logout-item {
+    display: none !important;
+  }
+
+  body .saas-app-layout .saas-menu .el-menu-item {
+    flex: 1 !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 62px !important;
+    line-height: 1.25 !important;
+    padding: 4px 2px !important;
+    margin: 0 2px !important;
+    border-radius: 16px !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    gap: 5px !important;
+    color: #6B7280 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    min-width: 0 !important;
+  }
+
+  body .saas-app-layout .saas-menu .el-menu-item .el-icon {
+    font-size: 24px !important;
+    margin: 0 !important;
+  }
+
+  body .saas-app-layout .saas-menu .el-menu-item.is-active {
+    background: #111 !important;
+    color: #FFF !important;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.18) !important;
+    transform: translateY(-2px);
+  }
+
+  .saas-app-layout .saas-main-canvas {
+    margin: 0;
+    padding: 16px;
+    min-height: calc(100vh - 60px - 70px - env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* ============================================================
+   Home.vue 移动端适配（适老化高对比度修正）
+   ============================================================ */
+@media (max-width: 768px) {
+  .bento-home-wrapper {
+    padding: 0;
+  }
+
+  .bento-home-wrapper .bento-grid-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .bento-home-wrapper .bento-card {
+    border-radius: 24px;
+    padding: 20px;
+    width: 100%;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .bento-home-wrapper .hero-card {
+    min-height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%);
+    gap: 16px;
+    padding-bottom: 24px;
+  }
+
+  .bento-home-wrapper .hero-content {
+    max-width: 100%;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+  }
+
+  .bento-home-wrapper .hero-header {
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .bento-home-wrapper .hero-logo {
+    width: 40px;
+  }
+
+  .bento-home-wrapper .welcome-title {
+    font-size: 24px;
+    line-height: 1.3;
+    color: #064E3B;
+  }
+
+  .bento-home-wrapper .welcome-text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #065F46;
+    margin-bottom: 20px;
+  }
+
+  .bento-home-wrapper .hero-btn {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 16px;
+    border-radius: 16px;
+  }
+
+  /* 修复插画与文字叠加：移动端改为背景装饰，降低透明度并置于底部 */
+  .bento-home-wrapper .bg-illustration {
+    position: absolute;
+    right: -20%;
+    bottom: 0;
+    height: 55%;
+    width: 70%;
+    opacity: 0.12;
+    z-index: 1;
+  }
+
+  /* 日期胶囊：无背景，与问候语同行 */
+  .bento-home-wrapper .hero-top-line {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .bento-home-wrapper .date-capsule {
+    position: relative;
+    top: auto;
+    right: auto;
+    align-self: flex-start;
+    font-size: 13px;
+    padding: 0;
+    background: transparent;
+    color: var(--sn-text-secondary);
+    border: none;
+  }
+
+  .bento-home-wrapper .control-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .bento-home-wrapper .control-btn {
+    padding: 14px 8px;
+    font-size: 13px;
+    border-radius: 16px;
+    flex-direction: column;
+    text-align: center;
+    gap: 6px;
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    min-height: 76px;
+    justify-content: center;
+  }
+
+  .bento-home-wrapper .control-btn .c-icon {
+    font-size: 22px;
+  }
+
+  .bento-home-wrapper .action-card {
+    flex-direction: row;
+    gap: 14px;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .bento-home-wrapper .action-card-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .bento-home-wrapper .action-card h3 {
+    font-size: 18px !important;
+    line-height: 1.3;
+  }
+
+  .bento-home-wrapper .action-card p {
+    font-size: 13px !important;
+    line-height: 1.5;
+  }
+
+  .bento-home-wrapper .card-arrow {
+    font-size: 20px;
+    opacity: 0.4;
+  }
+}
+
+/* ============================================================
+   History.vue 移动端适配
+   ============================================================ */
+@media (max-width: 768px) {
+  .history-page {
+    overflow-y: auto;
+  }
+
+  .history-page .sn-subpage-header {
+    padding: 12px 16px;
+    background: rgba(244, 245, 247, 0.95);
+  }
+
+  .history-page .sn-back-btn span {
+    display: none;
+  }
+
+  .history-page .sn-subpage-body {
+    padding: 0 16px 100px 16px;
+  }
+
+  .history-page .sn-page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 0 28px 0;
+  }
+
+  .history-page .sn-page-title {
+    font-size: 28px;
+  }
+
+  .history-page .sn-page-subtitle {
+    font-size: 14px;
+  }
+
+  .history-page .header-actions {
+    width: 100%;
+  }
+
+  .history-page .header-actions button {
+    flex: 1;
+    justify-content: center;
+    height: 44px;
+    padding: 0 16px;
+    font-size: 14px;
+  }
+
+  .history-page .whoop-data-card {
+    padding: 20px;
+    border-radius: 24px;
+  }
+
+  .history-page .card-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .history-page .meta-date {
+    font-size: 18px;
+  }
+
+  .history-page .card-body {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .history-page .hero-metric {
+    justify-content: flex-start;
+  }
+
+  .history-page .score-circle {
+    width: 110px;
+    height: 110px;
+    border-width: 6px;
+  }
+
+  .history-page .score-value {
+    font-size: 38px;
+  }
+
+  .history-page .sub-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .history-page .metric-pill {
+    padding: 12px;
+    border-radius: 16px;
+  }
+
+  .history-page .m-name {
+    font-size: 13px;
+  }
+
+  .history-page .m-val {
+    font-size: 22px;
+  }
+
+  .history-page .card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .history-page .detail-link {
+    font-size: 14px;
+  }
+
+  .history-page .whoop-insight-dialog,
+  .history-page .whoop-detail-dialog {
+    width: 92vw !important;
+  }
+
+  .history-page .insight-content,
+  .history-page .detail-content {
+    padding: 16px;
+  }
+
+  .history-page .detail-summary {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .history-page .detail-score {
+    width: 90px;
+    height: 90px;
+  }
+
+  .history-page .detail-score strong {
+    font-size: 32px;
+  }
+
+  .history-page .detail-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .history-page .detail-dim {
+    padding: 14px;
+  }
+
+  .history-page .detail-dim strong {
+    font-size: 22px;
+  }
+}
+
+/* ============================================================
+   Intervention.vue 移动端适配
+   ============================================================ */
+@media (max-width: 768px) {
+  .intervention-page {
+    overflow-y: auto;
+  }
+
+  .intervention-page .sn-subpage-header {
+    padding: 0 16px;
+    height: 52px;
+  }
+
+  .intervention-page .sn-back-btn span {
+    display: none;
+  }
+
+  .intervention-page .sn-subpage-body {
+    padding: 20px 16px 100px 16px;
+  }
+
+  .intervention-page .sn-page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .intervention-page .sn-page-header-main {
+    gap: 6px;
+  }
+
+  .intervention-page .sn-page-title {
+    font-size: 24px;
+  }
+
+  .intervention-page .header-actions {
+    width: 100%;
+  }
+
+  .intervention-page .header-actions button {
+    flex: 1;
+    justify-content: center;
+    height: 44px;
+    font-size: 14px;
+  }
+
+  .intervention-page .linear-list-header {
+    display: none;
+  }
+
+  .intervention-page .linear-row {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .intervention-page .row-main {
+    padding-right: 0;
+    width: 100%;
+  }
+
+  .intervention-page .row-content {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .intervention-page .row-meta {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 12px;
+    padding-top: 0;
+  }
+
+  .intervention-page .linear-label {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+
+  .intervention-page .row-date {
+    text-align: left;
+  }
+}
+
+/* ============================================================
+   HealthTest.vue 移动端适配
+   ============================================================ */
+@media (max-width: 768px) {
+  .figma-immersive-test .test-header {
+    height: auto;
+    padding: 12px 16px;
+  }
+
+  .figma-immersive-test .header-inner {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .figma-immersive-test .brand-side {
+    gap: 8px;
+  }
+
+  .figma-immersive-test .brand-logo {
+    height: 28px;
+  }
+
+  .figma-immersive-test .brand-text {
+    font-size: 14px;
+  }
+
+  .figma-immersive-test .progress-section {
+    width: 100%;
+    order: 3;
+  }
+
+  .figma-immersive-test .progress-count {
+    font-size: 12px;
+  }
+
+  .figma-immersive-test .test-viewport {
+    padding: 16px;
+  }
+
+  .figma-immersive-test .test-canvas {
+    padding: 0 0 80px;
+  }
+
+  .figma-immersive-test .hero-title {
+    font-size: 24px;
+  }
+
+  .figma-immersive-test .hero-subtitle {
+    font-size: 14px;
+  }
+
+  .figma-immersive-test .selection-box {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .figma-immersive-test .mode-pill {
+    padding: 20px;
+  }
+
+  .figma-immersive-test .binary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   Info.vue （健康档案）移动端适配
+   ============================================================ */
+@media (max-width: 768px) {
+  .info-page {
+    overflow-y: auto;
+  }
+
+  .info-page .sn-subpage-header {
+    padding: 12px 16px;
+  }
+
+  .info-page .sn-back-btn span {
+    display: none;
+  }
+
+  .info-page .sn-subpage-body {
+    padding: 0 16px 120px 16px;
+  }
+
+  .info-page .sn-page-header {
+    padding: 20px 0;
+  }
+
+  .info-page .sn-page-title {
+    font-size: 26px;
+    line-height: 1.2;
+  }
+
+  .info-page .save-info-pill {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .info-page .modern-card {
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .info-page .card-header-flex {
+    margin-bottom: 20px;
+  }
+
+  .info-page .card-title {
+    font-size: 20px;
+  }
+
+  /* Element Plus 表单一列显示 */
+  .info-page .figma-form-style :deep(.el-col) {
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+  }
+
+  .info-page .figma-form-style :deep(.el-form-item__label) {
+    font-size: 15px;
+  }
+
+  .info-page .question-text {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .info-page .custom-radio-group,
+  .info-page .custom-checkbox-group {
+    gap: 10px;
+  }
+
+  .info-page .figma-form-style :deep(.el-radio.is-bordered),
+  .info-page .figma-form-style :deep(.el-checkbox.is-bordered) {
+    width: 100%;
+    height: auto;
+    min-height: 48px;
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .info-page .modern-exercise-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .info-page .exercise-inner img {
+    height: 90px;
+  }
+
+  .info-page .exercise-inner span {
+    padding: 12px 8px;
+    font-size: 13px;
+  }
+
+  .info-page .support-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .info-page .support-group {
+    padding: 16px;
+  }
+
+  .info-page .inline-sub-inputs {
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .info-page .sub-field-group {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .info-page .sub-input-mt {
+    max-width: 100%;
+  }
+
+  .info-page .modern-bottom-actions {
+    left: 0;
+    padding: 20px 16px 16px 16px;
+  }
+
+  .info-page .cta-black-giant {
+    width: 100%;
+    height: 52px;
+    padding: 0 24px;
+    font-size: 17px;
+    border-radius: 16px;
+  }
+}
+
+/* ============================================================
+   HealthEducation.vue （健康科普）移动端适配
+   ============================================================ */
+@media (max-width: 768px) {
+  .health-education-page {
+    overflow-y: auto;
+  }
+
+  .health-education-page .sn-subpage-header {
+    padding: 12px 16px;
+  }
+
+  .health-education-page .sn-back-btn span {
+    display: none;
+  }
+
+  .health-education-page .sn-subpage-body {
+    padding: 0 16px 100px 16px;
+  }
+
+  .health-education-page .sn-page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 0 24px 0;
+  }
+
+  .health-education-page .sn-page-title {
+    font-size: 28px;
+  }
+
+  .health-education-page .cta-black-btn {
+    width: 100%;
+    justify-content: center;
+    height: 44px;
+    font-size: 14px;
+  }
+
+  /* Tabs 横向滚动且字号加大 */
+  .health-education-page .modern-tabs :deep(.el-tabs__nav) {
+    white-space: nowrap;
+  }
+
+  .health-education-page .modern-tabs :deep(.el-tabs__item) {
+    font-size: 15px;
+    padding: 0 14px !important;
+    height: 40px;
+    line-height: 40px;
+  }
+
+  .health-education-page .modern-article-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .health-education-page .modern-card {
+    border-radius: 20px;
+  }
+
+  .health-education-page .card-cover {
+    height: 180px;
+  }
+
+  .health-education-page .card-body {
+    padding: 16px;
+  }
+
+  .health-education-page .card-title {
+    font-size: 18px;
+  }
+
+  .health-education-page .card-summary {
+    font-size: 14px;
+  }
+
+  /* 弹窗全宽 */
+  .health-education-page :deep(.modern-dialog) {
+    width: 92vw !important;
+  }
+
+  .health-education-page .modern-form :deep(.el-col) {
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+  }
+
+  .health-education-page .speech-floater {
+    position: static;
+    margin-bottom: 16px;
+  }
+
+  .health-education-page .speech-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================================
+   ChatAI.vue / ChatMessage / ChatInput 移动端微调
+   ============================================================ */
+@media (max-width: 768px) {
+  .modern-ai-app .ai-topbar {
+    height: 56px;
+    padding: 0 12px;
+  }
+
+  .modern-ai-app .model-badge {
+    font-size: 13px;
+    padding: 6px 12px;
+    max-width: 45vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .modern-ai-app .menu-toggle-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .modern-ai-app .help-btn,
+  .modern-ai-app .clear-chat-btn {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+  }
+
+  .modern-ai-app .help-text {
+    display: none;
+  }
+
+  .modern-ai-app .ai-message-stream {
+    padding: 10px;
+    gap: 14px;
+  }
+
+  .chat-message {
+    gap: 8px;
+  }
+
+  .chat-message .message-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .chat-message .message-content-wrapper {
+    max-width: calc(100% - 52px);
+  }
+
+  .chat-message .message-role {
+    font-size: 12px;
+  }
+
+  .chat-message .message-bubble {
+    padding: 10px 12px !important;
+  }
+
+  .chat-message .message-text {
+    font-size: 15px;
+  }
+
+  .chat-input-container {
+    padding: 10px;
+  }
+
+  .chat-input-container .input-wrapper {
+    gap: 8px;
+  }
+
+  .chat-input-container .voice-button {
+    width: 48px;
+    height: 48px;
+  }
+
+  .chat-input-container .voice-button .el-icon {
+    font-size: 18px;
+  }
+
+  .chat-input-container .voice-text {
+    font-size: 10px;
+  }
+
+  .chat-input-container .send-button {
+    height: 48px;
+    padding: 0 18px;
+    font-size: 14px;
+  }
+
+  .chat-input-container .message-input :deep(.el-textarea__inner) {
+    min-height: 48px !important;
+    padding: 12px 14px;
+    font-size: 15px;
+  }
+
+  .chat-input-container .input-hint {
+    display: none;
+  }
+}
+
+/* ============================================================
+   安全区与超小屏兜底
+   ============================================================ */
+@media (max-width: 360px) {
+  html { font-size: 14px; }
+
+  .saas-app-layout .saas-menu .el-menu-item {
+    font-size: 10px;
+  }
+
+  .bento-home-wrapper .welcome-title {
+    font-size: 20px;
+  }
+}
+
+
+/* ============================================================
+   追加：修复/补强移动端适配（2026-08-09）
+   使用标准 CSS 选择器，避免在全局 CSS 中使用 :deep()
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   1. Login.vue 认证弹窗（dialog 被 teleport 到 body）
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  .auth-dialog {
+    width: 92vw !important;
+  }
+  .auth-dialog .auth-box {
+    padding: 20px !important;
+  }
+  .auth-dialog .auth-field .el-input__wrapper {
+    height: 52px !important;
+    border-radius: 12px !important;
+  }
+  .auth-dialog .auth-submit-btn {
+    width: 100% !important;
+    height: 52px !important;
+    font-size: 16px !important;
+    border-radius: 12px !important;
+  }
+  .auth-dialog .auth-toggle {
+    font-size: 14px !important;
+  }
+}
+
+/* ----------------------------------------------------------
+   2. ChatMessage / ChatInput 移动端严格覆盖
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  .chat-message {
+    gap: 8px !important;
+    margin-bottom: 12px !important;
+  }
+  .chat-message .message-avatar {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .chat-message .message-content-wrapper {
+    max-width: calc(100% - 56px) !important;
+  }
+  .chat-message .message-role {
+    font-size: 12px !important;
+    margin-bottom: 4px !important;
+  }
+  .chat-message .message-bubble {
+    padding: 10px 12px !important;
+    border-radius: 14px !important;
+  }
+  .chat-message .message-text {
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+  }
+  .chat-message .message-text pre {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    font-size: 13px !important;
+  }
+  .chat-message .message-text table {
+    display: block !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+  }
+  .chat-message .message-time {
+    font-size: 11px !important;
+  }
+
+  .chat-input-container {
+    padding: 10px 12px 12px !important;
+  }
+  .chat-input-container .input-wrapper {
+    gap: 8px !important;
+    align-items: center !important;
+  }
+  .chat-input-container .voice-button {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 14px !important;
+  }
+  .chat-input-container .voice-button .el-icon {
+    font-size: 20px !important;
+  }
+  .chat-input-container .voice-text {
+    font-size: 10px !important;
+  }
+  .chat-input-container .message-input .el-textarea__inner {
+    min-height: 48px !important;
+    padding: 12px 14px !important;
+    font-size: 15px !important;
+    border-radius: 18px !important;
+  }
+  .chat-input-container .send-button {
+    height: 48px !important;
+    padding: 0 18px !important;
+    font-size: 14px !important;
+    border-radius: 18px !important;
+  }
+  .chat-input-container .input-hint {
+    display: none !important;
+  }
+}
+
+/* ----------------------------------------------------------
+   3. HealthTest.vue 全页面移动端适配
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  .figma-immersive-test .test-header {
+    padding: 12px 16px !important;
+    height: auto !important;
+  }
+  .figma-immersive-test .header-inner {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .figma-immersive-test .brand-side {
+    gap: 8px;
+  }
+  .figma-immersive-test .brand-logo {
+    height: 28px !important;
+  }
+  .figma-immersive-test .brand-text {
+    font-size: 14px !important;
+  }
+  .figma-immersive-test .progress-section {
+    order: 3;
+    width: 100%;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+  .figma-immersive-test .progress-count {
+    font-size: 12px !important;
+  }
+  .figma-immersive-test .action-side {
+    margin-left: auto;
+  }
+  .figma-immersive-test .exit-btn-new {
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+  }
+
+  .figma-immersive-test .test-viewport {
+    padding: 16px !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+  }
+  .figma-immersive-test .test-canvas {
+    padding: 0 0 40px !important;
+  }
+
+  .figma-immersive-test .hero-title {
+    font-size: 26px !important;
+    letter-spacing: -1px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 16px !important;
+  }
+  .figma-immersive-test .hero-subtitle {
+    font-size: 15px !important;
+    margin-bottom: 24px !important;
+  }
+  .figma-immersive-test .selection-box {
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin-bottom: 24px !important;
+  }
+  .figma-immersive-test .mode-pill {
+    padding: 22px 18px !important;
+    border-radius: 18px !important;
+  }
+  .figma-immersive-test .mode-pill .icon {
+    font-size: 32px !important;
+    margin-bottom: 8px !important;
+  }
+  .figma-immersive-test .mode-pill .txt {
+    font-size: 17px !important;
+  }
+  .figma-immersive-test .giant-start-btn,
+  .figma-immersive-test .action-btn {
+    padding: 18px 20px !important;
+    font-size: 17px !important;
+    border-radius: 16px !important;
+    min-height: 52px;
+  }
+
+  .figma-immersive-test .q-meta {
+    margin-bottom: 16px !important;
+  }
+  .figma-immersive-test .q-statement {
+    font-size: 20px !important;
+    letter-spacing: -0.5px !important;
+    line-height: 1.35 !important;
+    margin-bottom: 28px !important;
+  }
+  .figma-immersive-test .back-link {
+    font-size: 13px !important;
+  }
+
+  .figma-immersive-test .binary-grid {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+  .figma-immersive-test .choice-card {
+    padding: 18px 20px !important;
+    border-radius: 16px !important;
+    font-size: 17px !important;
+    min-height: 52px;
+  }
+
+  .figma-immersive-test .timer-canvas {
+    margin-bottom: 16px;
+  }
+  .figma-immersive-test .timer-clock {
+    font-size: 64px !important;
+    letter-spacing: -3px !important;
+    margin-bottom: 20px !important;
+  }
+  .figma-immersive-test .timer-clock span {
+    font-size: 22px !important;
+  }
+  .figma-immersive-test .timer-trigger {
+    padding: 14px 28px !important;
+    font-size: 17px !important;
+    border-radius: 100px !important;
+  }
+  .figma-immersive-test .timer-result {
+    margin-bottom: 20px !important;
+  }
+  .figma-immersive-test .time-display {
+    font-size: 26px !important;
+    margin-bottom: 12px !important;
+  }
+  .figma-immersive-test .time-question {
+    font-size: 15px !important;
+  }
+
+  .figma-immersive-test .word-reveal {
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+    margin-bottom: 28px !important;
+  }
+  .figma-immersive-test .word {
+    padding: 16px 24px !important;
+    font-size: 26px !important;
+    border-radius: 16px !important;
+  }
+
+  .figma-immersive-test .input-focus-group {
+    margin-bottom: 20px !important;
+  }
+  .figma-immersive-test .figma-input-style {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 52px !important;
+    font-size: 16px !important;
+  }
+  .figma-immersive-test .recall-option-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+  .figma-immersive-test .recall-option-card {
+    min-height: 52px !important;
+    padding: 16px !important;
+    font-size: 16px !important;
+    border-radius: 14px !important;
+  }
+  .figma-immersive-test .record-assist {
+    width: 100%;
+    justify-content: center;
+    margin-top: 12px;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* 结果页 */
+  .figma-immersive-test .results-canvas {
+    padding: 0 0 40px !important;
+  }
+  .figma-immersive-test .result-top {
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: center !important;
+  }
+  .figma-immersive-test .score-disk {
+    width: 120px !important;
+    height: 120px !important;
+    margin-bottom: 0 !important;
+  }
+  .figma-immersive-test .score-disk .val {
+    font-size: 36px !important;
+  }
+  .figma-immersive-test .title-group {
+    text-align: center;
+  }
+  .figma-immersive-test .title-group h2 {
+    font-size: 22px !important;
+    margin-bottom: 6px !important;
+  }
+  .figma-immersive-test .title-group p {
+    font-size: 14px !important;
+  }
+  .figma-immersive-test .dimension-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    margin: 20px 0 !important;
+  }
+  .figma-immersive-test .dim-pill {
+    padding: 14px 10px !important;
+    border-radius: 16px !important;
+  }
+  .figma-immersive-test .dim-pill .el-icon {
+    font-size: 22px !important;
+  }
+  .figma-immersive-test .dim-name {
+    font-size: 13px !important;
+    margin-top: 8px !important;
+  }
+  .figma-immersive-test .dim-status {
+    font-size: 12px !important;
+  }
+  .figma-immersive-test .result-visual-panel {
+    padding: 18px !important;
+    border-radius: 16px !important;
+    margin-bottom: 24px !important;
+  }
+  .figma-immersive-test .result-bar-row + .result-bar-row {
+    margin-top: 14px !important;
+  }
+  .figma-immersive-test .bar-label {
+    font-size: 13px !important;
+    margin-bottom: 6px !important;
+  }
+  .figma-immersive-test .bar-track {
+    height: 10px !important;
+  }
+  .figma-immersive-test .figma-recommendations {
+    padding: 20px !important;
+    border-radius: 18px !important;
+    margin-bottom: 24px !important;
+  }
+  .figma-immersive-test .rec-main-title {
+    font-size: 18px !important;
+    margin-bottom: 16px !important;
+  }
+  .figma-immersive-test .rec-dim-title {
+    font-size: 15px !important;
+    margin-bottom: 10px !important;
+  }
+  .figma-immersive-test .risk-tag {
+    font-size: 11px !important;
+  }
+  .figma-immersive-test .rec-list {
+    font-size: 14px !important;
+    padding-left: 14px !important;
+  }
+  .figma-immersive-test .rec-list li {
+    margin-bottom: 8px !important;
+  }
+  .figma-immersive-test .overall-group {
+    padding: 16px !important;
+    margin-top: 20px !important;
+  }
+  .figma-immersive-test .cta-group {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+  .figma-immersive-test .btn-primary,
+  .figma-immersive-test .btn-secondary {
+    width: 100%;
+    padding: 16px 20px !important;
+    font-size: 16px !important;
+    border-radius: 14px !important;
+  }
+
+  /* 弹窗（teleport 到 body，直接按 class 选） */
+  .modern-ai-dialog {
+    width: 92vw !important;
+  }
+  .modern-ai-dialog .el-dialog__body {
+    padding: 24px 20px 0 20px !important;
+  }
+  .ai-connect-title {
+    font-size: 20px !important;
+  }
+  .ai-connect-desc {
+    font-size: 14px !important;
+    margin-bottom: 20px !important;
+  }
+  .ai-connect-footer {
+    flex-direction: column !important;
+    gap: 10px !important;
+    padding: 0 20px 20px 20px !important;
+  }
+  .ai-connect-footer .modern-btn {
+    width: 100%;
+    height: 48px !important;
+    font-size: 15px !important;
+  }
+
+  .exit-confirm-dialog {
+    width: 92vw !important;
+    padding: 28px 20px !important;
+  }
+  .exit-confirm-dialog .el-message-box__title {
+    font-size: 22px !important;
+  }
+  .exit-confirm-dialog .el-message-box__message {
+    font-size: 15px !important;
+  }
+  .exit-confirm-dialog .el-button {
+    height: 44px !important;
+    font-size: 15px !important;
+  }
+}
+
+/* ----------------------------------------------------------
+   4. Person.vue / 通用 modern-health-record 表单移动端适配
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  .modern-health-record {
+    padding: 0 16px 120px 16px !important;
+  }
+  .modern-health-record .modern-page-header {
+    padding: 20px 0 16px 0 !important;
+  }
+  .modern-health-record .giant-page-title {
+    font-size: 24px !important;
+    letter-spacing: -0.5px !important;
+  }
+  .modern-health-record .save-info-pill {
+    font-size: 12px !important;
+    padding: 6px 12px !important;
+  }
+  .modern-health-record .modern-card {
+    padding: 20px !important;
+    border-radius: 20px !important;
+    margin-bottom: 16px !important;
+  }
+  .modern-health-record .card-header-flex {
+    margin-bottom: 16px !important;
+  }
+  .modern-health-record .card-title {
+    font-size: 18px !important;
+  }
+  .modern-health-record .question-text {
+    font-size: 15px !important;
+    margin-bottom: 14px !important;
+  }
+
+  /* 强制单列 */
+  .modern-health-record .figma-form-style .el-row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+  }
+  .modern-health-record .figma-form-style .el-col {
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .modern-health-record .figma-form-style .el-form-item__label {
+    font-size: 14px !important;
+    padding-bottom: 6px !important;
+  }
+  .modern-health-record .figma-form-style .el-input__wrapper,
+  .modern-health-record .figma-form-style .el-select__wrapper,
+  .modern-health-record .figma-form-style .el-input-number {
+    width: 100% !important;
+    height: 48px !important;
+  }
+
+  /* 选项按钮全宽可点 */
+  .modern-health-record .custom-radio-group,
+  .modern-health-record .custom-checkbox-group {
+    gap: 8px !important;
+  }
+  .modern-health-record .figma-form-style .el-radio.is-bordered,
+  .modern-health-record .figma-form-style .el-checkbox.is-bordered {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 46px !important;
+    padding: 10px 14px !important;
+    font-size: 14px !important;
+    border-radius: 12px !important;
+    margin-right: 0 !important;
+  }
+
+  .modern-health-record .sub-field-group,
+  .modern-health-record .inline-sub-inputs {
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+  .modern-health-record .inline-sub-inputs {
+    padding: 12px !important;
+  }
+  .modern-health-record .sub-input,
+  .modern-health-record .sub-input-mt {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .modern-health-record .support-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .modern-health-record .support-group {
+    padding: 14px !important;
+    border-radius: 14px !important;
+  }
+  .modern-health-record .support-label {
+    font-size: 14px !important;
+    margin-bottom: 10px !important;
+  }
+  .modern-health-record .compact-checkboxes {
+    gap: 8px !important;
+  }
+  .modern-health-record .compact-checkboxes .el-checkbox {
+    font-size: 14px !important;
+  }
+
+  /* 底部悬浮栏在 Manager 移动端改为通栏 */
+  .modern-health-record .modern-bottom-actions {
+    left: 0 !important;
+    right: 0 !important;
+    padding: 16px !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+  }
+  .modern-health-record .cta-black-giant {
+    width: 100% !important;
+    height: 52px !important;
+    padding: 0 24px !important;
+    font-size: 17px !important;
+    border-radius: 16px !important;
+    justify-content: center;
+  }
+}
+
+/* ----------------------------------------------------------
+   5. health/Index.vue 功能卡片入口
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  .health-record-container {
+    padding: 16px !important;
+  }
+  .health-record-container .welcome-card :deep(.el-card__body),
+  .health-record-container .welcome-card .el-card__body {
+    padding: 24px 16px !important;
+  }
+  .health-record-container .welcome-content h2 {
+    font-size: 24px !important;
+  }
+  .health-record-container .welcome-content p {
+    font-size: 15px !important;
+  }
+  .health-record-container .feature-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .health-record-container .feature-card :deep(.el-card__body),
+  .health-record-container .feature-card .el-card__body {
+    padding: 20px !important;
+  }
+  .health-record-container .card-icon {
+    width: 60px !important;
+    height: 60px !important;
+    margin-bottom: 14px !important;
+  }
+  .health-record-container .card-content h3 {
+    font-size: 20px !important;
+  }
+  .health-record-container .card-content p {
+    font-size: 14px !important;
+    margin-bottom: 16px !important;
+  }
+  .health-record-container .card-content .el-button {
+    width: 100% !important;
+    height: 44px !important;
+  }
+}
+
+/* ----------------------------------------------------------
+   6. OnboardingDialog.vue 引导弹窗
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  .modern-onboarding-dialog {
+    width: 92vw !important;
+  }
+  .modern-onboarding-dialog .custom-progress {
+    padding: 20px 20px 0 20px !important;
+  }
+  .modern-onboarding-dialog .el-carousel {
+    height: 320px !important;
+  }
+  .modern-onboarding-dialog .guide-page {
+    padding: 24px 20px 0 20px !important;
+  }
+  .modern-onboarding-dialog .guide-illustration {
+    width: 72px !important;
+    height: 72px !important;
+    margin-bottom: 20px !important;
+  }
+  .modern-onboarding-dialog .slide-icon {
+    font-size: 36px !important;
+  }
+  .modern-onboarding-dialog .guide-title {
+    font-size: 20px !important;
+    margin-bottom: 10px !important;
+  }
+  .modern-onboarding-dialog .guide-description {
+    font-size: 14px !important;
+  }
+  .modern-onboarding-dialog .onboarding-footer {
+    padding: 0 20px 20px 20px !important;
+  }
+  .modern-onboarding-dialog .next-primary-btn {
+    padding: 12px 24px !important;
+    font-size: 14px !important;
+  }
+}
+
+/* ----------------------------------------------------------
+   7. CareBubble.vue 关怀气泡
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  .care-bubble-dialog {
+    width: 92vw !important;
+  }
+  .care-bubble-dialog .care-content {
+    padding: 24px 16px !important;
+  }
+  .care-bubble-dialog .care-message {
+    font-size: 16px !important;
+    margin-bottom: 20px !important;
+  }
+  .care-bubble-dialog .care-actions {
+    flex-direction: column !important;
+    gap: 10px !important;
+    padding: 0 !important;
+  }
+  .care-bubble-dialog .care-actions .el-button {
+    width: 100% !important;
+    max-width: none !important;
+    height: 48px !important;
+    font-size: 15px !important;
+    margin: 0 !important;
+  }
+}
+
+/* ----------------------------------------------------------
+   8. Home.vue 弹窗底部按钮防溢出
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  .modern-dialog .el-dialog__footer {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    padding: 16px 20px !important;
+  }
+  .modern-dialog .el-dialog__footer button,
+  .modern-dialog .el-dialog__footer .el-button {
+    flex: 1 1 calc(50% - 4px) !important;
+    min-width: 0 !important;
+    height: 44px !important;
+    font-size: 14px !important;
+  }
+  .modern-dialog .guide-actions {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+  .modern-dialog .guide-actions button {
+    width: 100% !important;
+  }
+}
+
+/* ----------------------------------------------------------
+   9. Manager.vue 底部导航加固
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  .saas-app-layout .saas-floating-sidebar {
+    height: calc(70px + env(safe-area-inset-bottom, 0px)) !important;
+    padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  body .saas-app-layout .saas-menu .el-menu-item {
+    min-width: 0 !important;
+    padding: 4px 1px !important;
+    font-size: 12px !important;
+  }
+  body .saas-app-layout .saas-menu .el-menu-item .el-icon {
+    font-size: 22px !important;
+  }
+  .saas-app-layout .saas-main-canvas {
+    min-height: calc(100vh - 60px - 70px - env(safe-area-inset-bottom, 0px)) !important;
+    padding: 12px !important;
+  }
+}
+
+/* ----------------------------------------------------------
+   10. 超小屏 480px 额外收紧
+   ---------------------------------------------------------- */
+@media (max-width: 480px) {
+  .figma-pure-landing .main-prompt-input,
+  .figma-pure-landing .placeholder-animation {
+    font-size: 22px !important;
+  }
+  .figma-pure-landing .giant-prompt-box {
+    min-height: 200px !important;
+    padding: 20px !important;
+  }
+  .figma-pure-landing .brand-name {
+    font-size: 16px !important;
+  }
+
+  .bento-home-wrapper .welcome-title {
+    font-size: 22px !important;
+  }
+  .bento-home-wrapper .welcome-text {
+    font-size: 14px !important;
+  }
+  .bento-home-wrapper .control-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .bento-home-wrapper .action-card {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  .figma-immersive-test .dimension-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .figma-immersive-test .choice-card {
+    font-size: 16px !important;
+  }
+
+  .history-page .sub-metrics-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .intervention-page .linear-row {
+    padding: 14px !important;
+  }
+
+  .health-education-page .modern-tabs :deep(.el-tabs__item),
+  .health-education-page .modern-tabs .el-tabs__item {
+    font-size: 14px !important;
+    padding: 0 10px !important;
+  }
+
+  .modern-health-record .figma-form-style .el-radio.is-bordered,
+  .modern-health-record .figma-form-style .el-checkbox.is-bordered {
+    padding: 10px 12px !important;
+    font-size: 13px !important;
+  }
+}

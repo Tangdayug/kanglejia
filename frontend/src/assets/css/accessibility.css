@@ -1,0 +1,24 @@
+/**
+ * 老年人无障碍模式辅助样式
+ * 主要缩放逻辑在 global.css 中
+ */
+
+/* ==================== 文字溢出保护 ==================== */
+
+html[data-accessibility="elderly"] {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* 防止表格内容溢出 */
+html[data-accessibility="elderly"] table,
+html[data-accessibility="elderly"] .el-table {
+  word-break: break-word;
+}
+
+/* 防止卡片内容溢出 */
+html[data-accessibility="elderly"] .card,
+html[data-accessibility="elderly"] .el-card {
+  overflow: hidden;
+}

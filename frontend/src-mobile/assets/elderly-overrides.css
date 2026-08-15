@@ -1,0 +1,222 @@
+/* ============================================================
+   移动端长辈模式：全局字号与交互元素显著放大
+   通过更强的选择器覆盖各页面 scoped 样式与 Ant Design 默认样式
+   ============================================================ */
+
+html[data-accessibility="elderly"],
+html[data-accessibility="elderly"] body,
+html[data-accessibility="elderly"] #app {
+  font-size: 22px !important;
+  line-height: 1.7 !important;
+}
+
+/* -------------------- 通用标题 -------------------- */
+html[data-accessibility="elderly"] h1,
+html[data-accessibility="elderly"] .page-title {
+  font-size: 30px !important;
+  line-height: 1.3 !important;
+}
+
+html[data-accessibility="elderly"] h2,
+html[data-accessibility="elderly"] .section-title,
+html[data-accessibility="elderly"] .card-title,
+html[data-accessibility="elderly"] .welcome-text h2 {
+  font-size: 26px !important;
+  line-height: 1.35 !important;
+}
+
+html[data-accessibility="elderly"] h3,
+html[data-accessibility="elderly"] .article-title,
+html[data-accessibility="elderly"] .today-card h3,
+html[data-accessibility="elderly"] .recommendations h3 {
+  font-size: 24px !important;
+  line-height: 1.4 !important;
+}
+
+html[data-accessibility="elderly"] h4,
+html[data-accessibility="elderly"] .readiness-card h4,
+html[data-accessibility="elderly"] .rec-block h5,
+html[data-accessibility="elderly"] .detail-recs h4 {
+  font-size: 22px !important;
+  line-height: 1.4 !important;
+}
+
+/* -------------------- 正文 / 辅助文字 -------------------- */
+html[data-accessibility="elderly"] p,
+html[data-accessibility="elderly"] .content-text,
+html[data-accessibility="elderly"] .article-summary,
+html[data-accessibility="elderly"] .detail-content,
+html[data-accessibility="elderly"] .welcome-text p,
+html[data-accessibility="elderly"] .today-card p,
+html[data-accessibility="elderly"] .step-desc,
+html[data-accessibility="elderly"] .sub-question,
+html[data-accessibility="elderly"] .timer-result p,
+html[data-accessibility="elderly"] .rec-group ul,
+html[data-accessibility="elderly"] .rec-group li,
+html[data-accessibility="elderly"] .analysis-result,
+html[data-accessibility="elderly"] .mode-option span {
+  font-size: 20px !important;
+  line-height: 1.7 !important;
+}
+
+html[data-accessibility="elderly"] .date,
+html[data-accessibility="elderly"] .article-date,
+html[data-accessibility="elderly"] .session-time,
+html[data-accessibility="elderly"] .message-time,
+html[data-accessibility="elderly"] .dim-status,
+html[data-accessibility="elderly"] .score-label,
+html[data-accessibility="elderly"] .required,
+html[data-accessibility="elderly"] .disclaimer,
+html[data-accessibility="elderly"] .ant-empty-description {
+  font-size: 18px !important;
+}
+
+/* -------------------- 重点信息 / 大数字 -------------------- */
+html[data-accessibility="elderly"] .greeting,
+html[data-accessibility="elderly"] .username,
+html[data-accessibility="elderly"] .message-text,
+html[data-accessibility="elderly"] .message-role,
+html[data-accessibility="elderly"] .question-text,
+html[data-accessibility="elderly"] .step-title,
+html[data-accessibility="elderly"] .total-score,
+html[data-accessibility="elderly"] .score-value,
+html[data-accessibility="elderly"] .dim-score,
+html[data-accessibility="elderly"] .sub-item strong,
+html[data-accessibility="elderly"] .detail-dim strong,
+html[data-accessibility="elderly"] .word,
+html[data-accessibility="elderly"] .timer-display {
+  font-size: 28px !important;
+  line-height: 1.4 !important;
+}
+
+html[data-accessibility="elderly"] .timer-display span {
+  font-size: 22px !important;
+}
+
+html[data-accessibility="elderly"] .total-score span,
+html[data-accessibility="elderly"] .score-text {
+  font-size: 20px !important;
+}
+
+/* -------------------- Ant Design 通用组件 -------------------- */
+html[data-accessibility="elderly"] .ant-btn,
+html[data-accessibility="elderly"] .ant-radio-wrapper,
+html[data-accessibility="elderly"] .ant-checkbox-wrapper,
+html[data-accessibility="elderly"] .ant-radio-button-wrapper {
+  font-size: 22px !important;
+  min-height: 60px !important;
+}
+
+html[data-accessibility="elderly"] .ant-btn-sm {
+  font-size: 18px !important;
+  min-height: 48px !important;
+}
+
+html[data-accessibility="elderly"] .ant-input,
+html[data-accessibility="elderly"] .ant-input-password,
+html[data-accessibility="elderly"] .ant-input-number,
+html[data-accessibility="elderly"] .ant-input-number-input,
+html[data-accessibility="elderly"] .ant-select,
+html[data-accessibility="elderly"] .ant-select-selector,
+html[data-accessibility="elderly"] .ant-select-item,
+html[data-accessibility="elderly"] .ant-picker,
+html[data-accessibility="elderly"] .ant-form-item-label > label,
+html[data-accessibility="elderly"] .ant-list-item,
+html[data-accessibility="elderly"] .ant-tabs-tab,
+html[data-accessibility="elderly"] .ant-tag,
+html[data-accessibility="elderly"] .ant-modal-title,
+html[data-accessibility="elderly"] .ant-modal-body,
+html[data-accessibility="elderly"] .ant-modal-confirm-title,
+html[data-accessibility="elderly"] .ant-modal-confirm-content,
+html[data-accessibility="elderly"] .ant-drawer-title,
+html[data-accessibility="elderly"] .ant-message-notice-content,
+html[data-accessibility="elderly"] .ant-picker-dropdown,
+html[data-accessibility="elderly"] .ant-select-dropdown {
+  font-size: 22px !important;
+}
+
+html[data-accessibility="elderly"] .ant-input,
+html[data-accessibility="elderly"] .ant-input-number,
+html[data-accessibility="elderly"] .ant-select-selector,
+html[data-accessibility="elderly"] .ant-picker {
+  min-height: 60px !important;
+}
+
+html[data-accessibility="elderly"] input::placeholder,
+html[data-accessibility="elderly"] textarea::placeholder {
+  font-size: 20px !important;
+}
+
+/* -------------------- 页面内常用元素 -------------------- */
+html[data-accessibility="elderly"] .back-btn,
+html[data-accessibility="elderly"] .menu-item,
+html[data-accessibility="elderly"] .session-title,
+html[data-accessibility="elderly"] .rec-btn,
+html[data-accessibility="elderly"] .action-btn,
+html[data-accessibility="elderly"] .yes-btn,
+html[data-accessibility="elderly"] .no-btn,
+html[data-accessibility="elderly"] .recall-btn,
+html[data-accessibility="elderly"] .save-btn,
+html[data-accessibility="elderly"] .analyze-btn,
+html[data-accessibility="elderly"] .logout-btn,
+html[data-accessibility="elderly"] .feedback-input {
+  font-size: 22px !important;
+  min-height: 60px !important;
+}
+
+html[data-accessibility="elderly"] .today-icon,
+html[data-accessibility="elderly"] .menu-icon,
+html[data-accessibility="elderly"] .checked-icon {
+  font-size: 40px !important;
+}
+
+html[data-accessibility="elderly"] .arrow,
+html[data-accessibility="elderly"] .today-arrow {
+  font-size: 22px !important;
+}
+
+html[data-accessibility="elderly"] .progress-text,
+html[data-accessibility="elderly"] .dimension-tag,
+html[data-accessibility="elderly"] .type-badge {
+  font-size: 18px !important;
+}
+
+/* -------------------- 聊天输入区域（专门提高优先级） -------------------- */
+html[data-accessibility="elderly"] .message-textarea .ant-input,
+html[data-accessibility="elderly"] .mobile-chat-input .ant-input {
+  font-size: 22px !important;
+  min-height: 56px !important;
+}
+
+html[data-accessibility="elderly"] .voice-btn,
+html[data-accessibility="elderly"] .send-btn {
+  width: 58px !important;
+  height: 58px !important;
+  font-size: 26px !important;
+}
+
+html[data-accessibility="elderly"] .recording-bar {
+  font-size: 20px !important;
+}
+
+/* -------------------- TabBar -------------------- */
+html[data-accessibility="elderly"] .tab-label {
+  font-size: 16px !important;
+}
+
+/* -------------------- 增大点击热区与卡片内边距 -------------------- */
+html[data-accessibility="elderly"] .mobile-card,
+html[data-accessibility="elderly"] .section-card,
+html[data-accessibility="elderly"] .intervention-card,
+html[data-accessibility="elderly"] .history-card,
+html[data-accessibility="elderly"] .article-card,
+html[data-accessibility="elderly"] .recommendations,
+html[data-accessibility="elderly"] .rec-group.overall {
+  padding: 20px !important;
+  border-radius: 18px !important;
+}
+
+html[data-accessibility="elderly"] .checkbox-list,
+html[data-accessibility="elderly"] .radio-list {
+  gap: 12px !important;
+}

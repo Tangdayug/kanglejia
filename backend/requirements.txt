@@ -1,0 +1,47 @@
+
+# Web Framework
+fastapi[all]==0.128.0
+uvicorn[standard]==0.40.0
+python-dotenv==1.2.1
+starlette==0.50.0
+pydantic==2.12.5
+python-multipart==0.0.21
+
+# Database
+SQLAlchemy==2.0.23
+pymysql==1.1.2
+
+# Authentication & Security
+PyJWT==2.11.0
+passlib==1.7.4
+bcrypt==4.0.1
+cryptography==46.0.4
+
+# TTS (Text-to-Speech)
+edge-tts==7.2.7
+tabulate==0.9.0
+
+# LLM and RAG
+openai==1.6.1
+dashscope==1.25.11
+httpx==0.28.1
+websockets==13.1
+
+# Vector Database (FAISS only)
+faiss-cpu==1.13.2  # Vector similarity search
+
+# Document Processing
+PyPDF2==3.0.1
+python-docx==0.8.11
+markdown==3.7
+
+# Utilities
+requests==2.32.5
+orjson==3.11.5
+pytz==2025.2
+python-dateutil==2.9.0.post0
+PyYAML==6.0.3
+psutil==5.9.6
+numpy>=1.25.0,<2.0.0
+
+

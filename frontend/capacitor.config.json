@@ -1,0 +1,9 @@
+{
+  "appId": "com.kanglejia.app",
+  "appName": "康乐家",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "http",
+    "cleartext": true
+  }
+}
