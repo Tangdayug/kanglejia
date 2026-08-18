@@ -81,6 +81,7 @@
             <ChatMessage
               v-for="message in messages"
               :key="message.id"
+              :message-id="message.id"
               :role="message.role"
               :content="message.content"
               :sources="message.sources"

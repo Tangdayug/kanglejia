@@ -51,7 +51,7 @@
           @click.stop="handleSpeakerClick"
           title="语音播报"
         >
-          <el-icon><component :is="isSpeaking ? 'VideoPause' : 'Microphone'" /></el-icon>
+          <el-icon><component :is="isSpeaking ? VideoPause : Microphone" /></el-icon>
         </button>
       </div>
     </div>
@@ -87,6 +87,10 @@ const props = defineProps({
   isSpeaking: {
     type: Boolean,
     default: false
+  },
+  messageId: {
+    type: [String, Number],
+    default: null
   }
 })
 
@@ -104,7 +108,7 @@ const handleSpeakerClick = () => {
     stop()
     emit('pause')
   } else {
-    emit('speak', props.content)
+    emit('speak', props.content, props.messageId)
   }
 }
 

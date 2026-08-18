@@ -131,7 +131,7 @@
       <div class="modern-article-detail" v-if="currentArticle">
         <div class="speech-floater" v-if="speechEnabled">
           <button class="speech-btn" @click="isSpeaking ? stopSpeaking() : speakArticleDetail()" :class="{ 'is-playing': isSpeaking }">
-            <el-icon><component :is="isSpeaking ? 'VideoPause' : 'Microphone'" /></el-icon>
+            <el-icon><component :is="isSpeaking ? VideoPause : Microphone" /></el-icon>
             {{ isSpeaking ? '停止播报' : '语音朗读' }}
           </button>
         </div>
