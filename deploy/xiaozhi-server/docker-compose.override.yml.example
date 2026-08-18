@@ -1,12 +1,16 @@
 # xiaozhi-server 接入 SecondNature 的 docker-compose override 示例
 # 用法：
-#   1. 复制本文件到 /opt/xiaozhi-server/docker-compose.override.yml
+#   1. 复制本文件到 <xiaozhi-server-dir>/docker-compose.override.yml
 #   2. 将 SECONDNATURE_TOKEN 与 SecondNature 的 XIAOZHI_SYSTEM_TOKEN 设为相同值
 #   3. 根据实际情况修改 SECONDNATURE_HOST（宿主机 IP 或容器名）
-#   4. 在 /opt/xiaozhi-server 目录执行：
-#        docker compose -f docker-compose_all.yml -f docker-compose.override.yml up -d xiaozhi-esp32-server
+#   4. 在 xiaozhi-server 目录执行：
+#        docker-compose -f docker-compose_all.yml -f docker-compose.override.yml up -d xiaozhi-esp32-server
 #
-# 注意：本文件只是模板，不要把 /opt/xiaozhi-server 的完整代码放到 SecondNature 仓库里。
+# 注意：
+#   - 本文件只是模板，不要把 xiaozhi-server 的完整代码放到 SecondNature 仓库里。
+#   - 若 docker-compose v1.29 重新创建容器时报 KeyError: 'ContainerConfig'，
+#     可用 docker run 手动重建 xiaozhi-esp32-server，或升级 Docker Compose。
+#   - 若 SecondNature 未设置 XIAOZHI_SYSTEM_TOKEN，SECONDNATURE_TOKEN 可留空。
 
 services:
   xiaozhi-esp32-server:
@@ -22,7 +26,7 @@ services:
       - XIAOZHI_MYSQL_PASSWORD=123456
       - XIAOZHI_MYSQL_DATABASE=xiaozhi_esp32_server
     volumes:
-      # 代理脚本与补丁文件需放在 /opt/xiaozhi-server 对应目录下
+      # 代理脚本与补丁文件需放在 xiaozhi-server 对应目录下
       - ./data/secondnature_proxy.py:/opt/xiaozhi-esp32-server/data/secondnature_proxy.py:ro
       - ./patches/connection.py:/opt/xiaozhi-esp32-server/core/connection.py:ro
     extra_hosts:
