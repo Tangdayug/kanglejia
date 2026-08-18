@@ -244,7 +244,7 @@ import {
 } from '@/utils/healthTestFlow.mjs'
 
 const router = useRouter()
-const { speak, stop } = useSpeech()
+const { speak, stop, speakWithCallback } = useSpeech()
 
 // --- 核心状态 ---
 const currentStep = ref('intro')
@@ -263,19 +263,24 @@ const answers = reactive({
 const timer = reactive({ running: false, startTime: null, elapsed: 0 })
 const testResult = reactive({ scores: null, risks: null, recommendations: null }) 
 
-// --- 监听进入结果页，触发AI弹窗 ---
+// --- 监听进入结果页，自动播报评估结果后弹出AI弹窗 ---
 watch(currentStep, (newStep, oldStep) => {
   if (aiConnectTimer) {
     clearTimeout(aiConnectTimer)
     aiConnectTimer = null
   }
 
-  // 进入结果页面后，延迟 8 秒弹出 AI 连线提示
+  // 进入结果页面后，先语音播报评估结果摘要，播报完成后再弹出 AI 连线提示
   if (newStep === 'results' && oldStep !== 'results') {
-    aiConnectTimer = setTimeout(() => {
-      showAIConnectDialog.value = true
-      speak('一键连线AI健康管家，结合您的筛查结果，即刻定制专属健康方案')
-    }, 8000) 
+    stop()
+    setTimeout(() => {
+      speakResultSummary(() => {
+        aiConnectTimer = setTimeout(() => {
+          showAIConnectDialog.value = true
+          speak('一键连线AI健康管家，结合您的筛查结果，即刻定制专属健康方案')
+        }, 3000)
+      })
+    }, 600)
   }
 })
 
@@ -382,6 +387,37 @@ function handleAIConnect() {
 }
 function handleCloseDialog() {
   showAIConnectDialog.value = false
+}
+
+// --- 评估结果语音播报 ---
+const speakResultSummary = (onComplete) => {
+  if (!testResult.scores || !testResult.risks) {
+    if (onComplete) onComplete()
+    return
+  }
+
+  const total = testResult.scores.total || 0
+  const riskLevel = total > 3 ? '建议进一步检查' : '健康状况良好'
+  const riskDims = dimensions.filter(d => testResult.risks[d.key]).map(d => d.label)
+
+  let summary = `健康评估已完成。您的总评分为 ${total} 分，${riskLevel}。`
+  if (riskDims.length > 0) {
+    summary += `需要关注的维度包括：${riskDims.join('、')}。`
+  } else {
+    summary += `各维度状态均正常，请继续保持。`
+  }
+
+  const overallRecs = testResult.recommendations?.overall || []
+  if (overallRecs.length > 0) {
+    summary += `总体建议：${overallRecs.slice(0, 2).join('；')}。`
+  }
+
+  // 后端 TTS 单条限制 1000 字符，做安全截断
+  if (summary.length > 900) {
+    summary = summary.slice(0, 900).replace(/[^。；，、]$/, '') + '。'
+  }
+
+  speakWithCallback(summary, onComplete)
 }
 
 const getDimensionLabel = (k) => dimensions.find(d => d.key === k)?.label || '评估'
