@@ -3,7 +3,7 @@
 ## 环境变量配置
 
 ### 必需环境变量:
-- `DEEPSEEK_API_KEY` - DeepSeek API 密钥：sk-e682d6241abc4eefa0868f31191ec300
+- `DEEPSEEK_API_KEY` - DeepSeek API 密钥
 - `JWT_SECRET_KEY` - JWT 密钥 (至少32字符)
 
 ### 数据库配置 (可选):
@@ -19,6 +19,68 @@
 ## 端口说明
 - 应用前端端口: 8006
 - 内部后端端口: 8007
+
+## Docker 运行
+
+### 1. 准备环境变量
+
+```bash
+cp backend/.env.example backend/.env
+# 编辑 backend/.env，填入 DEEPSEEK_API_KEY 和 JWT_SECRET_KEY
+```
+
+### 2. 启动（生产模式，无热重载）
+
+```bash
+docker compose up --build -d
+```
+
+查看日志：
+
+```bash
+docker compose logs --tail 50 -f
+```
+
+访问：http://localhost:8006
+
+### 3. 开发模式（启用热重载）
+
+```bash
+cp docker-compose.override.example.yml docker-compose.override.yml
+# 编辑 docker-compose.override.yml，填入真实密钥
+docker compose up --build -d
+```
+
+或直接在项目根目录创建 `.env`：
+
+```bash
+RELOAD=true
+DEEPSEEK_API_KEY=your_key
+JWT_SECRET_KEY=your_secret
+```
+
+修改 `backend/` 下的 Python 文件后，uvicorn 会自动重载，无需重启容器。
+
+### 4. 更新向量知识库（不重启服务）
+
+向 `backend/rag/data/` 添加新的 PDF/Markdown 文档后，调用接口重建索引：
+
+```bash
+curl -X POST http://localhost:8006/api/rag/rebuild \
+  -H "Authorization: Bearer <your_jwt_token>"
+```
+
+### 5. 停止
+
+```bash
+docker compose down
+```
+
+## 资源限制
+
+`docker-compose.yml` 已为 4 核 / 8 GB 机器设置：
+- CPU 限制：3 核
+- 内存限制：7 GB（保留 2 GB）
 
 ## 语音问题
 - 接入方言分类头，调用云端方言大模型，建立方言规则映射表，用对应方言的tts回复
@@ -42,7 +104,7 @@ session 复用	当天内同一用户复用健康档案	不用每次重新问基�
 
 ## 数据持久化
 - SQLite 数据库存储在容器内 `/app/backend/data/secondnature.db`
-- 建议配置卷挂载以持久化数据
+- 已通过命名卷 `secondnature-data` 持久化
 
 ## 沉淀文档
 - 每次更新代码逻辑需要在本目录的子目录下新建md文档详细记录

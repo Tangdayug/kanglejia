@@ -12,13 +12,6 @@ backend/rag/
 │   └── faiss/              # 生成的 FAISS 向量索引（运行时自动生成）
 │       ├── health_knowledge.faiss
 │       └── health_knowledge_metadata.pkl
-├── legacy/                 # 旧版 ChromaDB 脚本，已停止维护，仅供参考
-│   ├── init_rag.py
-│   ├── rebuild_vectordb.py
-│   ├── build_vector_db_locally.py
-│   ├── auto_fix.py
-│   ├── vector_store.py
-│   └── retriever.py
 ├── document_processor.py   # 文档解析与分块
 ├── retriever_faiss.py      # 当前使用的 FAISS 检索器
 ├── vector_store_faiss.py   # 当前使用的 FAISS 向量存储
@@ -45,7 +38,7 @@ backend/rag/
 如需立即强制重建向量索引，可调用后端 API：
 
 ```bash
-curl -X POST http://localhost:7861/api/rag/rebuild
+curl -X POST http://localhost:8006/api/rag/rebuild
 ```
 
 或在后端目录下执行：
@@ -56,5 +49,4 @@ python -c "from rag.retriever_faiss import get_rag_retriever; get_rag_retriever(
 
 ## 注意事项
 
-- `legacy/` 中的 ChromaDB 代码不再使用，保留仅作历史参考。
 - FAISS 索引是构建产物，通常不需要提交到 Git；已在 `.gitignore` 中排除。

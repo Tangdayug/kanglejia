@@ -3,8 +3,10 @@
 """
 import asyncio
 import json
+import logging
 from typing import List, Dict, Any, Optional
-from fastapi import Depends, APIRouter
+
+from fastapi import Depends
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
@@ -15,6 +17,8 @@ from common.result import ResultModel, Result
 from model import get_db_session
 from service.chatService import ChatService
 from exception.customException import NotFoundException
+
+logger = logging.getLogger(__name__)
 
 
 async def _extract_intervention_async(
@@ -61,25 +65,13 @@ class ChatMessageResponse(BaseModel):
 
 
 def _message_to_dict(message) -> dict:
-    """将ChatMessage模型转换为字典"""
-    return {
-        'id': message.id,
-        'sessionId': message.session_id,
-        'role': message.role,
-        'content': message.content,
-        'sources': message.sources,
-        'createdAt': message.created_at.isoformat() if message.created_at else None
-    }
+    """将ChatMessage模型转换为字典（由模型自身维护）。"""
+    return message.to_dict()
 
 
 def _session_to_dict(session) -> dict:
-    """将ChatSession模型转换为字典"""
-    return {
-        'id': session.id,
-        'title': session.title,
-        'createdAt': session.created_at.isoformat() if session.created_at else None,
-        'updatedAt': session.updated_at.isoformat() if session.updated_at else None
-    }
+    """将ChatSession模型转换为字典（由模型自身维护）。"""
+    return session.to_dict()
 
 @app.post("/chat/sessions", response_model=ResultModel)
 async def create_chat_session(
@@ -203,8 +195,7 @@ async def stream_chat_message(
             ))
 
         except Exception as e:
-            import traceback
-            traceback.print_exc()
+            logger.exception("[Chat] stream chat failed")
             yield f"data: {json.dumps({'error': str(e)}, ensure_ascii=False)}\n\n"
 
     return StreamingResponse(
@@ -264,6 +255,7 @@ async def delete_chat_session(
     if not session:
         raise NotFoundException("会话不存在")
 
+    # 显式删除消息：SQLite 默认不开启外键级联，保留手动删除以保证兼容性
     db_session.query(ChatMessage).filter(
         ChatMessage.session_id == session_id
     ).delete()

@@ -33,19 +33,15 @@ class DeepSeekClient:
         if OpenAI is None:
             raise ImportError("OpenAI is not available. Please install: pip install openai>=1.12.0")
 
-        try:
-            # Explicitly create httpx client (avoiding proxy issues)
-            import httpx
-            http_client = httpx.Client(timeout=60.0)
+        # Explicitly create httpx client (avoiding proxy issues)
+        import httpx
+        http_client = httpx.Client(timeout=60.0)
 
-            self.client = OpenAI(
-                api_key=api_key,
-                base_url=base_url,
-                http_client=http_client
-            )
-        except Exception as e:
-            raise
-
+        self.client = OpenAI(
+            api_key=api_key,
+            base_url=base_url,
+            http_client=http_client
+        )
         self.model = model
 
     def chat_completion(
@@ -55,24 +51,16 @@ class DeepSeekClient:
         max_tokens: Optional[int] = None,
         stream: bool = False,
     ) -> Any:
-        """
-        Create a chat completion
-        """
+        """Create a chat completion."""
         kwargs = {
             "model": self.model,
             "messages": messages,
             "temperature": temperature,
             "stream": stream,
         }
-
         if max_tokens is not None:
             kwargs["max_tokens"] = max_tokens
-
-        try:
-            response = self.client.chat.completions.create(**kwargs)
-            return response
-        except Exception as e:
-            raise
+        return self.client.chat.completions.create(**kwargs)
 
     def stream_chat_completion(
         self,
@@ -80,29 +68,20 @@ class DeepSeekClient:
         temperature: float = 0.7,
         max_tokens: Optional[int] = None,
     ) -> Iterator[str]:
-        """
-        Stream chat completion
-        """
+        """Stream chat completion."""
         kwargs = {
             "model": self.model,
             "messages": messages,
             "temperature": temperature,
             "stream": True,
         }
-
         if max_tokens is not None:
             kwargs["max_tokens"] = max_tokens
 
-        try:
-            stream = self.client.chat.completions.create(**kwargs)
-
-            for chunk in stream:
-                if chunk.choices and chunk.choices[0].delta.content:
-                    content = chunk.choices[0].delta.content
-                    yield content
-
-        except Exception as e:
-            raise
+        stream = self.client.chat.completions.create(**kwargs)
+        for chunk in stream:
+            if chunk.choices and chunk.choices[0].delta.content:
+                yield chunk.choices[0].delta.content
 
     def generate_chat_response(
         self,

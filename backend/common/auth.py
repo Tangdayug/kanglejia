@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime, timedelta
 
 import jwt
@@ -7,6 +8,8 @@ from typing import Optional
 
 from common.constant import TOKEN_EXPIRE_DAYS, TOKEN_EXPIRE_MINUTES, TOKEN_EXPIRE_SECONDS, JWT_SECRET_KEY, DISABLE_AUTH
 from exception.customException import TokenException
+
+logger = logging.getLogger(__name__)
 
 
 class AuthHandler:
@@ -64,22 +67,22 @@ class AuthHandler:
         """
         # 如果禁用认证，直接返回默认用户 ID
         if DISABLE_AUTH:
-            print(f"[DEBUG] auth_required called, returning user_id=1 (auth disabled)")
+            logger.debug("auth_required called, returning user_id=1 (auth disabled)")
             return 1
 
         # 正常认证流程
         if authorization is None:
-            print(f"[DEBUG] auth_required called, but no Authorization header")
+            logger.warning("auth_required called, but no Authorization header")
             raise HTTPException(status_code=401, detail="未提供认证信息")
 
         # 检查 Bearer 格式
         if not authorization.startswith("Bearer "):
-            print(f"[DEBUG] auth_required called, invalid Authorization format")
+            logger.warning("auth_required called, invalid Authorization format")
             raise HTTPException(status_code=401, detail="认证格式错误")
 
         # 提取 token
         token = authorization[7:]  # 跳过 "Bearer "
-        print(f"[DEBUG] auth_required called, token: {token[:20]}...")
+        logger.debug(f"auth_required called, token: {token[:20]}...")
 
         # 解码 token
         return self.decode_token(token)

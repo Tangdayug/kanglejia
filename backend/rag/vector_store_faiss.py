@@ -1,6 +1,6 @@
 """
 Vector Store - FAISS wrapper for storing and retrieving document embeddings
-使用阿里云百炼 text-embedding-v4 嵌入模型
+使用本地 sentence-transformers 嵌入模型
 """
 import os
 import pickle
@@ -14,7 +14,7 @@ except ImportError:
 
 
 class VectorStore:
-    """向量数据库 - 使用 FAISS + 阿里云嵌入模型"""
+    """向量数据库 - 使用 FAISS + 本地 sentence-transformers 嵌入模型"""
 
     def __init__(self, persist_directory: str, index_name: str = "health_knowledge"):
         """
@@ -27,7 +27,7 @@ class VectorStore:
         if faiss is None:
             raise ImportError("faiss 未安装，请运行: pip install faiss-cpu")
 
-        from common.aliyun_embedding import get_aliyun_embedding
+        from common.local_embedding import get_local_embedding
 
         self.persist_directory = Path(persist_directory)
         self.persist_directory.mkdir(parents=True, exist_ok=True)
@@ -35,8 +35,8 @@ class VectorStore:
         self.index_path = self.persist_directory / f"{index_name}.faiss"
         self.metadata_path = self.persist_directory / f"{index_name}_metadata.pkl"
 
-        # 初始化阿里云嵌入模型
-        self.embedding_model = get_aliyun_embedding()
+        # 初始化本地嵌入模型（首次加载会下载模型文件）
+        self.embedding_model = get_local_embedding()
         self.embedding_dimension = self.embedding_model.get_dimension()
 
         # 加载或创建索引
@@ -207,7 +207,7 @@ def get_vector_store(
         from common.constant import RAG_VECTOR_DB_PATH, RAG_KNOWLEDGE_BASE_PATH
 
         if persist_directory is None:
-            persist_directory = os.getenv(RAG_VECTOR_DB_PATH, './rag/indices/faiss')
+            persist_directory = os.getenv("RAG_VECTOR_DB_PATH", RAG_VECTOR_DB_PATH)
 
         print("🔄 初始化向量数据库单例...")
         _vector_store_instance = VectorStore(persist_directory, index_name)
@@ -239,7 +239,7 @@ def _initialize_knowledge_base():
         import os
 
         # 获取知识库路径
-        knowledge_base_path = os.getenv(RAG_KNOWLEDGE_BASE_PATH, './rag/data')
+        knowledge_base_path = os.getenv("RAG_KNOWLEDGE_BASE_PATH", RAG_KNOWLEDGE_BASE_PATH)
 
         # 检查知识库文件
         knowledge_dir = Path(knowledge_base_path)

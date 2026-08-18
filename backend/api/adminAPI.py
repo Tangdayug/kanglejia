@@ -1,8 +1,6 @@
 """
 登录API - 提供用户和管理员登录功能
 """
-from json import JSONEncoder
-
 from fastapi.encoders import jsonable_encoder
 from fastapi.params import Depends
 
@@ -11,7 +9,6 @@ from common.result import Result, ResultModel
 from api import app
 from model import get_db_session, Session
 from model.account import AccountLogin
-from model.admin import AdminModel
 from service.adminService import AdminService
 from service.userService import UserService
 
@@ -27,5 +24,5 @@ async def login(account: AccountLogin, db_session: Session = Depends(get_db_sess
     elif role_upper == "USER" or Role.USER.name.__eq__(account.role):
         db_account = UserService.login(account, db_session)
     else:
-        return Result.error("角色错误")
+        return Result.error(msg="角色错误")
     return Result.success(jsonable_encoder(db_account))

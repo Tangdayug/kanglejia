@@ -46,4 +46,4 @@ async def submit_feedback(
     if success:
         return Result.success(data={'updated': True})
     else:
-        return Result.error(message="更新反馈失败")
+        return Result.error(msg="更新反馈失败")

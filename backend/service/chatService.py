@@ -1,18 +1,22 @@
-from common.datetime_utils import get_now_naive
 """AI 聊天服务"""
-import os
-from datetime import datetime
+import json
+import logging
+import re
 from typing import List, Dict, Any, Optional, Iterator
+
 from sqlalchemy import select, desc
 from sqlalchemy.orm import Session
 
+from common.datetime_utils import get_now_naive
 from model.chatHistory import ChatSession, ChatMessage
 from model.interventionLog import InterventionLog
-from model.healthRecord import HealthRecord
+from model.healthRecord import HealthRecord, HealthRecordMapper
 from model.healthTest import HealthTest
 from common.deepseek_client import get_deepseek_client
 from common.constant import CHAT_MAX_HISTORY_ROUNDS
 from rag.retriever_faiss import get_rag_retriever
+
+logger = logging.getLogger(__name__)
 
 
 class ChatService:
@@ -83,144 +87,8 @@ class ChatService:
 
         # Use the record if it exists (even partially filled)
         if record:
-            # Collect all available basic info
-            basic_info = {}
-            if record.name:
-                basic_info['name'] = record.name
-            if record.birth_date:
-                basic_info['birthDate'] = record.birth_date
-                basic_info['age'] = ChatService._calculate_age(record.birth_date)
-            if record.gender:
-                basic_info['gender'] = record.gender
-            if record.height:
-                basic_info['height'] = record.height
-            if record.weight:
-                basic_info['weight'] = record.weight
-            if record.bmi:
-                basic_info['bmi'] = record.bmi
-            if record.waist:
-                basic_info['waist'] = record.waist
-            if record.abdomen:
-                basic_info['abdomen'] = record.abdomen
-            if record.systolic_bp:
-                basic_info['systolic_bp'] = record.systolic_bp
-            if record.diastolic_bp:
-                basic_info['diastolic_bp'] = record.diastolic_bp
-            if record.heart_rate:
-                basic_info['heart_rate'] = record.heart_rate
-
-            # Collect sleep information
-            sleep_info = []
-            if record.sleep_good:
-                sleep_info.append('睡眠良好')
-            if record.sleep_difficulty_falling:
-                sleep_info.append('入睡困难')
-            if record.sleep_easily_wake:
-                sleep_info.append('易醒')
-            if record.sleep_early_wake:
-                sleep_info.append('早醒')
-            if record.sleep_daytime_sleepiness:
-                sleep_info.append('白天犯困')
-            if record.sleep_other and record.sleep_other_desc:
-                sleep_info.append(f'其他: {record.sleep_other_desc}')
-
-            # Collect diseases
-            diseases = ChatService._get_diseases_list(record)
-
-            # Collect medication info
-            medication_info = None
-            if record.is_medication and record.medication_names:
-                medication_info = record.medication_names
-
-            # Collect lifestyle habits
-            lifestyle = {}
-            if record.smoking_status:
-                lifestyle['smoking'] = {
-                    'status': record.smoking_status,
-                    'count': record.smoking_count if record.smoking_count else None
-                }
-            if record.drinking_status:
-                lifestyle['drinking'] = {
-                    'status': record.drinking_status,
-                    'frequency': record.drinking_frequency if record.drinking_frequency else None,
-                    'amount': record.drinking_amount if record.drinking_amount else None
-                }
-
-            # Collect exercise preferences
-            exercise_prefs = []
-            exercise_map = {
-                'exercise_walking': '散步/健走',
-                'exercise_jogging': '慢跑',
-                'exercise_square_dance': '广场舞',
-                'exercise_tai_chi': '太极拳/八段锦',
-                'exercise_swimming': '游泳',
-                'exercise_cycling': '骑车',
-                'exercise_racket': '乒乓球/羽毛球',
-                'exercise_hiking': '爬山/爬楼梯',
-                'exercise_gardening': '园艺',
-                'exercise_fishing': '钓鱼',
-                'exercise_gym': '健身房器械',
-                'exercise_yoga': '瑜伽/普拉提'
-            }
-            for field, name in exercise_map.items():
-                if getattr(record, field):
-                    exercise_prefs.append(name)
-            if record.exercise_other and record.exercise_other_desc:
-                exercise_prefs.append(f'其他: {record.exercise_other_desc}')
-            if record.exercise_no_preference:
-                exercise_prefs.append('无运动偏好')
-
-            # Collect social support
-            social_support = []
-            support_map = {
-                'support_equipment': '场地/器材支持',
-                'support_organization': '组织/人群支持',
-                'support_info': '信息/指导支持',
-                'support_policy': '政策/费用支持'
-            }
-            for field, name in support_map.items():
-                if getattr(record, field):
-                    social_support.append(name)
-            if record.support_other:
-                social_support.append(f'其他: {record.support_other}')
-            if record.support_none:
-                social_support.append('无支持')
-
-            # Collect demographic info
-            demographic = {}
-            if record.marital_status:
-                demographic['marital_status'] = record.marital_status
-            if record.work_status:
-                demographic['work_status'] = record.work_status
-            if record.education:
-                demographic['education'] = record.education
-            if record.residence_type:
-                demographic['residence_type'] = record.residence_type
-            if record.co_residents:
-                demographic['co_residents'] = record.co_residents
-
-            # Only add healthRecord if we have at least some data
-            if basic_info or diseases or sleep_info or lifestyle or exercise_prefs:
-                record_data = {
-                    'basicInfo': basic_info,
-                    'chronicDisease': {
-                        'diseases': diseases
-                    }
-                }
-
-                if sleep_info:
-                    record_data['sleep'] = sleep_info
-                if medication_info:
-                    record_data['medication'] = medication_info
-                if lifestyle:
-                    record_data['lifestyle'] = lifestyle
-                if exercise_prefs:
-                    record_data['exercise'] = exercise_prefs
-                if social_support:
-                    record_data['socialSupport'] = social_support
-                if demographic:
-                    record_data['demographic'] = demographic
-
+            record_data = HealthRecordMapper.to_llm_context(record)
+            if record_data:
                 context['healthRecord'] = record_data
 
         # Get latest health test
@@ -256,41 +124,6 @@ class ChatService:
             }
 
         return context
-
-    @staticmethod
-    def _calculate_age(birth_date: str) -> int:
-        try:
-            from datetime import datetime
-            birth = datetime.strptime(birth_date, '%Y-%m-%d')
-            today = get_now_naive()
-            age = today.year - birth.year
-            if (today.month, today.day) < (birth.month, birth.day):
-                age -= 1
-            return age
-        except:
-            return None
-
-    @staticmethod
-    def _get_diseases_list(record: HealthRecord) -> List[str]:
-        diseases = []
-        disease_fields = [
-            ('disease_hypertension', 'hypertension'),
-            ('disease_diabetes', 'diabetes'),
-            ('disease_dyslipidemia', 'dyslipidemia'),
-            ('disease_coronary', 'coronary_heart_disease'),
-            ('disease_stroke', 'stroke'),
-            ('disease_copd', 'copd'),
-            ('disease_gout', 'gout'),
-            ('disease_osteoporosis', 'osteoporosis'),
-            ('disease_parkinsons', 'parkinsons'),
-            ('disease_alzheimers', 'alzheimers'),
-        ]
-
-        for field, code in disease_fields:
-            if getattr(record, field):
-                diseases.append(code)
-
-        return diseases
 
     @staticmethod
     def save_message(
@@ -720,8 +553,7 @@ AI回复：{assistant_response[:500]}
             return intervention
 
         except Exception as e:
-            import traceback
-            traceback.print_exc()
+            logger.exception("[Chat] extract intervention failed")
             return None
 
     @staticmethod

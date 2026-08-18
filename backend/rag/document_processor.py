@@ -191,6 +191,6 @@ def get_document_processor(knowledge_base_path: str = None) -> DocumentProcessor
     from common.constant import RAG_KNOWLEDGE_BASE_PATH
 
     if knowledge_base_path is None:
-        knowledge_base_path = os.getenv(RAG_KNOWLEDGE_BASE_PATH, './rag/data')
+        knowledge_base_path = os.getenv("RAG_KNOWLEDGE_BASE_PATH", RAG_KNOWLEDGE_BASE_PATH)
 
     return DocumentProcessor(knowledge_base_path)

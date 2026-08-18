@@ -35,49 +35,8 @@ class SubmitHealthTestRequest(BaseModel):
 
 
 def _test_to_dict(test) -> dict:
-    """将数据库模型转换为字典格式"""
-    return {
-        'id': test.id,
-        'answers': {
-            'q1MemoryIssue': test.q1_memory_issue,
-            'q1_1Remembered': test.q1_1_recall_name,
-            'q1_2TodayDate': test.q1_2_today_date,
-            'q1_2Correct': test.q1_2_correct,
-            'q1_3Location': test.q1_3_home_address,
-            'q1_3Correct': test.q1_3_correct,
-            'q1_4Recall': test.q1_4_current_location,
-            'q2Completed': test.q2_completed,
-            'q2TimeSeconds': test.q2_time_seconds,
-            'q3WeightLoss': test.q3_fatigued,
-            'q4AppetiteLoss': test.q4_health_poor,
-            'q5VisionIssue': test.q5_vision_issue,
-            'q6DiabetesHypertension': test.q6_reading_issue,
-            'q7HearingIssue': test.q7_hearing_issue,
-            'q8Depressed': test.q8_depressed,
-            'q9InterestLoss': test.q9_anxious,
-            'assistanceMode': test.assistance_mode,
-        },
-        'scores': {
-            'cognitive': test.score_cognitive,
-            'motor': test.score_motor,
-            'vitality': test.score_vitality,
-            'vision': test.score_vision,
-            'hearing': test.score_hearing,
-            'psychological': test.score_psychological,
-            'total': test.score_total
-        },
-        'risks': {
-            'cognitive': test.risk_cognitive,
-            'motor': test.risk_motor,
-            'vitality': test.risk_vitality,
-            'vision': test.risk_vision,
-            'hearing': test.risk_hearing,
-            'psychological': test.risk_psychological
-        },
-        'recommendations': test.recommendations,
-        'createdAt': test.created_at.isoformat() if test.created_at else None,
-        'updatedAt': test.updated_at.isoformat() if test.updated_at else None
-    }
+    """将数据库模型转换为字典格式（由模型自身维护）。"""
+    return test.to_dict()
 
 
 @app.post("/health-test/submit", response_model=ResultModel)

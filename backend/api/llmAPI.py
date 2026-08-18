@@ -4,11 +4,12 @@ OpenAI 兼容的 LLM 代理接口
 用于让小智服务器（xiaozhi-esp32-server）把 second-nature 智能体的对话请求
 转发到 SecondNature，由 SecondNature 提供面向老年人的健康咨询回复。
 
-xiaozhi-server 的 LLM 配置指向：
-  base_url: http://secondnature:7860/api/v1
+xiaozhi-server 的 LLM 配置指向 SecondNature 的对外端口（默认 8006）：
+  base_url: http://secondnature:8006/api/v1
   model: second-nature
 """
 import json
+import logging
 import time
 from typing import Any, Dict, Iterator, List, Optional
 
@@ -23,6 +24,8 @@ from common import xiaozhi_prompts as prompts
 from common.deepseek_client import get_deepseek_client
 from common.result import ResultModel, Result
 from model import get_db_session
+
+logger = logging.getLogger(__name__)
 from service.chatService import ChatService
 from service import icope_test_service as icope
 
@@ -267,7 +270,7 @@ def _stream_response(
                 }]
             })
     except Exception as e:
-        print(f"[LLM API] streaming error: {e}")
+        logger.exception("[LLM API] streaming error")
         yield _sse_chunk({
             "id": chunk_id,
             "object": "chat.completion.chunk",
@@ -324,7 +327,7 @@ async def create_chat_completion(
         session_id = chat_session.id
     except Exception as e:
         # 数据库异常时降级到无状态回复
-        print(f"[LLM API] session error: {e}")
+        logger.warning(f"[LLM API] session error: {e}")
         session_id = None
 
     # -----------------------------------------------------------------
@@ -343,7 +346,7 @@ async def create_chat_completion(
                 ChatService.save_message(session_id, "user", user_message, db_session=db_session)
                 ChatService.save_message(session_id, "assistant", icope_reply, db_session=db_session)
             except Exception as e:
-                print(f"[LLM API] save message error: {e}")
+                logger.warning(f"[LLM API] save message error: {e}")
 
         if request.stream:
             return StreamingResponse(
@@ -391,7 +394,7 @@ async def create_chat_completion(
                     ChatService.save_message(session_id, "user", user_message, db_session=db_session)
                     ChatService.save_message(session_id, "assistant", full_text, db_session=db_session)
                 except Exception as e:
-                    print(f"[LLM API] save message error: {e}")
+                    logger.warning(f"[LLM API] save message error: {e}")
 
         return StreamingResponse(
             generate(),
@@ -417,7 +420,7 @@ async def create_chat_completion(
             ChatService.save_message(session_id, "user", user_message, db_session=db_session)
             ChatService.save_message(session_id, "assistant", response_text, db_session=db_session)
         except Exception as e:
-            print(f"[LLM API] save message error: {e}")
+            logger.warning(f"[LLM API] save message error: {e}")
 
     return ChatCompletionResponse(
         model=request.model or "second-nature",

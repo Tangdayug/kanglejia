@@ -242,11 +242,18 @@ class RAGRetriever:
 
 
 class NoOpRetriever(RAGRetriever):
-    """当向量检索不可用时的降级检索器（不依赖 DASHSCOPE_API_KEY）"""
+    """当向量检索不可用时的降级检索器（不依赖外部 embedding API）"""
+
+    class _DummyVectorStore:
+        """兼容 RAGWatcher 的占位向量库。"""
+        def is_empty(self) -> bool:
+            return True
+        def clear_collection(self) -> None:
+            pass
 
     def __init__(self):
         # 不需要真实的 vector_store/document_processor
-        pass
+        self.vector_store = self._DummyVectorStore()
 
     def retrieve(
         self,
@@ -264,7 +271,7 @@ class NoOpRetriever(RAGRetriever):
     def initialize_knowledge_base(self) -> Dict[str, Any]:
         return {
             'status': 'disabled',
-            'message': '向量检索未启用（缺少 DASHSCOPE_API_KEY 或向量库初始化失败）'
+            'message': '向量检索未启用（本地嵌入模型加载失败或向量库初始化失败）'
         }
 
     def rebuild_knowledge_base(self) -> Dict[str, Any]:
@@ -282,7 +289,7 @@ _rag_retriever_initialized: bool = False
 def get_rag_retriever() -> RAGRetriever:
     """Get or create RAG retriever instance
 
-    当 DASHSCOPE_API_KEY 未设置或向量库初始化失败时，返回 NoOpRetriever，
+    当本地嵌入模型加载失败或向量库初始化失败时，返回 NoOpRetriever，
     让聊天功能仍能基于大模型继续工作。
     """
     global _rag_retriever_instance, _rag_retriever_initialized

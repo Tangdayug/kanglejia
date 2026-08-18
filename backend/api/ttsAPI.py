@@ -1,6 +1,8 @@
 """
 语音合成API - 使用Edge TTS提供文字转语音服务
 """
+import logging
+
 from fastapi import Depends, HTTPException
 from fastapi.responses import Response
 from sqlalchemy.orm import Session
@@ -9,8 +11,11 @@ from typing import Optional
 
 from api import app
 from common.auth import auth_handler
+from common.result import Result
 from model import get_db_session
 from service.edgeTTSService import get_edge_tts_service
+
+logger = logging.getLogger(__name__)
 
 
 class TTSRequest(BaseModel):
@@ -72,16 +77,16 @@ async def get_available_voices():
     tts_service = get_edge_tts_service()
 
     if not tts_service.is_available():
-        return {
+        return Result.success(data={
             "available": False,
             "voices": [],
             "message": "TTS服务不可用"
-        }
+        })
 
-    return {
+    return Result.success(data={
         "available": True,
         "voices": tts_service.get_available_voices()
-    }
+    })
 
 
 @app.get("/tts/recommended")
@@ -96,10 +101,10 @@ async def get_recommended_voice(
     tts_service = get_edge_tts_service()
 
     if not tts_service.is_available():
-        return {
+        return Result.success(data={
             "available": False,
             "voice": None
-        }
+        })
 
     user_gender = None
 
@@ -114,14 +119,14 @@ async def get_recommended_voice(
             if record and record.gender:
                 user_gender = record.gender
         except Exception:
-            pass
+            logger.exception("获取用户性别失败")
 
     recommended_voice = tts_service.get_recommended_voice(user_gender)
     voices = tts_service.get_available_voices()
 
-    return {
+    return Result.success(data={
         "available": True,
         "voice": recommended_voice,
         "voiceInfo": voices.get(recommended_voice),
         "userGender": user_gender
-    }
+    })

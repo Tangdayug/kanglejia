@@ -1,0 +1,30 @@
+version: "3.8"
+
+# 复制本文件为 docker-compose.override.yml 后，docker compose 会自动合并。
+# 用于本地开发：启用热重载、注入密钥、设置模型下载镜像等。
+# docker-compose.override.yml 已在 .gitignore 中，不会提交到 Git。
+
+services:
+  app:
+    environment:
+      # 启用后端代码热重载（uvicorn --reload）
+      - RELOAD=true
+      # DeepSeek / 大模型密钥（必填）
+      - DEEPSEEK_API_KEY=your_deepseek_api_key_here
+      # JWT 签名密钥（至少 32 字符，必填）
+      - JWT_SECRET_KEY=change_this_to_a_random_string_at_least_32_chars
+      # 可选：本地 embedding 模型名称
+      # - EMBEDDING_MODEL_NAME=BAAI/bge-small-en-v1.5
+      # 可选：在中国大陆下载 HuggingFace 模型时加速
+      # - HF_ENDPOINT=https://hf-mirror.com
+      # 可选：模型下载超时，避免无网络环境阻塞启动
+      # - HF_HUB_DOWNLOAD_TIMEOUT=20
+      # - HF_HUB_ETAG_TIMEOUT=20
+      # 可选：小智硬件服务地址
+      # - XIAOZHI_SERVER_URL=ws://xiaozhi-server-less:5000
+    # volumes:
+      # 可额外挂载本地 HuggingFace 缓存目录，避免重复下载模型
+      # - /path/to/local/hf/cache:/root/.cache/huggingface
+    # 如果希望完全用宿主机 .env 文件管理密钥，可取消下面注释：
+    # env_file:
+    #   - .env

@@ -18,6 +18,13 @@ app.add_middleware(
 # Import routes AFTER CORS middleware is configured
 from api import adminAPI, exceptionHandler, userAPI, healthRecordAPI, healthTestAPI, chatAPI, careAPI, interventionAPI, ttsAPI, healthEducationAPI, xiaozhiAPI, llmAPI, ragAPI
 
+
+@app.get("/health")
+async def health_check():
+    """健康检查端点（经 nginx /api 代理后对外为 /api/health）。"""
+    return {"status": "ok", "service": "second-nature"}
+
+
 # 启动时初始化数据库
 @app.on_event("startup")
 async def startup_event():

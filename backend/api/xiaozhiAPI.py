@@ -10,7 +10,7 @@
 import asyncio
 import base64
 import json
-import traceback
+import logging
 from typing import Any, Dict, List, Optional
 
 from fastapi import Depends, WebSocket, WebSocketDisconnect, Query
@@ -31,6 +31,8 @@ from service.xiaozhiService import (
     dialogue_manager,
     register_voiceprint
 )
+
+logger = logging.getLogger(__name__)
 
 
 # ---------------------------------------------------------------------------
@@ -69,15 +71,8 @@ class DeviceAllowRequest(BaseModel):
 
 
 def _voice_session_to_dict(session: XiaozhiVoiceSession) -> Dict[str, Any]:
-    return {
-        "id": session.id,
-        "user_id": session.user_id,
-        "voiceprint_id": session.voiceprint_id,
-        "session_type": session.session_type,
-        "created_at": session.created_at.isoformat() if session.created_at else None,
-        "updated_at": session.updated_at.isoformat() if session.updated_at else None,
-        "last_active_at": session.last_active_at.isoformat() if session.last_active_at else None
-    }
+    """将 XiaozhiVoiceSession 模型转换为字典（由模型自身维护）。"""
+    return session.to_dict()
 
 
 # ---------------------------------------------------------------------------
@@ -118,7 +113,7 @@ async def xiaozhi_websocket_endpoint(websocket: WebSocket):
         try:
             await websocket.send_json(data)
         except Exception as e:
-            print(f"[XiaoZhi] forward to hardware failed: {e}")
+            logger.warning(f"[XiaoZhi] forward to hardware failed: {e}")
 
     try:
         while True:
@@ -231,7 +226,7 @@ async def xiaozhi_websocket_endpoint(websocket: WebSocket):
                         raw_audio = base64.b64decode(audio_data)
                         await outbound_client.send_audio(raw_audio)
                     except Exception as e:
-                        print(f"[XiaoZhi] audio forward error: {e}")
+                        logger.warning(f"[XiaoZhi] audio forward error: {e}")
                 continue
 
             # 显式打断
@@ -262,8 +257,7 @@ async def xiaozhi_websocket_endpoint(websocket: WebSocket):
     except WebSocketDisconnect:
         pass
     except Exception as e:
-        print(f"[XiaoZhi] websocket error: {e}")
-        traceback.print_exc()
+        logger.exception("[XiaoZhi] websocket error")
     finally:
         if outbound_client:
             await outbound_client.close()

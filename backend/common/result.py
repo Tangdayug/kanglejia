@@ -1,8 +1,8 @@
 from pydantic import BaseModel
-from typing import Any, Dict
+from typing import Any, Optional
 
 class ResultModel(BaseModel):
-    data: Dict[str, Any] = {}
+    data: Optional[Any] = {}
     msg: str = 'success'
     code: str = '200'
 
@@ -13,13 +13,9 @@ class Result:
         self.code = code
 
     @classmethod
-    def success(cls,data:object=None, msg='success', code='200'):
-        if not data:
-            data = {}
+    def success(cls, data: object = None, msg='success', code='200'):
         return cls(data=data, msg=msg, code=code)
 
     @classmethod
-    def error(cls,data:object=None, msg='error', code='500'):
-        if not data:
-            data = {}
+    def error(cls, data: object = None, msg='error', code='500'):
         return cls(data=data, msg=msg, code=code)

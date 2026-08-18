@@ -23,7 +23,6 @@ if not exist .env (
     echo.
     echo 请创建 .env 文件并添加以下内容：
     echo DEEPSEEK_API_KEY=your_deepseek_api_key_here
-    echo DASHSCOPE_API_KEY=your_dashscope_api_key_here
     echo JWT_SECRET_KEY=your-secret-key-must-be-at-least-32-characters-long
     echo.
     set /p CONTINUE="是否继续启动？(Y/N): "

@@ -38,10 +38,10 @@ import asyncio
 import base64
 import copy
 import json
+import logging
 import os
 import re
 import time
-import traceback
 from datetime import date, datetime, timedelta
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
@@ -52,6 +52,8 @@ from common.datetime_utils import get_now_naive
 from common import xiaozhi_prompts as prompts
 from model.xiaozhiSession import XiaozhiVoiceSession, XiaozhiVoiceprint, HealthObservation
 from service.edgeTTSService import EdgeTTSService
+
+logger = logging.getLogger(__name__)
 
 
 # ---------------------------------------------------------------------------
@@ -459,7 +461,7 @@ class XiaozhiWebSocketClient:
         try:
             import websockets
         except ImportError:
-            print("[XiaoZhi] websockets not installed, outbound bridge disabled")
+            logger.warning("[XiaoZhi] websockets not installed, outbound bridge disabled")
             return False
 
         async with self._lock:
@@ -476,10 +478,10 @@ class XiaozhiWebSocketClient:
                 self.ws = await websockets.connect(connect_url)
                 self.connected = True
                 self._receive_task = asyncio.create_task(self._receive_loop())
-                print(f"[XiaoZhi] outbound connected to {self.server_url}")
+                logger.info(f"[XiaoZhi] outbound connected to {self.server_url}")
                 return True
             except Exception as e:
-                print(f"[XiaoZhi] outbound connect failed: {e}")
+                logger.warning(f"[XiaoZhi] outbound connect failed: {e}")
                 self.connected = False
                 return False
 
@@ -496,9 +498,9 @@ class XiaozhiWebSocketClient:
                     if self._inbound_callback:
                         await self._inbound_callback(data)
                 except Exception as e:
-                    print(f"[XiaoZhi] outbound message handling error: {e}")
+                    logger.warning(f"[XiaoZhi] outbound message handling error: {e}")
         except Exception as e:
-            print(f"[XiaoZhi] outbound receive error: {e}")
+            logger.warning(f"[XiaoZhi] outbound receive error: {e}")
         finally:
             self.connected = False
 
@@ -509,7 +511,7 @@ class XiaozhiWebSocketClient:
         try:
             await self.ws.send(json.dumps(data, ensure_ascii=False))
         except Exception as e:
-            print(f"[XiaoZhi] outbound send error: {e}")
+            logger.warning(f"[XiaoZhi] outbound send error: {e}")
             self.connected = False
 
     async def send_audio(self, audio_bytes: bytes):
@@ -519,7 +521,7 @@ class XiaozhiWebSocketClient:
         try:
             await self.ws.send(audio_bytes)
         except Exception as e:
-            print(f"[XiaoZhi] outbound audio send error: {e}")
+            logger.warning(f"[XiaoZhi] outbound audio send error: {e}")
             self.connected = False
 
     async def close(self):
@@ -1097,8 +1099,7 @@ class XiaozhiDialogueManager:
                 state["chat_session_id"] = chat_session_id
                 self._save_state(session_id, db_session)
             except Exception as e:
-                print(f"[XiaoZhi] create chat session failed: {e}")
-                traceback.print_exc()
+                logger.exception("[XiaoZhi] create chat session failed")
                 reply = "抱歉，健康咨询启动失败，请稍后再试。"
                 return await self._build_health_response(session_id, reply, db_session=db_session)
 
@@ -1122,8 +1123,7 @@ class XiaozhiDialogueManager:
                 )
                 reply = result.get("response", "")
             except Exception as e:
-                print(f"[XiaoZhi] generate_chat_response failed: {e}")
-                traceback.print_exc()
+                logger.exception("[XiaoZhi] generate_chat_response failed")
                 reply = "抱歉，我刚才没听清楚，您能再说一遍吗？"
 
         if interrupt:
@@ -1194,7 +1194,7 @@ class XiaozhiDialogueManager:
             )
             return audio
         except Exception as e:
-            print(f"[XiaoZhi] TTS failed: {e}")
+            logger.warning(f"[XiaoZhi] TTS failed: {e}")
             return None
 
     def _build_response(
@@ -1274,13 +1274,13 @@ class XiaozhiDialogueManager:
                 await asyncio.sleep(30)
                 expired = [sid for sid in list(self._sessions.keys()) if self.is_session_expired(sid)]
                 for sid in expired:
-                    print(f"[XiaoZhi] session {sid} expired")
+                    logger.info(f"[XiaoZhi] session {sid} expired")
                     self._sessions.pop(sid, None)
                     self._speaking.pop(sid, None)
             except asyncio.CancelledError:
                 break
             except Exception as e:
-                print(f"[XiaoZhi] cleanup error: {e}")
+                logger.warning(f"[XiaoZhi] cleanup error: {e}")
 
     # -----------------------------------------------------------------------
     # 状态查询

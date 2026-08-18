@@ -25,7 +25,23 @@ export SKIP_RAG_INIT="true"
 # 账号隔离需要认证生效，不再强制关闭；可通过 .env 控制 DISABLE_AUTH
 export PYTHONUNBUFFERED="1"
 
+# 端口默认值与 Dockerfile/README 保持一致
+export PORT="${PORT:-8006}"
+export INTERNAL_PORT="${INTERNAL_PORT:-8007}"
+# 是否启用开发热重载（由 docker-compose.override.yml 或 .env 注入）
+export RELOAD="${RELOAD:-false}"
+
+RELOAD_LOWER=$(echo "$RELOAD" | tr '[:upper:]' '[:lower:]')
+if [ "$RELOAD_LOWER" = "true" ] || [ "$RELOAD_LOWER" = "1" ]; then
+    RELOAD="true"
+else
+    RELOAD="false"
+fi
+
 echo "Configuration:"
+echo "  PORT: $PORT"
+echo "  INTERNAL_PORT: $INTERNAL_PORT"
+echo "  RELOAD: $RELOAD"
 echo "  RAG_VECTOR_DB_PATH: $RAG_VECTOR_DB_PATH"
 echo "  RAG_KNOWLEDGE_BASE_PATH: $RAG_KNOWLEDGE_BASE_PATH"
 echo "  SKIP_RAG_INIT: $SKIP_RAG_INIT"
@@ -50,25 +66,39 @@ python scripts/migrate_account_isolation_20260810.py || {
     exit 1
 }
 
-# 6. 启动 nginx
-echo "Starting nginx on port 7860..."
+# 6. 根据环境变量生成 nginx 配置
+if command -v envsubst >/dev/null 2>&1; then
+    echo "Generating nginx config with PORT=$PORT, INTERNAL_PORT=$INTERNAL_PORT..."
+    envsubst '\$PORT \$INTERNAL_PORT' < /etc/nginx/nginx.conf > /tmp/nginx.generated.conf
+    cp /tmp/nginx.generated.conf /etc/nginx/nginx.conf
+else
+    echo "⚠️ envsubst not found, using default nginx config ports"
+fi
+
+# 7. 启动 nginx
+echo "Starting nginx on port $PORT..."
 nginx -g "daemon off;" &
 NGINX_PID=$!
 echo "Nginx PID: $NGINX_PID"
 
-# 7. 等待 nginx 启动
+# 8. 等待 nginx 启动
 sleep 2
 
-# 8. 启动 FastAPI 后端
-echo "Starting FastAPI backend on port 7861..."
-python main.py &
+# 9. 启动 FastAPI 后端
+echo "Starting FastAPI backend on port $INTERNAL_PORT..."
+if [ "$RELOAD" = "true" ]; then
+    echo "  Hot-reload enabled (uvicorn will watch ./backend for changes)"
+else
+    echo "  Hot-reload disabled (production mode)"
+fi
+INTERNAL_PORT="$INTERNAL_PORT" RELOAD="$RELOAD" python main.py &
 BACKEND_PID=$!
 echo "Backend PID: $BACKEND_PID"
 
-# 8. 等待进程启动
+# 10. 等待进程启动
 sleep 3
 
-# 9. 检查进程状态
+# 11. 检查进程状态
 if ! kill -0 $BACKEND_PID 2>/dev/null; then
     echo "❌ Backend failed to start!"
     tail -50 ./logs/*.log 2>/dev/null || echo "No logs found"
@@ -82,11 +112,14 @@ fi
 
 echo "=========================================="
 echo "✓ Application started successfully!"
-echo "  Frontend: http://0.0.0.0:7860"
-echo "  Backend:  http://0.0.0.0:7861"
+echo "  Frontend/API: http://0.0.0.0:$PORT"
+echo "  Backend:      http://0.0.0.0:$INTERNAL_PORT"
+if [ "$RELOAD" = "true" ]; then
+    echo "  Hot reload:   ENABLED"
+fi
 echo "=========================================="
 
-# 10. 保持容器运行并监控进程
+# 12. 保持容器运行并监控进程
 while true; do
     # 检查后端进程
     if ! kill -0 $BACKEND_PID 2>/dev/null; then

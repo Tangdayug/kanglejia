@@ -27,17 +27,8 @@ class AddFeedbackRequest(BaseModel):
 
 
 def _intervention_to_dict(intervention) -> dict:
-    """将InterventionLog模型转换为字典"""
-    return {
-        'id': intervention.id,
-        'userId': intervention.user_id,
-        'sessionId': intervention.session_id,
-        'suggestion': intervention.intervention_suggestion,
-        'feedback': intervention.user_feedback,
-        'status': intervention.execution_status,
-        'createdAt': intervention.created_at.isoformat() if intervention.created_at else None,
-        'updatedAt': intervention.updated_at.isoformat() if intervention.updated_at else None
-    }
+    """将InterventionLog模型转换为字典（由模型自身维护）。"""
+    return intervention.to_dict()
 
 
 @app.get("/intervention/user", response_model=ResultModel)
@@ -77,11 +68,11 @@ async def update_intervention_status(
     intervention = db_session.execute(query).scalar_one_or_none()
 
     if not intervention:
-        return Result.error(message="干预记录不存在")
+        return Result.error(msg="干预记录不存在")
 
     valid_statuses = ['pending', 'completed', 'dismissed']
     if request.status not in valid_statuses:
-        return Result.error(message=f"无效的状态值，允许的值: {', '.join(valid_statuses)}")
+        return Result.error(msg=f"无效的状态值，允许的值: {', '.join(valid_statuses)}")
 
     intervention.execution_status = request.status
     intervention.updated_at = datetime.now()
@@ -108,7 +99,7 @@ async def add_intervention_feedback(
     intervention = db_session.execute(query).scalar_one_or_none()
 
     if not intervention:
-        return Result.error(message="干预记录不存在")
+        return Result.error(msg="干预记录不存在")
 
     intervention.user_feedback = request.feedback
     intervention.execution_status = 'completed'
@@ -135,7 +126,7 @@ async def delete_intervention(
     intervention = db_session.execute(query).scalar_one_or_none()
 
     if not intervention:
-        return Result.error(message="干预记录不存在")
+        return Result.error(msg="干预记录不存在")
 
     db_session.delete(intervention)
     db_session.commit()

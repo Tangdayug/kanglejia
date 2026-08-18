@@ -1,7 +1,6 @@
 from common.datetime_utils import get_now_naive
 from sqlalchemy import Integer, String, DateTime, Text
 from sqlalchemy.orm import Mapped, mapped_column
-from datetime import datetime
 
 from model import Base
 
@@ -18,3 +17,15 @@ class InterventionLog(Base):
     execution_status: Mapped[str] = mapped_column(String(50), default='pending', comment='执行状态: pending/completed/dismissed')
     created_at: Mapped[DateTime] = mapped_column(DateTime, default=lambda: get_now_naive(), nullable=False)
     updated_at: Mapped[DateTime] = mapped_column(DateTime, default=lambda: get_now_naive(), onupdate=lambda: get_now_naive(), nullable=False)
+
+    def to_dict(self) -> dict:
+        return {
+            'id': self.id,
+            'userId': self.user_id,
+            'sessionId': self.session_id,
+            'suggestion': self.intervention_suggestion,
+            'feedback': self.user_feedback,
+            'status': self.execution_status,
+            'createdAt': self.created_at.isoformat() if self.created_at else None,
+            'updatedAt': self.updated_at.isoformat() if self.updated_at else None
+        }

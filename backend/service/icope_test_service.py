@@ -8,10 +8,10 @@ ICOPTE（内在能力减退初筛）测试状态机
 如需跨重启保留，可改用数据库表持久化。
 """
 import re
-from datetime import datetime
 from typing import Dict, List, Optional
 
 from common import xiaozhi_prompts as prompts
+from service.icope_scoring import calculate_scores_for_voice, determine_risks
 
 
 class IcopeTestState:
@@ -86,12 +86,6 @@ def _extract_number(answer: str) -> Optional[int]:
     if nums:
         return int(nums[0])
     return None
-
-
-def _today_date_str() -> str:
-    """今天日期，用于判断用户回答是否正确。"""
-    now = datetime.now()
-    return f"{now.month}月{now.day}日"
 
 
 def start_test(user_id: int) -> str:
@@ -267,67 +261,9 @@ def _finish_test(user_id: int, state: IcopeTestState) -> str:
 
 def _calculate_scores_and_risks(answers: Dict[str, any]) -> tuple:
     """
-    复用前端 HealthTestService 的评分逻辑。
+    复用统一评分模块中的语音对话评分逻辑。
     分数 > 0 表示该维度存在风险。
     """
-    scores = {
-        "cognitive": 0,
-        "motor": 0,
-        "vitality": 0,
-        "vision": 0,
-        "hearing": 0,
-        "psychological": 0,
-    }
-
-    # 认知
-    q1 = answers.get("q1MemoryIssue")
-    if q1:
-        scores["cognitive"] += 1
-    if q1 is False:
-        today_str = _today_date_str()
-        q1_2 = answers.get("q1_2TodayDate", "")
-        if today_str not in q1_2:
-            scores["cognitive"] += 1
-
-        q1_3 = answers.get("q1_3Location", "")
-        if not q1_3.strip() or "不知道" in q1_3:
-            scores["cognitive"] += 1
-
-        q1_4 = answers.get("q1_4Recall", "")
-        recall_text = q1_4.lower()
-        if not ("花" in recall_text and ("门" in recall_text) and ("饭" in recall_text or "米" in recall_text)):
-            scores["cognitive"] += 1
-
-    # 运动
-    q2_completed = answers.get("q2Completed")
-    if q2_completed is False:
-        scores["motor"] = 1
-    elif q2_completed is True:
-        q2_time = answers.get("q2TimeSeconds", 0)
-        if q2_time and q2_time > 14:
-            scores["motor"] = 1
-
-    # 活力
-    if answers.get("q3WeightLoss"):
-        scores["vitality"] += 1
-    if answers.get("q4AppetiteLoss"):
-        scores["vitality"] += 1
-
-    # 视力
-    if answers.get("q5VisionIssue"):
-        scores["vision"] += 1
-    if answers.get("q6DiabetesHypertension"):
-        scores["vision"] += 1
-
-    # 听力
-    if answers.get("q7HearingIssue"):
-        scores["hearing"] = 1
-
-    # 心理
-    if answers.get("q8Depressed"):
-        scores["psychological"] += 1
-    if answers.get("q9InterestLoss"):
-        scores["psychological"] += 1
-
-    risks = {k: v > 0 for k, v in scores.items()}
+    scores = calculate_scores_for_voice(answers)
+    risks = determine_risks(scores)
     return scores, risks

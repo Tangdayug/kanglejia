@@ -67,6 +67,17 @@ class XiaozhiVoiceSession(Base):
         comment='最后活跃时间'
     )
 
+    def to_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "voiceprint_id": self.voiceprint_id,
+            "session_type": self.session_type,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "updated_at": self.updated_at.isoformat() if self.updated_at else None,
+            "last_active_at": self.last_active_at.isoformat() if self.last_active_at else None
+        }
+
 
 class XiaozhiVoiceprint(Base):
     """小智声纹身份映射表"""

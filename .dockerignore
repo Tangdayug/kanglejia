@@ -1,0 +1,64 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+venv/
+env/
+ENV/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Frontend dependencies & build artifacts
+frontend/node_modules/
+frontend/dist/
+frontend/dist-mobile/
+frontend/android/.gradle/
+frontend/android/app/build/
+frontend/android/captures/
+
+# Backend runtime data (will be mounted as volume)
+backend/data/
+backend/logs/
+backend/tmp/
+backend/uploadfile/
+backend/rag/indices/
+backend/rag/data/chroma/
+backend/rag/data/faiss/
+
+# Models
+models/
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.ckpt
+*.onnx
+*.h5
+
+# Secrets
+.env
+**/.env
+.env.local
+.env.*.local
+*.key
+*.pem
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile
+docker-compose*.yml
+.dockerignore

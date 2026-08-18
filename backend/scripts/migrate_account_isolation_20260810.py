@@ -20,10 +20,26 @@ from sqlalchemy.orm import sessionmaker
 from model import USE_SQLITE, database_url
 
 
+def _sqlite_table_exists(conn, table_name: str) -> bool:
+    result = conn.execute(
+        text("SELECT name FROM sqlite_master WHERE type='table' AND name=:table"),
+        {"table": table_name}
+    )
+    return result.fetchone() is not None
+
+
 def _sqlite_column_exists(conn, table_name: str, column_name: str) -> bool:
     result = conn.execute(text(f"PRAGMA table_info({table_name})"))
     rows = result.fetchall()
     return any(row[1] == column_name for row in rows)
+
+
+def _mysql_table_exists(conn, table_name: str) -> bool:
+    result = conn.execute(
+        text("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME=:table"),
+        {"table": table_name}
+    )
+    return result.fetchone() is not None
 
 
 def _mysql_column_exists(conn, table_name: str, column_name: str) -> bool:
@@ -68,26 +84,29 @@ def migrate():
                 ))
 
                 # 2. chat_messages.user_id（防御纵深，允许 NULL 兼容旧数据）
-                if not _sqlite_column_exists(conn, "chat_messages", "user_id"):
-                    conn.execute(text(
-                        "ALTER TABLE chat_messages ADD COLUMN user_id INTEGER"
-                    ))
-                    print("✅ chat_messages.user_id 已添加")
+                if not _sqlite_table_exists(conn, "chat_messages"):
+                    print("⚠️ chat_messages 表不存在，跳过该表迁移")
                 else:
-                    print("⚠️ chat_messages.user_id 已存在，跳过")
+                    if not _sqlite_column_exists(conn, "chat_messages", "user_id"):
+                        conn.execute(text(
+                            "ALTER TABLE chat_messages ADD COLUMN user_id INTEGER"
+                        ))
+                        print("✅ chat_messages.user_id 已添加")
+                    else:
+                        print("⚠️ chat_messages.user_id 已存在，跳过")
 
-                conn.execute(text("""
-                    UPDATE chat_messages
-                    SET user_id = (
-                        SELECT user_id FROM chat_sessions WHERE chat_sessions.id = chat_messages.session_id
-                    )
-                    WHERE user_id IS NULL
-                """))
-                print("✅ chat_messages.user_id 已回填")
+                    conn.execute(text("""
+                        UPDATE chat_messages
+                        SET user_id = (
+                            SELECT user_id FROM chat_sessions WHERE chat_sessions.id = chat_messages.session_id
+                        )
+                        WHERE user_id IS NULL
+                    """))
+                    print("✅ chat_messages.user_id 已回填")
 
-                conn.execute(text(
-                    "CREATE INDEX IF NOT EXISTS ix_chat_messages_user_id ON chat_messages (user_id)"
-                ))
+                    conn.execute(text(
+                        "CREATE INDEX IF NOT EXISTS ix_chat_messages_user_id ON chat_messages (user_id)"
+                    ))
 
             else:
                 # MySQL 分支
@@ -106,21 +125,24 @@ def migrate():
                 """))
                 print("✅ health_observations.user_id 已回填")
 
-                if not _mysql_column_exists(conn, "chat_messages", "user_id"):
-                    conn.execute(text(
-                        "ALTER TABLE chat_messages ADD COLUMN user_id INT NULL"
-                    ))
-                    print("✅ chat_messages.user_id 已添加")
+                if not _mysql_table_exists(conn, "chat_messages"):
+                    print("⚠️ chat_messages 表不存在，跳过该表迁移")
                 else:
-                    print("⚠️ chat_messages.user_id 已存在，跳过")
+                    if not _mysql_column_exists(conn, "chat_messages", "user_id"):
+                        conn.execute(text(
+                            "ALTER TABLE chat_messages ADD COLUMN user_id INT NULL"
+                        ))
+                        print("✅ chat_messages.user_id 已添加")
+                    else:
+                        print("⚠️ chat_messages.user_id 已存在，跳过")
 
-                conn.execute(text("""
-                    UPDATE chat_messages m
-                    JOIN chat_sessions s ON s.id = m.session_id
-                    SET m.user_id = s.user_id
-                    WHERE m.user_id IS NULL
-                """))
-                print("✅ chat_messages.user_id 已回填")
+                    conn.execute(text("""
+                        UPDATE chat_messages m
+                        JOIN chat_sessions s ON s.id = m.session_id
+                        SET m.user_id = s.user_id
+                        WHERE m.user_id IS NULL
+                    """))
+                    print("✅ chat_messages.user_id 已回填")
 
             conn.commit()
 

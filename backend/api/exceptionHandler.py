@@ -1,18 +1,23 @@
-from fastapi.encoders import jsonable_encoder
-from starlette.responses import JSONResponse
-from fastapi.exceptions import RequestValidationError
+import logging
 import traceback
+
+from fastapi import Request
+from fastapi.encoders import jsonable_encoder
+from fastapi.exceptions import RequestValidationError
+from starlette.responses import JSONResponse
 
 from api import app
 from common.result import Result
-from exception.customException import UserNotFoundException, PasswordNotMatchException, TokenException,UserExistException
-from fastapi import Request
+from exception.customException import UserNotFoundException, PasswordNotMatchException, TokenException, UserExistException
+
+logger = logging.getLogger(__name__)
+
 
 @app.exception_handler(Exception)
 async def exception_handler(request: Request, exc: Exception):
-    # 打印详细的错误信息
-    print(f"[ERROR] Exception occurred: {type(exc).__name__}: {str(exc)}")
-    print(f"[ERROR] Traceback:\n{traceback.format_exc()}")
+    # 记录详细的错误信息
+    logger.error(f"Exception occurred: {type(exc).__name__}: {str(exc)}")
+    logger.error(f"Traceback:\n{traceback.format_exc()}")
 
     # 尝试创建安全的错误响应
     try:
@@ -20,7 +25,7 @@ async def exception_handler(request: Request, exc: Exception):
         return JSONResponse(status_code=500, content=jsonable_encoder(result))
     except Exception as e:
         # 如果序列化失败，返回简单的错误信息
-        print(f"[ERROR] Failed to serialize error: {e}")
+        logger.error(f"Failed to serialize error: {e}")
         return JSONResponse(
             status_code=500,
             content={"code": "500", "msg": "Internal server error", "data": {}}

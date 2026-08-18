@@ -1,4 +1,6 @@
+# ========================================
 # Python
+# ========================================
 __pycache__/
 *.py[cod]
 *$py.class
@@ -20,57 +22,120 @@ wheels/
 .installed.cfg
 *.egg
 
+# ========================================
 # Virtual Environment
+# ========================================
 venv/
 ENV/
 env/
+.venv/
 
-# IDE
+# ========================================
+# IDE / Editor
+# ========================================
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# Environment variables
+# ========================================
+# Secrets & Environment Variables
+# .env.example is intentionally kept as a template
+# ========================================
+.env
+**/.env
 .env.local
 .env.*.local
+.env.development
+.env.production
+.env.android
+*.key
+*.pem
+*.pfx
+*.p12
+secrets.*
+credentials.*
 
-# Database
+# ========================================
+# Database & Runtime Data
+# ========================================
 *.db
 *.sqlite
 *.sqlite3
-
-# Vector Database (generated indices, not source documents)
-backend/rag/indices/faiss/
-backend/rag/indices/chroma/
-backend/rag/data/chroma/
-backend/rag/data/chroma_backup/
-backend/rag/data/chroma_backup_optimization/
-backend/rag/data/faiss/
-!backend/rag/indices/faiss/*.faiss
-!backend/rag/indices/faiss/*_metadata.pkl
-
-# Logs
-*.log
+backend/data/
+backend/logs/
+backend/tmp/
+backend/uploadfile/
+tmp/
+data/
 logs/
 
-# OS
+# ========================================
+# Vector Database / Knowledge Base Generated Files
+# Keep source documents (.pdf, .docx, .md) but ignore generated indices
+# ========================================
+backend/rag/indices/
+backend/rag/data/chroma/
+backend/rag/data/chroma_backup*/
+backend/rag/data/faiss/
+*.faiss
+*_metadata.pkl
+
+# ========================================
+# ML Models & Large Binary Files
+# ========================================
+models/
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.ckpt
+*.onnx
+*.h5
+
+# ========================================
+# Audio / Media Uploads
+# ========================================
+*.wav
+*.mp3
+*.mp4
+!backend/*.mp4
+*.webm
+*.ogg
+uploads/
+recordings/
+
+# ========================================
+# Frontend / Android Build Artifacts
+# ========================================
+frontend/dist/
+frontend/dist-mobile/
+frontend/android/app/build/
+frontend/android/.gradle/
+frontend/android/local.properties
+frontend/android/captures/
+frontend/android/.externalNativeBuild/
+frontend/android/.cxx/
+*.js.map
+
+# ========================================
+# OS Files
+# ========================================
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Test files (exclude unit tests, keep integration test)
+# ========================================
+# Test / Backup Files
+# ========================================
 test_*.py
 *_test.py
-!backend/test_rag.py
-
-# Backup files
 *.bak
 *.backup
 *_backup.*
-.env
-*.key
-secrets.*
-.env
-*.key
-secrets.*
+
+# ========================================
+# Docker
+# ========================================
+docker-compose.override.yml

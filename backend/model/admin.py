@@ -1,4 +1,3 @@
-import bcrypt
 from pydantic import BaseModel
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped,mapped_column
@@ -15,9 +14,6 @@ class Admin(Base):
     name: Mapped[String] = mapped_column(String(255), nullable=False)
     role: Mapped[String] = mapped_column(String(255), nullable=False)
 
-    def password_check(self,password:str)->bool:
-        """验证密码"""
-        return bcrypt.checkpw(password.encode(),self.password.encode())
 
 class AdminModel(BaseModel):
     """管理员登录模型"""

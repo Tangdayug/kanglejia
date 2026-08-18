@@ -1,12 +1,18 @@
-from fastapi import HTTPException
-from fastapi.responses import FileResponse
-from api import app
+import logging
 import os
-import markdown
+import re
 from pathlib import Path
 from typing import List, Optional
+
+import markdown
+from fastapi import HTTPException
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
-import re
+
+from api import app
+
+logger = logging.getLogger(__name__)
+
 
 # 定义数据模型
 class Article(BaseModel):
@@ -81,7 +87,7 @@ def parse_markdown_file(filepath: Path) -> str:
 
         return html_content
     except Exception as e:
-        print(f"Error parsing markdown: {e}")
+        logger.warning(f"解析 Markdown 失败: {e}")
         return ""
 
 

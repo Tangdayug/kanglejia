@@ -25,11 +25,10 @@ tags:
 # 环境变量配置
 environment:
   - DEEPSEEK_API_KEY
-  - DASHSCOPE_API_KEY
   - JWT_SECRET_KEY
 
-# 端口配置
-port: 7860
+# 端口配置（与 docker-compose.yml / nginx 统一为 8006）
+port: 8006
 
 # 许可证
 license: Apache 2.0
@@ -53,4 +52,4 @@ README: |
   ## 技术栈
   - 前端：Vue 3 + Vite + Element Plus
   - 后端：FastAPI + SQLite
-  - AI：DeepSeek + 阿里云百炼
+  - AI：DeepSeek + 本地 sentence-transformers 嵌入模型
