@@ -928,7 +928,8 @@ async function handleOcrFileChange(event) {
     }
   } catch (error) {
     console.error('OCR error:', error)
-    ElMessage.error('识别请求失败，请检查网络')
+    const msg = error?.response?.data?.msg || error?.message || '识别请求失败，请检查网络'
+    ElMessage.error(msg)
   } finally {
     ocrLoading.value = false
     event.target.value = ''
