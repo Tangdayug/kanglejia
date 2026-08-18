@@ -1,9 +1,9 @@
 @forward "element-plus/theme-chalk/src/common/var.scss" with ($colors: (
-    "primary": ("base": #0a7fce),
-    "success": ("base": #08b41f),
-    "warning": ("base": #e8af56),
-    "danger": ("base": #ef3030),
-    "info": ("base": #5d66ea),
+    "primary": ("base": #0D9488),
+    "success": ("base": #10B981),
+    "warning": ("base": #F59E0B),
+    "danger": ("base": #EF4444),
+    "info": ("base": #0D9488),
 ));
 
-/* 老年人模式通过 zoom: 1.5 实现整体缩放，无需额外设置组件变量 */
+/* Element Plus 主题色已统一为暖青绿，与 --sn-primary 保持一致 */

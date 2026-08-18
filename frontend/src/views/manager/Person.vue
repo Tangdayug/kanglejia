@@ -586,7 +586,7 @@ onUnmounted(() => { stopAutoSave() })
   font-size: 36px;
   font-weight: 800;
   letter-spacing: -1.5px;
-  color: #111;
+  color: var(--sn-text);
   margin: 0 0 12px 0;
 }
 .save-info-pill {
@@ -594,22 +594,22 @@ onUnmounted(() => { stopAutoSave() })
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: #F5F5F5;
+  background: var(--sn-slate-light);
   border-radius: 100px;
   font-size: 14px;
   font-weight: 600;
-  color: #666;
+  color: var(--sn-text-secondary);
 }
-.save-info-pill .unsaved { color: #FF4D4F; }
+.save-info-pill .unsaved { color: var(--sn-danger); }
 
 /* 现代卡片覆盖 el-card */
 .modern-card {
-  background: #FFFFFF;
+  background: var(--sn-surface);
   border-radius: 32px;
   padding: 40px;
   margin-bottom: 32px;
   box-shadow: 0 10px 40px rgba(0,0,0,0.02);
-  border: 1px solid #F0F0F0;
+  border: 1px solid var(--sn-border);
 }
 .card-header-flex {
   display: flex;
@@ -620,14 +620,14 @@ onUnmounted(() => { stopAutoSave() })
 .card-title {
   font-size: 24px;
   font-weight: 800;
-  color: #111;
+  color: var(--sn-text);
   letter-spacing: -0.5px;
 }
 .required-tip {
   font-size: 14px;
   font-weight: 600;
-  color: #999;
-  background: #F9F9F9;
+  color: var(--sn-text-muted);
+  background: var(--sn-slate-light);
   padding: 4px 12px;
   border-radius: 10px;
 }
@@ -637,7 +637,7 @@ onUnmounted(() => { stopAutoSave() })
 .question-text {
   font-size: 18px;
   font-weight: 700;
-  color: #111;
+  color: var(--sn-text);
   margin-bottom: 20px;
 }
 
@@ -645,13 +645,13 @@ onUnmounted(() => { stopAutoSave() })
 .figma-form-style :deep(.el-form-item__label) {
   font-size: 15px;
   font-weight: 700;
-  color: #111;
+  color: var(--sn-text);
   padding-bottom: 10px;
 }
 /* 统一大尺寸输入框 */
 .figma-form-style :deep(.el-input__wrapper),
 .figma-form-style :deep(.el-select__wrapper) {
-  background-color: #F5F5F5;
+  background-color: var(--sn-slate-light);
   border-radius: 16px;
   height: 52px;
   box-shadow: none !important;
@@ -660,8 +660,8 @@ onUnmounted(() => { stopAutoSave() })
 }
 .figma-form-style :deep(.el-input__wrapper.is-focus),
 .figma-form-style :deep(.el-select__wrapper.is-focus) {
-  background-color: #FFFFFF;
-  box-shadow: 0 0 0 2px #000000 !important; /* 纯黑高亮边框 */
+  background-color: var(--sn-surface);
+  box-shadow: 0 0 0 2px var(--sn-text) !important; /* 纯黑高亮边框 */
 }
 
 /* 选择按钮阵列重排 */
@@ -675,8 +675,8 @@ onUnmounted(() => { stopAutoSave() })
   height: 52px;
   padding: 0 24px;
   border-radius: 16px;
-  border: 2px solid #F0F0F0;
-  background: #FFFFFF;
+  border: 2px solid var(--sn-border);
+  background: var(--sn-surface);
   margin-right: 0;
 }
 .figma-form-style :deep(.el-radio.is-bordered.is-checked), 
@@ -686,20 +686,20 @@ onUnmounted(() => { stopAutoSave() })
 }
 .figma-form-style :deep(.el-radio.is-bordered.is-checked .el-radio__label),
 .figma-form-style :deep(.el-checkbox.is-bordered.is-checked .el-checkbox__label) {
-  color: #FFF;
+  color: var(--sn-surface);
   font-weight: 700;
 }
 .figma-form-style :deep(.el-radio__input), .figma-form-style :deep(.el-checkbox__inner) {
   display: none; /* 隐藏原生圈圈，做成纯 Button 质感 */
 }
 .highlight-none {
-  border-color: #FFCCC7 !important;
+  border-color: var(--sn-danger-border) !important;
 }
 
 /* 子问题与补充输入 */
 .sub-field-group { margin-top: 16px; display: flex; align-items: center; gap: 12px; }
-.inline-sub-inputs { margin-top: 16px; display: flex; align-items: center; gap: 12px; background: #FAFAFA; padding: 16px; border-radius: 16px;}
-.sub-label { font-weight: 600; color: #666; }
+.inline-sub-inputs { margin-top: 16px; display: flex; align-items: center; gap: 12px; background: var(--sn-slate-light); padding: 16px; border-radius: 16px;}
+.sub-label { font-weight: 600; color: var(--sn-text-secondary); }
 .sub-input { margin-top: 16px; max-width: 600px; }
 
 /* 选项组栅格 */
@@ -709,18 +709,18 @@ onUnmounted(() => { stopAutoSave() })
   gap: 24px;
 }
 .support-group {
-  background: #FAFAFA;
+  background: var(--sn-slate-light);
   padding: 24px;
   border-radius: 20px;
 }
 .support-label {
   font-weight: 800;
-  color: #111;
+  color: var(--sn-text);
   margin-bottom: 16px;
   font-size: 16px;
 }
 .compact-checkboxes { display: flex; flex-direction: column; gap: 12px; }
-.modern-divider { height: 1px; background: #F0F0F0; margin: 40px 0; }
+.modern-divider { height: 1px; background: var(--sn-border); margin: 40px 0; }
 
 /* 底部操作悬浮栏 */
 .modern-bottom-actions {
@@ -731,7 +731,7 @@ onUnmounted(() => { stopAutoSave() })
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid #F0F0F0;
+  border-top: 1px solid var(--sn-border);
   padding: 24px;
   z-index: 900;
   display: flex;
@@ -754,7 +754,7 @@ html[data-accessibility="elderly"] .modern-bottom-actions { left: 320px; } /* �
   align-items: center;
   transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 }
-.cta-black-giant:hover { background: rgba(23, 114, 246, 0.06); transform: translateY(-2px); }
+.cta-black-giant:hover { background: rgba(13, 148, 136, 0.06); transform: translateY(-2px); }
 .icon-space { margin-right: 12px; font-size: 24px; }
 .is-spinning { animation: rotating 2s linear infinite; }
 @keyframes rotating { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }

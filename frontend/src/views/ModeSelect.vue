@@ -162,15 +162,15 @@ function confirmMode() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+  background: linear-gradient(135deg, var(--sn-bg) 0%, var(--sn-slate-light) 100%);
   padding: 20px;
 }
 
 .mode-select-box {
-  background: white;
-  border-radius: 24px;
+  background: var(--sn-surface);
+  border-radius: var(--sn-radius-xl);
   padding: 40px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--sn-shadow-lg);
   max-width: 600px;
   width: 100%;
   animation: slideIn 0.5s ease;
@@ -192,21 +192,21 @@ function confirmMode() {
   font-weight: bold;
   text-align: center;
   margin-bottom: 20px;
-  color: #333;
+  color: var(--sn-text);
 }
 
 .current-mode-hint {
   text-align: center;
   margin-bottom: 30px;
   font-size: 15px;
-  color: #666;
+  color: var(--sn-text-secondary);
 }
 
 .mode-badge {
   display: inline-block;
   padding: 4px 12px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--sn-primary) 0%, var(--sn-primary-dark) 100%);
+  color: var(--sn-white);
   border-radius: 12px;
   font-weight: 600;
   margin-left: 8px;
@@ -229,27 +229,27 @@ function confirmMode() {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  border: 2px solid #e0e0e0;
-  background: #fafafa;
-  color: #555;
+  border: 2px solid var(--sn-border);
+  background: var(--sn-slate-light);
+  color: var(--sn-text-secondary);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .mode-button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--sn-shadow-md);
 }
 
 .mode-button.is-active {
-  background: linear-gradient(135deg, #757575 0%, #9e9e9e 100%);
+  background: linear-gradient(135deg, var(--sn-primary) 0%, var(--sn-primary-dark) 100%);
   border-color: transparent;
-  color: white;
+  color: var(--sn-white);
 }
 
 .mode-description {
-  background: #f8f9fa;
-  border-radius: 16px;
+  background: var(--sn-slate-light);
+  border-radius: var(--sn-radius-lg);
   padding: 20px;
   margin-bottom: 20px;
 }
@@ -261,7 +261,7 @@ function confirmMode() {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 15px;
-  color: #333;
+  color: var(--sn-text);
 }
 
 .desc-list {
@@ -273,7 +273,7 @@ function confirmMode() {
 .desc-list li {
   padding: 8px 0 8px 24px;
   position: relative;
-  color: #666;
+  color: var(--sn-text-secondary);
   line-height: 1.6;
 }
 
@@ -281,7 +281,7 @@ function confirmMode() {
   content: '✓';
   position: absolute;
   left: 0;
-  color: #67c23a;
+  color: var(--sn-success);
   font-weight: bold;
 }
 
@@ -291,8 +291,8 @@ function confirmMode() {
   gap: 12px;
   margin-top: 20px;
   padding: 15px;
-  background: white;
-  border-radius: 12px;
+  background: var(--sn-surface);
+  border-radius: var(--sn-radius-md);
   flex-wrap: wrap;
 }
 
@@ -301,7 +301,7 @@ function confirmMode() {
   align-items: center;
   gap: 6px;
   font-size: 14px;
-  color: #666;
+  color: var(--sn-text-secondary);
   min-width: 80px;
 }
 
@@ -310,7 +310,7 @@ function confirmMode() {
   min-width: 120px;
   height: 6px;
   border-radius: 3px;
-  background: #e0e0e0;
+  background: var(--sn-border);
   outline: none;
   -webkit-appearance: none;
 }
@@ -320,7 +320,7 @@ function confirmMode() {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #757575;
+  background: var(--sn-primary);
   cursor: pointer;
 }
 
@@ -328,14 +328,14 @@ function confirmMode() {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #757575;
+  background: var(--sn-primary);
   cursor: pointer;
   border: none;
 }
 
 .volume-value {
   font-size: 14px;
-  color: #666;
+  color: var(--sn-text-secondary);
   min-width: 45px;
   text-align: right;
 }
@@ -345,11 +345,11 @@ function confirmMode() {
   align-items: center;
   gap: 4px;
   padding: 8px 14px;
-  border: 1px solid #e0e0e0;
-  background: white;
-  border-radius: 8px;
+  border: 1px solid var(--sn-border);
+  background: var(--sn-surface);
+  border-radius: var(--sn-radius-md);
   font-size: 13px;
-  color: #555;
+  color: var(--sn-text-secondary);
   cursor: pointer;
 }
 
@@ -364,7 +364,7 @@ function confirmMode() {
   gap: 6px;
   background: transparent;
   border: none;
-  color: #666;
+  color: var(--sn-text-secondary);
   font-size: 14px;
   cursor: pointer;
   text-decoration: underline;
@@ -379,16 +379,16 @@ function confirmMode() {
   height: 48px;
   font-size: 16px;
   border: none;
-  border-radius: 12px;
-  background: #409eff;
-  color: white;
+  border-radius: var(--sn-radius-md);
+  background: var(--sn-primary);
+  color: var(--sn-white);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .confirm-btn:hover {
-  background: #66b1ff;
+  background: var(--sn-primary-dark);
   transform: translateY(-2px);
 }
 

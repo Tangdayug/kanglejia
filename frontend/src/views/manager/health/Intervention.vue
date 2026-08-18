@@ -187,14 +187,14 @@ function formatDate(dateStr) {
 Linear 设计系统：核心样式
 ========================================= */
 .sn-subpage {
-  background-color: #F7F8FA;
-  color: #111827;
+  background-color: var(--sn-slate-light);
+  color: var(--sn-text);
 }
 
 
 
 .linear-count-badge {
-  background: #EBECEF; color: #4B5563;
+  background: var(--sn-border); color: var(--sn-text-secondary);
   padding: 4px 10px; border-radius: var(--sn-radius-sm); font-size: 13px; font-weight: 600;
 }
 
@@ -210,16 +210,16 @@ Linear 设计系统：核心样式
   border-color: var(--sn-primary);
   box-shadow: none;
 }
-.linear-btn-primary:hover { background: rgba(23, 114, 246, 0.06); }
+.linear-btn-primary:hover { background: rgba(13, 148, 136, 0.06); }
 .linear-btn-secondary {
-  background: #FFFFFF; color: #374151;
-  border-color: #E5E7EB; box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+  background: var(--sn-surface); color: var(--sn-text-secondary);
+  border-color: var(--sn-border); box-shadow: 0 1px 2px rgba(0,0,0,0.02);
 }
-.linear-btn-secondary:hover { background: #F9FAFB; border-color: #D1D5DB; }
+.linear-btn-secondary:hover { background: var(--sn-slate-light); border-color: var(--sn-border); }
 
 .linear-list-view {
-  background: #FFFFFF;
-  border: 1px solid #EBECEF;
+  background: var(--sn-surface);
+  border: 1px solid var(--sn-border);
   border-radius: var(--sn-radius-md);
   box-shadow: 0 1px 3px rgba(0,0,0,0.02);
   overflow: hidden;
@@ -228,9 +228,9 @@ Linear 设计系统：核心样式
 .linear-list-header {
   display: flex; align-items: center;
   padding: 12px 20px;
-  background: #FDFDFE;
-  border-bottom: 1px solid #EBECEF;
-  font-size: 12px; font-weight: 600; color: #9CA3AF;
+  background: var(--sn-surface);
+  border-bottom: 1px solid var(--sn-border);
+  font-size: 12px; font-weight: 600; color: var(--sn-text-muted);
 }
 .col-status { width: 44px; }
 .col-main { flex: 1; padding-right: 24px; }
@@ -239,13 +239,13 @@ Linear 设计系统：核心样式
 .linear-row {
   display: flex; align-items: flex-start;
   padding: 16px 20px;
-  border-bottom: 1px solid #EBECEF;
-  background: #FFFFFF;
+  border-bottom: 1px solid var(--sn-border);
+  background: var(--sn-surface);
   transition: background-color 0.15s ease;
   cursor: pointer;
 }
 .linear-row:last-child { border-bottom: none; }
-.linear-row:hover { background: #F9FAFB; }
+.linear-row:hover { background: var(--sn-slate-light); }
 
 /* 勾选圆圈热区 - 修复交互无效的核心 CSS */
 .status-trigger {
@@ -261,7 +261,7 @@ Linear 设计系统：核心样式
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  border: 1.5px solid #D1D5DB;
+  border: 1.5px solid var(--sn-border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -271,27 +271,27 @@ Linear 设计系统：核心样式
 
 .status-trigger:hover .status-circle:not(.completed) {
   border-color: var(--sn-primary);
-  background: rgba(23, 114, 246, 0.05);
+  background: rgba(13, 148, 136, 0.05);
 }
 
 .status-circle.completed {
   background: var(--sn-primary);
   border-color: var(--sn-primary);
-  color: #FFF;
+  color: var(--sn-surface);
 }
 
 .check-icon { font-size: 11px; font-weight: bold; }
 
 .row-main { flex: 1; padding-right: 24px; display: flex; flex-direction: column; gap: 6px; }
 .row-content {
-  font-size: 14px; font-weight: 500; color: #111827; line-height: 1.5;
+  font-size: 14px; font-weight: 500; color: var(--sn-text); line-height: 1.5;
   transition: color 0.2s;
 }
 .linear-row.is-completed .row-content {
-  color: #9CA3AF; text-decoration: line-through;
+  color: var(--sn-text-muted); text-decoration: line-through;
 }
 
-.row-sub-meta { display: flex; align-items: center; gap: 12px; font-size: 12px; font-weight: 500; color: #9CA3AF; }
+.row-sub-meta { display: flex; align-items: center; gap: 12px; font-size: 12px; font-weight: 500; color: var(--sn-text-muted); }
 .issue-id { font-family: monospace; letter-spacing: 0.5px; }
 
 .row-meta {
@@ -300,11 +300,11 @@ Linear 设计系统：核心样式
 }
 .linear-label {
   padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 600;
-  border: 1px solid #EBECEF; background: #FFFFFF; color: #4B5563;
+  border: 1px solid var(--sn-border); background: var(--sn-surface); color: var(--sn-text-secondary);
 }
-.linear-label.exercise { color: #0284C7; border-color: #E0F2FE; background: #F0F9FF; }
-.linear-label.diet { color: #059669; border-color: #D1FAE5; background: #ECFDF5; }
-.row-date { font-size: 13px; color: #9CA3AF; font-weight: 500; min-width: 45px; text-align: right; }
+.linear-label.exercise { color: var(--sn-primary); border-color: var(--sn-primary-light); background: var(--sn-primary-soft); }
+.linear-label.diet { color: var(--sn-success); border-color: var(--sn-success-light); background: var(--sn-success-light); }
+.row-date { font-size: 13px; color: var(--sn-text-muted); font-weight: 500; min-width: 45px; text-align: right; }
 
 /* 老年人模式适配 */
 html[data-accessibility="elderly"] .sn-page-title { font-size: 36px; }

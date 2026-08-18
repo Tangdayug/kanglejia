@@ -174,13 +174,13 @@ img, video {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background: #FFFFFF;
-    border: 2px solid #E5E7EB;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+    background: var(--sn-surface);
+    border: 2px solid var(--sn-border);
+    box-shadow: var(--sn-shadow-md);
   }
 
   .figma-pure-landing .giant-prompt-box.is-active {
-    border-color: #111;
+    border-color: var(--sn-primary);
   }
 
   .figma-pure-landing .main-prompt-input,
@@ -220,12 +220,12 @@ img, video {
     height: auto;
     border-radius: 0 100px 100px 0;
     font-size: 24px;
-    background: #333;
-    color: #FFF;
+    background: var(--sn-primary);
+    color: var(--sn-white);
   }
 
   .figma-pure-landing .submit-action-btn.ready {
-    background: #000;
+    background: var(--sn-primary-dark);
   }
 
   /* 底部 slogan 上移并加不透明背景，避免与图片叠加 */
@@ -336,7 +336,7 @@ img, video {
     font-size: 12px !important;
     font-weight: 800 !important;
     gap: 5px !important;
-    color: #6B7280 !important;
+    color: var(--sn-text-secondary) !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
@@ -349,9 +349,9 @@ img, video {
   }
 
   body .saas-app-layout .saas-menu .el-menu-item.is-active {
-    background: #111 !important;
-    color: #FFF !important;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.18) !important;
+    background: var(--sn-primary) !important;
+    color: var(--sn-white) !important;
+    box-shadow: var(--sn-shadow-md) !important;
     transform: translateY(-2px);
   }
 
@@ -390,7 +390,7 @@ img, video {
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%);
+    background: linear-gradient(135deg, var(--sn-primary-light) 0%, var(--sn-primary-soft) 100%);
     gap: 16px;
     padding-bottom: 24px;
   }
@@ -415,13 +415,13 @@ img, video {
   .bento-home-wrapper .welcome-title {
     font-size: 24px;
     line-height: 1.3;
-    color: #064E3B;
+    color: var(--sn-primary-dark);
   }
 
   .bento-home-wrapper .welcome-text {
     font-size: 15px;
     line-height: 1.6;
-    color: #065F46;
+    color: var(--sn-primary);
     margin-bottom: 20px;
   }
 
@@ -474,8 +474,8 @@ img, video {
     flex-direction: column;
     text-align: center;
     gap: 6px;
-    background: #F9FAFB;
-    border: 1px solid #E5E7EB;
+    background: var(--sn-slate-light);
+    border: 1px solid var(--sn-border);
     min-height: 76px;
     justify-content: center;
   }

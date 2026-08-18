@@ -110,7 +110,7 @@ const goToLogin = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg, #ffcba4 0%, #fff0e6 100%);
+  background: linear-gradient(180deg, var(--sn-primary-soft) 0%, var(--sn-primary-light) 100%);
   padding: 20px;
   box-sizing: border-box; /* 🌟 防止出现外层滚动条 */
 }
@@ -121,7 +121,7 @@ const goToLogin = () => {
   width: 100%;
   max-width: 600px;
   height: 360px;
-  background: linear-gradient(180deg, #32251d 0%, #1a120c 100%);
+  background: linear-gradient(180deg, var(--sn-primary) 0%, var(--sn-primary-dark) 100%);
   border-radius: 20px;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
   position: relative;
@@ -174,14 +174,14 @@ const goToLogin = () => {
 .brand-name {
   font-weight: bold;
   font-size: 26px;
-  color: #FFFFFF;
+  color: var(--sn-surface);
   letter-spacing: 3px;
   margin-bottom: 6px;
 }
 
 .brand-slogan {
   font-size: 12px;
-  color: #FFFFFF;
+  color: var(--sn-surface);
   letter-spacing: 1px;
   opacity: 0.9;
 }
@@ -191,13 +191,13 @@ const goToLogin = () => {
   height: 36px !important;
   border-radius: 40px !important;
   padding: 0 15px !important;
-  background-color: #FFFFFF !important;
+  background-color: var(--sn-surface) !important;
   box-shadow: none !important;
 }
 
 .capsule-input :deep(.el-input__inner) {
   background-color: transparent !important;
-  color: #333 !important;
+  color: var(--sn-text) !important;
   font-size: 14px !important;
 }
 /* 🌟 新增代码：专门缩小“请输入账号/密码”提示文字的大小 */
@@ -208,19 +208,19 @@ const goToLogin = () => {
 .capsule-button {
   height: 38px !important;
   border-radius: 40px !important;
-  background-color: #ff6600 !important;
-  border-color: #ff6600 !important;
-  color: #FFFFFF !important;
+  background-color: var(--sn-white) !important;
+  border-color: var(--sn-white) !important;
+  color: var(--sn-primary) !important;
   font-size: 15px !important;
   font-weight: 600;
   transition: all 0.3s ease;
 }
 
 .capsule-button:hover {
-  background-color: #ff8533 !important;
-  border-color: #ff8533 !important;
+  background-color: var(--sn-primary-light) !important;
+  border-color: var(--sn-primary-light) !important;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
 }
 
 /* --- 其他排版 --- */
@@ -235,12 +235,12 @@ const goToLogin = () => {
 .login-link {
   text-align: center;
   font-size: 13px;
-  color: #FFFFFF;
+  color: var(--sn-white);
   margin-top: 15px;
 }
 
 .login-link :deep(.el-button--primary.link) {
-  color: #ff6600;
+  color: var(--sn-primary-light);
   font-weight: 600;
 }
 

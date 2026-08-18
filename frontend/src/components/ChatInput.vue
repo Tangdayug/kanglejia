@@ -122,9 +122,9 @@ defineExpose({
 
 <style scoped>
 .chat-input-container {
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--sn-border);
   padding: 16px;
-  background-color: #fff;
+  background-color: var(--sn-surface);
 }
 
 .recording-indicator {
@@ -132,18 +132,18 @@ defineExpose({
   align-items: center;
   gap: 12px;
   padding: 12px;
-  background-color: #fff3f3;
+  background-color: var(--sn-danger-light);
   border-radius: 8px;
   margin-bottom: 12px;
   font-size: 14px;
-  color: #f56c6c;
+  color: var(--sn-danger);
 }
 
 .recording-dot {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #f56c6c;
+  background-color: var(--sn-danger);
   animation: pulse 1s infinite;
 }
 
@@ -175,9 +175,9 @@ defineExpose({
   height: 56px;
   padding: 0;
   border-radius: 16px;
-  background: #FFF;
-  border: 2px solid #E5E7EB;
-  color: #333;
+  background: var(--sn-surface);
+  border: 2px solid var(--sn-border);
+  color: var(--sn-text);
   cursor: pointer;
   transition: 0.2s;
 }
@@ -197,9 +197,9 @@ defineExpose({
 }
 
 .voice-button.is-recording {
-  background-color: #f56c6c;
+  background-color: var(--sn-danger);
   color: white;
-  border-color: #f56c6c;
+  border-color: var(--sn-danger);
 }
 
 .voice-button:disabled {
@@ -229,14 +229,14 @@ defineExpose({
 }
 
 .send-button:disabled {
-  background: #D1D5DB !important;
-  border-color: #D1D5DB !important;
-  color: #FFF !important;
+  background: var(--sn-border) !important;
+  border-color: var(--sn-border) !important;
+  color: var(--sn-surface) !important;
 }
 
 .input-hint {
   font-size: 13px;
-  color: #666;
+  color: var(--sn-text-secondary);
   margin-top: 8px;
   text-align: center;
   font-weight: 600;

@@ -167,19 +167,19 @@ function navigateTo(path) {
 
 .feature-icon {
   background: transparent;
-  color: #374151;
-  border: 2px solid #E5E7EB;
+  color: var(--sn-text-secondary);
+  border: 2px solid var(--sn-border);
 }
 
 .card-content h3 {
   font-size: 24px;
   margin: 0 0 15px 0;
-  color: #333;
+  color: var(--sn-text);
 }
 
 .card-content p {
   font-size: 14px;
-  color: #666;
+  color: var(--sn-text-secondary);
   line-height: 1.6;
   margin: 0 0 20px 0;
   flex: 1;

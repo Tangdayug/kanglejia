@@ -195,7 +195,7 @@ const doAuth = () => {
 <style scoped>
 .figma-pure-landing {
   min-height: 100vh;
-  background-color: #F9F9F9; /* 官方浅色底 */
+  background-color: var(--sn-bg); /* 官方浅色底 */
   position: relative;
   overflow: hidden;
   font-family: AlibabaHealthFont, 'PingFang SC', 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
@@ -246,7 +246,7 @@ const doAuth = () => {
 .header-left { display: flex; align-items: center; }
 .brand-group { display: flex; align-items: center; gap: 14px; }
 .main-logo { height: 44px; mix-blend-mode: darken; }
-.brand-name { font-size: 26px; font-weight: 800; color: #111; letter-spacing: -1.2px; }
+.brand-name { font-size: 26px; font-weight: 800; color: var(--sn-text); letter-spacing: -1.2px; }
 
 .header-right { display: flex; align-items: center; gap: 12px; }
 
@@ -268,19 +268,19 @@ const doAuth = () => {
 .nav-action-btn:hover { transform: translateY(-1px); }
 
 .mode-toggle-pill {
-  background: #F4F5F7;
-  color: #333;
+  background: var(--sn-slate-light);
+  color: var(--sn-text);
   border-color: transparent;
 }
-.mode-toggle-pill:hover { background: #EAEAEA; color: #000; }
+.mode-toggle-pill:hover { background: var(--sn-border); color: var(--sn-text); }
 
-.login-btn { background: #FFF; color: #111; border-color: #E5E7EB; }
-.login-btn:hover { background: #F9FAFB; border-color: #D1D5DB; }
+.login-btn { background: var(--sn-surface); color: var(--sn-text); border-color: var(--sn-border); }
+.login-btn:hover { background: var(--sn-slate-light); border-color: var(--sn-border); }
 
 .cta-black { 
   background: transparent; color: var(--sn-primary); border-color: var(--sn-primary);
 }
-.cta-black:hover { background: rgba(23, 114, 246, 0.06); border-color: var(--sn-primary-dark); color: var(--sn-primary-dark); }
+.cta-black:hover { background: rgba(13, 148, 136, 0.06); border-color: var(--sn-primary-dark); color: var(--sn-primary-dark); }
 
 .auth-group { display: flex; align-items: center; gap: 12px; }
 
@@ -294,23 +294,23 @@ const doAuth = () => {
 
 .giant-prompt-box {
   width: 100%; height: 300px; 
-  background: #FFFFFF; 
-  border: 1px solid #DEDEDE; border-radius: 48px; padding: 60px; position: relative;
+  background: var(--sn-surface); 
+  border: 1px solid var(--sn-border); border-radius: 48px; padding: 60px; position: relative;
   transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
   box-shadow: 0 10px 40px rgba(0,0,0,0.03);
 }
 .giant-prompt-box.is-active {
   border-color: var(--sn-primary); transform: translateY(-10px);
-  box-shadow: 0 40px 100px rgba(23,114,246,0.12);
+  box-shadow: 0 40px 100px rgba(13, 148, 136,0.12);
 }
 
 .main-prompt-input {
   width: 100%; height: 100%; border: none; outline: none; resize: none;
-  font-size: 64px; font-weight: 700; color: #000; line-height: 1.1; 
+  font-size: 64px; font-weight: 700; color: var(--sn-text); line-height: 1.1; 
   letter-spacing: -3px; background: transparent;
 }
-.placeholder-animation { position: absolute; top: 60px; left: 60px; font-size: 64px; font-weight: 700; color: #111; pointer-events: none; letter-spacing: -3px; text-align: left; }
-.cursor { color: #000; animation: blink 1s step-end infinite; }
+.placeholder-animation { position: absolute; top: 60px; left: 60px; font-size: 64px; font-weight: 700; color: var(--sn-text); pointer-events: none; letter-spacing: -3px; text-align: left; }
+.cursor { color: var(--sn-text); animation: blink 1s step-end infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 
 .prompt-actions {
@@ -323,36 +323,36 @@ const doAuth = () => {
   font-size: 16px; font-weight: 700; cursor: pointer;
   transition: 0.3s;
 }
-.start-text-btn:hover { background: rgba(23, 114, 246, 0.06); transform: translateY(-2px); }
+.start-text-btn:hover { background: rgba(13, 148, 136, 0.06); transform: translateY(-2px); }
 .submit-action-btn {
   width: 76px; height: 76px; border-radius: 50%;
-  border: 1px solid #E5E7EB; background: #FFF; color: #111; font-size: 32px; cursor: pointer; transition: 0.3s;
+  border: 1px solid var(--sn-border); background: var(--sn-surface); color: var(--sn-text); font-size: 32px; cursor: pointer; transition: 0.3s;
 }
 .submit-action-btn.ready { background: transparent; color: var(--sn-primary); border-color: var(--sn-primary); transform: scale(1.1); }
-.submit-action-btn.ready:hover { background: rgba(23, 114, 246, 0.06); }
+.submit-action-btn.ready:hover { background: rgba(13, 148, 136, 0.06); }
 
 /* 4. 底部品牌宣言 */
 .footer-slogan {
   position: absolute; bottom: 40px; width: 100%;
   display: flex; flex-direction: column; align-items: center; gap: 12px;
-  font-size: 16px; color: #000; font-weight: 600; letter-spacing: 1px;
+  font-size: 16px; color: var(--sn-text); font-weight: 600; letter-spacing: 1px;
   text-shadow: 0 1px 0 rgba(255,255,255,0.8), 0 0 12px rgba(255,255,255,0.7);
   padding: 8px 16px;
 }
 .footer-links { display: flex; gap: 24px; }
 .footer-links a { 
-  text-decoration: none; color: #666; font-weight: 600; font-size: 14px; 
+  text-decoration: none; color: var(--sn-text-secondary); font-weight: 600; font-size: 14px; 
   transition: color 0.2s; 
 }
-.footer-links a:hover { color: #111; }
+.footer-links a:hover { color: var(--sn-text); }
 
 /* 认证弹窗 */
 :deep(.auth-dialog) { border-radius: 32px !important; }
 .auth-box { padding: 30px; text-align: center; }
-.auth-field :deep(.el-input__wrapper) { background: #F5F5F5; border-radius: 12px; height: 52px; box-shadow: none !important; }
+.auth-field :deep(.el-input__wrapper) { background: var(--sn-slate-light); border-radius: 12px; height: 52px; box-shadow: none !important; }
 .auth-submit-btn { width: 100%; height: 52px; background: transparent; color: var(--sn-primary); border: 1px solid var(--sn-primary); border-radius: 12px; font-weight: 700; margin-top: 20px; }
-.auth-submit-btn:hover { background: rgba(23, 114, 246, 0.06); }
-.auth-toggle { margin-top: 24px; color: #000; font-weight: 700; cursor: pointer; text-decoration: underline; }
+.auth-submit-btn:hover { background: rgba(13, 148, 136, 0.06); }
+.auth-toggle { margin-top: 24px; color: var(--sn-text); font-weight: 700; cursor: pointer; text-decoration: underline; }
 
 .mobile-auth-card {
   display: none;
@@ -372,7 +372,7 @@ html[data-accessibility="elderly"] .case-background { opacity: 0.12; filter: gra
 html[data-accessibility="elderly"] .floating-nav-capsule {
   background: rgba(255, 255, 255, 0.98);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
-  border-color: rgba(23, 114, 246, 0.15);
+  border-color: rgba(13, 148, 136, 0.15);
 }
 html[data-accessibility="elderly"] .nav-action-btn {
   height: 60px;
@@ -382,20 +382,20 @@ html[data-accessibility="elderly"] .nav-action-btn {
 }
 html[data-accessibility="elderly"] .mode-toggle-pill {
   background: var(--sn-primary);
-  color: #FFF;
+  color: var(--sn-surface);
   font-weight: 800;
 }
 html[data-accessibility="elderly"] .mode-toggle-pill:hover {
   background: var(--sn-primary-dark);
 }
 html[data-accessibility="elderly"] .login-btn {
-  background: #FFF;
-  color: #111;
-  border: 2px solid #111;
+  background: var(--sn-surface);
+  color: var(--sn-text);
+  border: 2px solid var(--sn-text);
   font-weight: 800;
 }
 html[data-accessibility="elderly"] .login-btn:hover {
-  background: #F5F5F5;
+  background: var(--sn-slate-light);
 }
 html[data-accessibility="elderly"] .cta-black {
   background: transparent;
@@ -404,21 +404,21 @@ html[data-accessibility="elderly"] .cta-black {
   font-weight: 800;
 }
 html[data-accessibility="elderly"] .cta-black:hover {
-  background: rgba(23, 114, 246, 0.06);
+  background: rgba(13, 148, 136, 0.06);
 }
 
 /* 中央输入区长辈模式强化 */
 html[data-accessibility="elderly"] .input-focus-area { max-width: 1100px; }
 html[data-accessibility="elderly"] .giant-prompt-box {
   height: 360px;
-  border: 3px solid #DEDEDE;
+  border: 3px solid var(--sn-border);
   border-radius: 56px;
   padding: 70px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
 }
 html[data-accessibility="elderly"] .giant-prompt-box.is-active {
   border-color: var(--sn-primary);
-  box-shadow: 0 40px 100px rgba(23, 114, 246, 0.18);
+  box-shadow: 0 40px 100px rgba(13, 148, 136, 0.18);
 }
 html[data-accessibility="elderly"] .main-prompt-input,
 html[data-accessibility="elderly"] .placeholder-animation {
@@ -426,7 +426,7 @@ html[data-accessibility="elderly"] .placeholder-animation {
   letter-spacing: -2px;
   line-height: 1.05;
 }
-html[data-accessibility="elderly"] .placeholder-animation { color: #333; }
+html[data-accessibility="elderly"] .placeholder-animation { color: var(--sn-text); }
 html[data-accessibility="elderly"] .start-text-btn {
   padding: 18px 36px;
   font-size: 20px;
@@ -437,7 +437,7 @@ html[data-accessibility="elderly"] .start-text-btn {
   border: 2px solid var(--sn-primary);
 }
 html[data-accessibility="elderly"] .start-text-btn:hover {
-  background: rgba(23, 114, 246, 0.06);
+  background: rgba(13, 148, 136, 0.06);
 }
 html[data-accessibility="elderly"] .submit-action-btn {
   width: 88px;
@@ -448,7 +448,7 @@ html[data-accessibility="elderly"] .submit-action-btn {
   border: 2px solid var(--sn-primary);
 }
 html[data-accessibility="elderly"] .submit-action-btn.ready:hover {
-  background: rgba(23, 114, 246, 0.06);
+  background: rgba(13, 148, 136, 0.06);
 }
 
 /* 底部品牌宣言长辈模式 */
@@ -460,7 +460,7 @@ html[data-accessibility="elderly"] .footer-slogan {
 html[data-accessibility="elderly"] .footer-links { gap: 32px; }
 html[data-accessibility="elderly"] .footer-links a {
   font-size: 19px;
-  color: #333;
+  color: var(--sn-text);
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 4px;
@@ -486,7 +486,7 @@ html[data-accessibility="elderly"] .auth-submit-btn {
   border: 2px solid var(--sn-primary);
 }
 html[data-accessibility="elderly"] .auth-submit-btn:hover {
-  background: rgba(23, 114, 246, 0.06);
+  background: rgba(13, 148, 136, 0.06);
 }
 html[data-accessibility="elderly"] .auth-toggle {
   font-size: 18px;

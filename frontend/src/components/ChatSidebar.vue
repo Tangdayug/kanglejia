@@ -126,7 +126,7 @@ defineExpose({ reload: loadSessions })
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #F9F9F9; /* 融入整体环境，不设硬边框 */
+  background-color: var(--sn-slate-light); /* 融入整体环境，不设硬边框 */
   font-family: AlibabaHealthFont, 'PingFang SC', 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
 }
 
@@ -169,7 +169,7 @@ defineExpose({ reload: loadSessions })
   align-items: center;
   justify-content: center;
   height: 100px;
-  color: #999;
+  color: var(--sn-text-muted);
   font-size: 13px;
   font-weight: 500;
 }
@@ -177,7 +177,7 @@ defineExpose({ reload: loadSessions })
 .list-title {
   font-size: 13px;
   font-weight: 800;
-  color: #666;
+  color: var(--sn-text-secondary);
   padding: 8px 8px 10px 8px;
   letter-spacing: 0.5px;
 }
@@ -193,14 +193,14 @@ defineExpose({ reload: loadSessions })
   margin-bottom: 6px;
   transition: all 0.2s;
   border: 1px solid transparent;
-  background-color: #FFFFFF;
+  background-color: var(--sn-surface);
 }
 .session-item:hover {
-  background-color: #F0F0F0;
+  background-color: var(--sn-border);
 }
 .session-item.active {
-  background-color: #EFF6FF;
-  border-color: #2563EB;
+  background-color: var(--sn-primary-soft);
+  border-color: var(--sn-primary);
   box-shadow: 0 2px 8px rgba(37,99,235,0.08);
 }
 
@@ -211,7 +211,7 @@ defineExpose({ reload: loadSessions })
 .session-title {
   font-size: 15px;
   font-weight: 700;
-  color: #111;
+  color: var(--sn-text);
   margin-bottom: 6px;
   white-space: nowrap;
   overflow: hidden;
@@ -219,14 +219,14 @@ defineExpose({ reload: loadSessions })
 }
 .session-time {
   font-size: 13px;
-  color: #666;
+  color: var(--sn-text-secondary);
   font-weight: 500;
 }
 
 .delete-button {
   background: transparent;
   border: none;
-  color: #999;
+  color: var(--sn-text-muted);
   width: 32px;
   height: 32px;
   border-radius: 8px;
@@ -241,8 +241,8 @@ defineExpose({ reload: loadSessions })
   opacity: 1;
 }
 .delete-button:hover {
-  background-color: #FFEBEB;
-  color: #FF4D4F;
+  background-color: var(--sn-danger-light);
+  color: var(--sn-danger);
 }
 
 html[data-accessibility="elderly"] .new-chat-btn { height: 60px; font-size: 20px; }

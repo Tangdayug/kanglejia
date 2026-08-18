@@ -116,7 +116,7 @@ SaaS 现代化框架样式 (扁平导航优化)
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #F4F5F7;
+  background-color: var(--sn-bg);
   font-family: AlibabaHealthFont, 'PingFang SC', 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
   overflow: hidden;
 }
@@ -127,7 +127,7 @@ SaaS 现代化框架样式 (扁平导航优化)
 
 /* 侧边栏样式：与背景融合，弱化卡片感 */
 .saas-floating-sidebar {
-  width: 250px; background: #F9FAFB;
+  width: 250px; background: var(--sn-slate-light);
   padding: 24px 16px;
   display: flex; flex-direction: column;
   border-right: 1px solid rgba(0,0,0,0.04);
@@ -143,10 +143,10 @@ SaaS 现代化框架样式 (扁平导航优化)
   margin-bottom: 8px;
 }
 .sidebar-logo { width: 28px; flex-shrink: 0; }
-.sidebar-brand-name { font-weight: 700; font-size: 16px; color: #111; letter-spacing: -0.2px; }
+.sidebar-brand-name { font-weight: 700; font-size: 16px; color: var(--sn-text); letter-spacing: -0.2px; }
 
 .menu-group-title {
-  font-size: 11px; font-weight: 800; color: #BBB;
+  font-size: 11px; font-weight: 800; color: var(--sn-text-muted);
   padding: 16px 16px 8px 16px; text-transform: uppercase; letter-spacing: 1.2px;
 }
 
@@ -155,21 +155,21 @@ SaaS 现代化框架样式 (扁平导航优化)
 
 :deep(.el-menu-item) {
   height: 48px; line-height: 48px; border-radius: var(--sn-radius-sm);
-  margin-bottom: 2px; font-weight: 600; color: #666; font-size: 14px;
+  margin-bottom: 2px; font-weight: 600; color: var(--sn-text-secondary); font-size: 14px;
   transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 
 :deep(.el-menu-item:hover) {
-  background-color: rgba(23, 114, 246, 0.06) !important; color: var(--sn-primary);
+  background-color: rgba(13, 148, 136, 0.06) !important; color: var(--sn-primary);
 }
 
 :deep(.el-menu-item.is-active) {
-  background-color: rgba(23, 114, 246, 0.1) !important; color: var(--sn-primary) !important;
+  background-color: rgba(13, 148, 136, 0.1) !important; color: var(--sn-primary) !important;
   font-weight: 700;
 }
 
-.logout-item { color: #EF4444 !important; margin-top: 16px; }
-.logout-item:hover { background-color: #FEF2F2 !important; }
+.logout-item { color: var(--sn-danger) !important; margin-top: 16px; }
+.logout-item:hover { background-color: var(--sn-danger-light) !important; }
 
 .saas-main-canvas { flex: 1; overflow-y: auto; padding: 24px; }
 .canvas-wrapper { min-height: 100%; position: relative; }

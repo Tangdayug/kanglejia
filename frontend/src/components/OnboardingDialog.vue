@@ -424,8 +424,8 @@ onUnmounted(() => {
   z-index: 1;
   box-shadow:
     0 0 0 9999px rgba(0, 0, 0, 0.62),
-    0 0 0 4px rgba(23, 114, 246, 0.35),
-    0 8px 32px rgba(23, 114, 246, 0.18);
+    0 0 0 4px rgba(13, 148, 136, 0.35),
+    0 8px 32px rgba(13, 148, 136, 0.18);
   transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -433,7 +433,7 @@ onUnmounted(() => {
   position: absolute;
   inset: -4px;
   border-radius: inherit;
-  border: 2px solid rgba(23, 114, 246, 0.5);
+  border: 2px solid rgba(13, 148, 136, 0.5);
   animation: pulse-ring 2s ease-out infinite;
   pointer-events: none;
 }
@@ -448,7 +448,7 @@ onUnmounted(() => {
   z-index: 2;
   width: 360px;
   max-width: calc(100vw - 32px);
-  background: #FFFFFF;
+  background: var(--sn-surface);
   border-radius: var(--sn-radius-xl);
   padding: 28px;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
@@ -470,7 +470,7 @@ onUnmounted(() => {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #E5E7EB;
+  background: var(--sn-border);
   transition: all 0.3s ease;
 }
 
@@ -502,14 +502,14 @@ onUnmounted(() => {
 .tour-title {
   font-size: 22px;
   font-weight: 800;
-  color: #111;
+  color: var(--sn-text);
   margin: 0 0 10px 0;
   line-height: 1.3;
 }
 
 .tour-description {
   font-size: 15px;
-  color: #6B7280;
+  color: var(--sn-text-secondary);
   line-height: 1.7;
   margin: 0;
 }
@@ -543,8 +543,8 @@ onUnmounted(() => {
 
 .tour-btn--primary {
   background: var(--sn-primary);
-  color: #FFF;
-  box-shadow: 0 4px 12px rgba(23, 114, 246, 0.2);
+  color: var(--sn-surface);
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.2);
 }
 
 .tour-btn--primary:hover {
@@ -553,22 +553,22 @@ onUnmounted(() => {
 }
 
 .tour-btn--secondary {
-  background: #F3F4F6;
-  color: #374151;
+  background: var(--sn-slate-light);
+  color: var(--sn-text-secondary);
 }
 
 .tour-btn--secondary:hover {
-  background: #E5E7EB;
+  background: var(--sn-border);
 }
 
 .tour-btn--text {
   background: transparent;
-  color: #9CA3AF;
+  color: var(--sn-text-muted);
   padding: 0 10px;
 }
 
 .tour-btn--text:hover {
-  color: #374151;
+  color: var(--sn-text-secondary);
 }
 
 .tour-fade-enter-active,
@@ -612,8 +612,8 @@ html[data-accessibility="elderly"] .tour-icon {
 html[data-accessibility="elderly"] .spotlight-hole {
   box-shadow:
     0 0 0 9999px rgba(0, 0, 0, 0.68),
-    0 0 0 5px rgba(23, 114, 246, 0.45),
-    0 8px 32px rgba(23, 114, 246, 0.22);
+    0 0 0 5px rgba(13, 148, 136, 0.45),
+    0 8px 32px rgba(13, 148, 136, 0.22);
 }
 
 html[data-accessibility="elderly"] .spotlight-pulse {

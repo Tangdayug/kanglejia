@@ -229,7 +229,7 @@ function formatTime(dateStr) {
   height: 80px;
   border-radius: 50%;
   overflow: hidden;
-  background-color: #f0f0f0;
+  background-color: var(--sn-slate-light);
 }
 
 .message-avatar img {
@@ -250,7 +250,7 @@ function formatTime(dateStr) {
 
 .message-role {
   font-size: 14px;
-  color: #666;
+  color: var(--sn-text-secondary);
   margin-bottom: 6px !important;
   display: flex;
   align-items: center;
@@ -263,26 +263,26 @@ function formatTime(dateStr) {
   width: 24px !important;
   height: 24px !important;
   min-height: 24px !important;
-  background-color: #0c98d5 !important;
-  border-color: #0c98d5 !important;
+  background-color: var(--sn-primary) !important;
+  border-color: var(--sn-primary) !important;
   color: white !important;
   transition: all 0.2s ease;
 }
 
 .pause-btn:hover {
-  background-color: #0b86be !important;
-  border-color: #0b86be !important;
+  background-color: var(--sn-primary-dark) !important;
+  border-color: var(--sn-primary-dark) !important;
   transform: scale(1.1);
 }
 
 .user-message .message-bubble {
-  background-color: #0c98d5;
+  background-color: var(--sn-primary);
   color: white;
 }
 
 .assistant-message .message-bubble {
-  background-color: #fff;
-  color: #333;
+  background-color: var(--sn-surface);
+  color: var(--sn-text);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
@@ -317,7 +317,7 @@ function formatTime(dateStr) {
 }
 
 .message-text :deep(pre) {
-  background-color: #f5f5f5;
+  background-color: var(--sn-slate-light);
   border-radius: 6px;
   padding: 8px 10px !important;
   overflow-x: auto;
@@ -335,10 +335,10 @@ function formatTime(dateStr) {
 
 /* === Markdown Blockquote === */
 .message-text :deep(blockquote) {
-  border-left: 3px solid #ddd;
+  border-left: 3px solid var(--sn-border);
   padding-left: 10px !important;
   margin: 6px 0 !important;
-  color: #666;
+  color: var(--sn-text-secondary);
 }
 
 .user-message .message-text :deep(blockquote) {
@@ -359,7 +359,7 @@ function formatTime(dateStr) {
 
 /* === Markdown Links === */
 .message-text :deep(a) {
-  color: #0c98d5;
+  color: var(--sn-primary);
   text-decoration: none;
 }
 
@@ -368,7 +368,7 @@ function formatTime(dateStr) {
 }
 
 .user-message .message-text :deep(a) {
-  color: #fff;
+  color: var(--sn-surface);
   text-decoration: underline;
 }
 
@@ -382,13 +382,13 @@ function formatTime(dateStr) {
 
 .message-text :deep(th),
 .message-text :deep(td) {
-  border: 1px solid #ddd;
+  border: 1px solid var(--sn-border);
   padding: 6px 10px !important;
   text-align: left;
 }
 
 .message-text :deep(th) {
-  background-color: #f5f5f5;
+  background-color: var(--sn-slate-light);
   font-weight: 600;
 }
 
@@ -404,7 +404,7 @@ function formatTime(dateStr) {
 /* === Markdown Horizontal Rule === */
 .message-text :deep(hr) {
   border: none;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--sn-border);
   margin: 8px 0 !important;
 }
 
@@ -437,7 +437,7 @@ function formatTime(dateStr) {
 }
 
 .detail-toggle-btn:hover {
-  background: rgba(23, 114, 246, 0.06);
+  background: rgba(13, 148, 136, 0.06);
 }
 
 /* === Sources & Time === */
@@ -453,9 +453,9 @@ function formatTime(dateStr) {
   padding: 3px 8px !important;
   border-radius: 4px;
   font-weight: 500;
-  background-color: #f5f5f5;
-  color: #888;
-  border: 1px solid #eee;
+  background-color: var(--sn-slate-light);
+  color: var(--sn-text-muted);
+  border: 1px solid var(--sn-border);
 }
 
 .message-actions {
@@ -467,7 +467,7 @@ function formatTime(dateStr) {
 
 .message-time {
   font-size: 13px;
-  color: #888;
+  color: var(--sn-text-muted);
   font-weight: 500;
 }
 
@@ -475,9 +475,9 @@ function formatTime(dateStr) {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  border: 1px solid #E5E7EB;
-  background: #FFF;
-  color: #666;
+  border: 1px solid var(--sn-border);
+  background: var(--sn-surface);
+  color: var(--sn-text-secondary);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -493,7 +493,7 @@ function formatTime(dateStr) {
 .message-speaker-btn.is-speaking {
   background: var(--sn-primary);
   border-color: var(--sn-primary);
-  color: #FFF;
+  color: var(--sn-surface);
 }
 
 /* === Streaming indicator === */
@@ -512,7 +512,7 @@ function formatTime(dateStr) {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #ccc;
+  background-color: var(--sn-text-muted);
   animation: typing 1.4s infinite;
 }
 

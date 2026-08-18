@@ -1071,7 +1071,7 @@ onUnmounted(() => { stopAutoSave(); stop() })
   font-size: 36px;
   font-weight: 800;
   letter-spacing: -1.5px;
-  color: #111;
+  color: var(--sn-text);
   margin: 0 0 12px 0;
 }
 .save-info-pill {
@@ -1079,22 +1079,22 @@ onUnmounted(() => { stopAutoSave(); stop() })
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: #F5F5F5;
+  background: var(--sn-slate-light);
   border-radius: var(--sn-radius-md);
   font-size: 14px;
   font-weight: 600;
-  color: #666;
+  color: var(--sn-text-secondary);
 }
-.save-info-pill .unsaved { color: #FF4D4F; }
+.save-info-pill .unsaved { color: var(--sn-danger); }
 
 /* 现代卡片覆盖原生的 el-card */
 .modern-card {
-  background: #FFFFFF;
+  background: var(--sn-surface);
   border-radius: var(--sn-radius-lg);
   padding: 40px;
   margin-bottom: 32px;
   box-shadow: 0 10px 40px rgba(0,0,0,0.02);
-  border: 1px solid #F0F0F0;
+  border: 1px solid var(--sn-border);
 }
 .card-header-flex {
   display: flex;
@@ -1105,20 +1105,20 @@ onUnmounted(() => { stopAutoSave(); stop() })
 .card-title {
   font-size: 24px;
   font-weight: 800;
-  color: #111;
+  color: var(--sn-text);
   letter-spacing: -0.5px;
 }
 .required-tip {
   font-size: 14px;
   font-weight: 600;
-  color: #999;
-  background: #F9F9F9;
+  color: var(--sn-text-muted);
+  background: var(--sn-slate-light);
   padding: 4px 12px;
   border-radius: 10px;
 }
 
 /* OCR 智能识别 */
-.ocr-card { background: linear-gradient(135deg, #F0F7FF 0%, #FFFFFF 100%); border-color: #D9E9FD; }
+.ocr-card { background: linear-gradient(135deg, var(--sn-primary-soft) 0%, var(--sn-surface) 100%); border-color: var(--sn-primary-light); }
 .ocr-body { display: flex; flex-direction: column; gap: 20px; }
 .ocr-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 .ocr-btn {
@@ -1129,19 +1129,19 @@ onUnmounted(() => { stopAutoSave(); stop() })
   display: inline-flex; align-items: center; gap: 8px;
   cursor: pointer; transition: 0.2s;
 }
-.ocr-btn:hover { background: rgba(23, 114, 246, 0.06); transform: translateY(-1px); }
-.ocr-btn-secondary { background: #FFF; color: #111; border: 1px solid #E5E7EB; }
-.ocr-btn-secondary:hover { background: #F9FAFB; border-color: #D1D5DB; }
+.ocr-btn:hover { background: rgba(13, 148, 136, 0.06); transform: translateY(-1px); }
+.ocr-btn-secondary { background: var(--sn-surface); color: var(--sn-text); border: 1px solid var(--sn-border); }
+.ocr-btn-secondary:hover { background: var(--sn-slate-light); border-color: var(--sn-border); }
 .ocr-loading { display: flex; align-items: center; gap: 10px; color: var(--sn-primary); font-weight: 600; }
 .ocr-result-item { margin-bottom: 0; }
-.ocr-result-item :deep(.el-textarea__inner) { background: #FFFFFF; border-radius: var(--sn-radius-md); min-height: 120px; }
+.ocr-result-item :deep(.el-textarea__inner) { background: var(--sn-surface); border-radius: var(--sn-radius-md); min-height: 120px; }
 
 /* 问卷标题 */
 .question-box { margin-bottom: 24px; }
 .question-text {
   font-size: 18px;
   font-weight: 700;
-  color: #111;
+  color: var(--sn-text);
   margin-bottom: 20px;
   cursor: pointer;
   display: inline-block;
@@ -1150,20 +1150,20 @@ onUnmounted(() => { stopAutoSave(); stop() })
   border-radius: 8px;
   transition: 0.2s;
 }
-.question-text:hover { background: #F5F5F5; }
+.question-text:hover { background: var(--sn-slate-light); }
 
 /* --- Element Plus 控件深度覆写 --- */
 .figma-form-style :deep(.el-form-item__label) {
   font-size: 15px;
   font-weight: 700;
-  color: #111;
+  color: var(--sn-text);
   padding-bottom: 10px;
 }
 
 /* 统一大尺寸输入框 (Typeform/Stripe 风格) */
 .figma-form-style :deep(.el-input__wrapper),
 .figma-form-style :deep(.el-select__wrapper) {
-  background-color: #F5F5F5;
+  background-color: var(--sn-slate-light);
   border-radius: var(--sn-radius-md);
   height: 52px;
   box-shadow: none !important;
@@ -1172,8 +1172,8 @@ onUnmounted(() => { stopAutoSave(); stop() })
 }
 .figma-form-style :deep(.el-input__wrapper.is-focus),
 .figma-form-style :deep(.el-select__wrapper.is-focus) {
-  background-color: #FFFFFF;
-  box-shadow: 0 0 0 2px #000000 !important; /* 纯黑高亮边框 */
+  background-color: var(--sn-surface);
+  box-shadow: 0 0 0 2px var(--sn-text) !important; /* 纯黑高亮边框 */
 }
 /* 修复日期面板弹出层层级问题 */
 :deep(.el-picker__popper) { z-index: 9999 !important; }
@@ -1189,8 +1189,8 @@ onUnmounted(() => { stopAutoSave(); stop() })
   height: 52px;
   padding: 0 24px;
   border-radius: var(--sn-radius-md);
-  border: 2px solid #F0F0F0;
-  background: #FFFFFF;
+  border: 2px solid var(--sn-border);
+  background: var(--sn-surface);
   margin-right: 0;
   transition: all 0.2s;
 }
@@ -1201,7 +1201,7 @@ onUnmounted(() => { stopAutoSave(); stop() })
 }
 .figma-form-style :deep(.el-radio.is-bordered.is-checked .el-radio__label),
 .figma-form-style :deep(.el-checkbox.is-bordered.is-checked .el-checkbox__label) {
-  color: #FFF;
+  color: var(--sn-surface);
   font-weight: 700;
 }
 .figma-form-style :deep(.el-radio__input), .figma-form-style :deep(.el-checkbox__input) {
@@ -1209,7 +1209,7 @@ onUnmounted(() => { stopAutoSave(); stop() })
 }
 /* --- 统一 el-select 触发器样式 --- */
 .figma-form-style :deep(.el-select__wrapper) {
-  background-color: #F5F5F5 !important;
+  background-color: var(--sn-slate-light) !important;
   border-radius: var(--sn-radius-md) !important;
   height: 52px !important; /* 必须与输入框高度一致 */
   box-shadow: none !important;
@@ -1219,13 +1219,13 @@ onUnmounted(() => { stopAutoSave(); stop() })
 
 /* 选中后的文字颜色 */
 .figma-form-style :deep(.el-select__placeholder) {
-  color: #111;
+  color: var(--sn-text);
   font-weight: 600;
 }
 
 /* 聚焦状态：纯黑边框 */
 .figma-form-style :deep(.el-select__wrapper.is-focused) {
-  background-color: #FFFFFF !important;
+  background-color: var(--sn-surface) !important;
   box-shadow: 0 0 0 2px var(--sn-primary) !important;
 }
 
@@ -1233,7 +1233,7 @@ onUnmounted(() => { stopAutoSave(); stop() })
 /* 因为使用了 :teleported="false"，我们可以直接深度控制 */
 .figma-form-style :deep(.el-select__popper) {
   border-radius: var(--sn-radius-md) !important;
-  border: 1px solid #F0F0F0 !important;
+  border: 1px solid var(--sn-border) !important;
   box-shadow: 0 10px 30px rgba(0,0,0,0.08) !important;
   overflow: hidden;
   margin-top: 8px !important;
@@ -1250,27 +1250,27 @@ onUnmounted(() => { stopAutoSave(); stop() })
   border-radius: 10px !important;
   margin-bottom: 2px;
   font-weight: 600;
-  color: #666;
+  color: var(--sn-text-secondary);
   padding: 0 16px !important;
 }
 
 /* 选项悬停：浅灰背景 */
 .figma-form-style :deep(.el-select-dropdown__item.is-hovering) {
-  background-color: #F5F5F5 !important;
-  color: #111;
+  background-color: var(--sn-slate-light) !important;
+  color: var(--sn-text);
 }
 
 /* 选项选中：品牌蓝背景，白字 */
 .figma-form-style :deep(.el-select-dropdown__item.is-selected) {
   background-color: var(--sn-primary) !important;
-  color: #FFFFFF !important;
+  color: var(--sn-surface) !important;
 }
 
 /* 隐藏下拉菜单自带的小箭头，让视觉更干净 */
 .figma-form-style :deep(.el-popper__arrow) {
   display: none !important;
 }
-.highlight-none { border-color: #FFCCC7 !important; }
+.highlight-none { border-color: var(--sn-danger-border) !important; }
 
 /* 运动图文卡片重写 (Airbnb 风格) */
 .modern-exercise-grid {
@@ -1281,8 +1281,8 @@ onUnmounted(() => { stopAutoSave(); stop() })
 }
 .modern-exercise-card {
   position: relative;
-  background: #FFFFFF;
-  border: 2px solid #F0F0F0;
+  background: var(--sn-surface);
+  border: 2px solid var(--sn-border);
   border-radius: var(--sn-radius-md);
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
@@ -1291,11 +1291,11 @@ onUnmounted(() => { stopAutoSave(); stop() })
 .modern-exercise-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 30px rgba(0,0,0,0.06);
-  border-color: #CCC;
+  border-color: var(--sn-border);
 }
 .modern-exercise-card.is-active {
-  border-color: #000;
-  background: #FAFAFA;
+  border-color: var(--sn-text);
+  background: var(--sn-slate-light);
 }
 /* 强行掩盖原生 checkbox 影响 */
 .modern-exercise-card :deep(.el-checkbox) { display: flex; width: 100%; height: 100%; margin: 0; padding: 0; }
@@ -1316,40 +1316,40 @@ onUnmounted(() => { stopAutoSave(); stop() })
   padding: 16px 12px;
   font-size: 15px;
   font-weight: 700;
-  color: #111;
+  color: var(--sn-text);
   text-align: center;
 }
 .text-only .exercise-inner {
   height: 100%;
   justify-content: center;
   min-height: 80px;
-  background: #F9F9F9;
+  background: var(--sn-slate-light);
 }
 
 /* 子问题与补充输入 */
 .sub-field-group { margin-top: 16px; display: flex; align-items: center; gap: 12px; }
-.inline-sub-inputs { margin-top: 16px; display: flex; align-items: center; gap: 12px; background: #FAFAFA; padding: 16px; border-radius: var(--sn-radius-md); width: fit-content; }
-.sub-label { font-weight: 600; color: #666; }
+.inline-sub-inputs { margin-top: 16px; display: flex; align-items: center; gap: 12px; background: var(--sn-slate-light); padding: 16px; border-radius: var(--sn-radius-md); width: fit-content; }
+.sub-label { font-weight: 600; color: var(--sn-text-secondary); }
 .sub-input-mt { margin-top: 16px; max-width: 600px; }
 
 /* 选项组栅格 */
 .support-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-.support-group { background: #FAFAFA; padding: 24px; border-radius: var(--sn-radius-lg); }
-.support-label { font-weight: 800; color: #111; margin-bottom: 16px; font-size: 16px; }
+.support-group { background: var(--sn-slate-light); padding: 24px; border-radius: var(--sn-radius-lg); }
+.support-label { font-weight: 800; color: var(--sn-text); margin-bottom: 16px; font-size: 16px; }
 .compact-checkboxes { display: flex; flex-direction: column; gap: 12px; }
 /* 在 support 里面的 checkbox 稍微保留原生形态，避免信息密度过高 */
 .support-group :deep(.el-checkbox__inner) { display: inline-block; width: 20px; height: 20px; border-radius: 6px; }
-.support-group :deep(.el-checkbox__label) { font-size: 15px; color: #333; font-weight: 500; }
+.support-group :deep(.el-checkbox__label) { font-size: 15px; color: var(--sn-text); font-weight: 500; }
 .support-extras { margin-top: 24px; }
-.modern-divider { height: 1px; background: #F0F0F0; margin: 40px 0; }
+.modern-divider { height: 1px; background: var(--sn-border); margin: 40px 0; }
 
 /* 底部保存操作区 */
 .modern-bottom-actions {
   position: sticky;
   bottom: 24px;
   margin-top: 40px;
-  background: #FFFFFF;
-  border: 1px solid #E5E7EB;
+  background: var(--sn-surface);
+  border: 1px solid var(--sn-border);
   border-radius: var(--sn-radius-lg);
   padding: 20px 24px;
   display: flex;
@@ -1372,7 +1372,7 @@ onUnmounted(() => { stopAutoSave(); stop() })
   align-items: center;
   transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 }
-.cta-black-giant:hover { background: rgba(23, 114, 246, 0.06); transform: translateY(-2px); }
+.cta-black-giant:hover { background: rgba(13, 148, 136, 0.06); transform: translateY(-2px); }
 .icon-space { margin-right: 12px; font-size: 24px; }
 .is-spinning { animation: rotating 2s linear infinite; }
 @keyframes rotating { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -1395,7 +1395,7 @@ html[data-accessibility="elderly"] .exercise-inner span { font-size: 18px; }
 .modern-confirm-dialog.el-message-box {
   border-radius: var(--sn-radius-xl) !important;
   padding: 40px 32px !important;
-  background: #FFFFFF !important;
+  background: var(--sn-surface) !important;
   border: none !important;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12) !important;
   max-width: 420px !important;
@@ -1416,7 +1416,7 @@ html[data-accessibility="elderly"] .exercise-inner span { font-size: 18px; }
 .modern-confirm-dialog .el-message-box__title {
   font-size: 24px !important;
   font-weight: 800 !important;
-  color: #111 !important;
+  color: var(--sn-text) !important;
   text-align: center !important;
   letter-spacing: -0.5px !important;
 }
@@ -1429,7 +1429,7 @@ html[data-accessibility="elderly"] .exercise-inner span { font-size: 18px; }
 .modern-confirm-dialog .el-message-box__message {
   font-size: 16px !important;
   font-weight: 500 !important;
-  color: #666 !important;
+  color: var(--sn-text-secondary) !important;
   line-height: 1.6 !important;
   text-align: center !important;
 }
@@ -1453,33 +1453,33 @@ html[data-accessibility="elderly"] .exercise-inner span { font-size: 18px; }
 
 /* 取消/次级按钮 */
 .modern-confirm-dialog .el-button--default {
-  background: #F4F5F7 !important;
-  color: #333 !important;
+  background: var(--sn-slate-light) !important;
+  color: var(--sn-text) !important;
 }
 .modern-confirm-dialog .el-button--default:hover {
-  background: #EAEAEA !important;
+  background: var(--sn-border) !important;
   transform: translateY(-2px) !important;
 }
 
 /* 确认/主级按钮 */
 .modern-confirm-dialog .el-button--primary {
   background: var(--sn-primary) !important;
-  color: #FFF !important;
-  box-shadow: 0 4px 12px rgba(23,114,246,0.15) !important;
+  color: var(--sn-surface) !important;
+  box-shadow: 0 4px 12px rgba(13, 148, 136,0.15) !important;
 }
 .modern-confirm-dialog .el-button--primary:hover {
   background: var(--sn-primary-dark) !important;
   transform: translateY(-2px) !important;
-  box-shadow: 0 8px 24px rgba(23,114,246,0.2) !important;
+  box-shadow: 0 8px 24px rgba(13, 148, 136,0.2) !important;
 }
 
 /* 针对危险操作（如删除）的特殊颜色 */
 .modern-confirm-dialog.danger-action .el-button--primary {
-  background: #EF4444 !important;
+  background: var(--sn-danger) !important;
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2) !important;
 }
 .modern-confirm-dialog.danger-action .el-button--primary:hover {
-  background: #DC2626 !important;
+  background: var(--sn-danger-dark) !important;
   box-shadow: 0 8px 24px rgba(239, 68, 68, 0.3) !important;
 }
 </style>

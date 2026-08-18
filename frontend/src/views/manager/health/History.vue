@@ -360,16 +360,16 @@ function formatDate(dateStr) {
 }
 
 function getScoreColor(score) {
-  if (score > 20) return score >= 80 ? '#10B981' : score >= 60 ? '#F59E0B' : '#EF4444'
-  if (score === 0) return '#10B981'
-  if (score <= 2) return '#F59E0B'
-  return '#EF4444'
+  if (score > 20) return score >= 80 ? 'var(--sn-success)' : score >= 60 ? 'var(--sn-warning)' : 'var(--sn-danger)'
+  if (score === 0) return 'var(--sn-success)'
+  if (score <= 2) return 'var(--sn-warning)'
+  return 'var(--sn-danger)'
 }
 
 function getProgressColor(score) {
-  if (score === 0) return '#10B981'
-  if (score === 1) return '#F59E0B'
-  return '#EF4444'
+  if (score === 0) return 'var(--sn-success)'
+  if (score === 1) return 'var(--sn-warning)'
+  return 'var(--sn-danger)'
 }
 
 function getRiskLabel(level) {
@@ -383,7 +383,7 @@ function getRiskLabel(level) {
 全屏突破与深色/纯白高对比度基调
 ========================================= */
 .sn-subpage {
-  background-color: #F4F5F7;
+  background-color: var(--sn-slate-light);
 }
 
 
@@ -410,11 +410,11 @@ function getRiskLabel(level) {
   cursor: pointer; border: none; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 }
 .whoop-btn-primary { background: transparent; color: var(--sn-primary); border: 1px solid var(--sn-primary); box-shadow: none; }
-.whoop-btn-primary:hover { background: rgba(23, 114, 246, 0.06); transform: translateY(-2px); }
-.whoop-btn-secondary { background: #FFF; color: #111; border: 1px solid #E5E7EB; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-.whoop-btn-secondary:hover { background: #F9FAFB; transform: translateY(-2px); }
-.whoop-btn-text { background: transparent; color: #666; }
-.whoop-btn-text:hover { color: #111; background: #F3F4F6; }
+.whoop-btn-primary:hover { background: rgba(13, 148, 136, 0.06); transform: translateY(-2px); }
+.whoop-btn-secondary { background: var(--sn-surface); color: var(--sn-text); border: 1px solid var(--sn-border); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.whoop-btn-secondary:hover { background: var(--sn-slate-light); transform: translateY(-2px); }
+.whoop-btn-text { background: transparent; color: var(--sn-text-secondary); }
+.whoop-btn-text:hover { color: var(--sn-text); background: var(--sn-slate-light); }
 
 /* =========================================
 WHOOP 风格数据卡片 (核心)
@@ -422,7 +422,7 @@ WHOOP 风格数据卡片 (核心)
 .whoop-card-list { display: flex; flex-direction: column; gap: 32px; }
 
 .whoop-data-card {
-  background: #FFFFFF;
+  background: var(--sn-surface);
   border-radius: var(--sn-radius-lg);
   padding: 32px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0,0,0,0.02);
@@ -437,13 +437,13 @@ WHOOP 风格数据卡片 (核心)
 
 /* 卡片顶部：日期与徽章 */
 .card-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
-.meta-date { font-size: 24px; font-weight: 800; color: #111; letter-spacing: -0.5px; }
+.meta-date { font-size: 24px; font-weight: 800; color: var(--sn-text); letter-spacing: -0.5px; }
 .risk-badge {
   padding: 8px 16px; border-radius: var(--sn-radius-sm); font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
 }
-.risk-low { background: #ECFDF5; color: #059669; }
-.risk-medium { background: #FFFBEB; color: #D97706; }
-.risk-high { background: #FEF2F2; color: #DC2626; }
+.risk-low { background: var(--sn-success-light); color: var(--sn-success); }
+.risk-medium { background: var(--sn-danger-light); color: var(--sn-warning); }
+.risk-high { background: var(--sn-danger-light); color: var(--sn-danger-dark); }
 
 /* 卡片主体网格：左圈右框 */
 .card-body {
@@ -463,11 +463,11 @@ WHOOP 风格数据卡片 (核心)
   border-radius: 50%;
   border: 8px solid; /* 动态颜色边界 */
   display: flex; flex-direction: column; justify-content: center; align-items: center;
-  background: #FFF;
+  background: var(--sn-surface);
   box-shadow: inset 0 4px 12px rgba(0,0,0,0.04);
 }
 .score-value { font-size: 48px; font-weight: 900; line-height: 1; letter-spacing: -2px; }
-.score-label { font-size: 13px; font-weight: 700; color: #666; margin-top: 4px; text-transform: uppercase; }
+.score-label { font-size: 13px; font-weight: 700; color: var(--sn-text-secondary); margin-top: 4px; text-transform: uppercase; }
 
 /* 右侧：高密度数据药丸 (Pills) */
 .sub-metrics-grid {
@@ -476,25 +476,25 @@ WHOOP 风格数据卡片 (核心)
   gap: 12px;
 }
 .metric-pill {
-  background: #F9FAFB;
+  background: var(--sn-slate-light);
   padding: 16px;
   border-radius: var(--sn-radius-md);
   display: flex; flex-direction: column; justify-content: space-between;
   border: 1px solid transparent;
   transition: 0.2s;
 }
-.whoop-data-card:hover .metric-pill { background: #F3F4F6; }
-.m-name { font-size: 14px; font-weight: 600; color: #6B7280; margin-bottom: 8px; }
+.whoop-data-card:hover .metric-pill { background: var(--sn-slate-light); }
+.m-name { font-size: 14px; font-weight: 600; color: var(--sn-text-secondary); margin-bottom: 8px; }
 .m-val { font-size: 24px; font-weight: 800; line-height: 1; }
 
 /* 卡片底栏 */
 .card-footer {
   display: flex; justify-content: space-between; align-items: center;
-  padding-top: 24px; border-top: 1px solid #F3F4F6;
+  padding-top: 24px; border-top: 1px solid var(--sn-slate-light);
 }
-.test-index { font-size: 13px; font-weight: 700; color: #9CA3AF; letter-spacing: 1px; }
+.test-index { font-size: 13px; font-weight: 700; color: var(--sn-text-muted); letter-spacing: 1px; }
 .detail-link {
-  background: none; border: none; font-size: 15px; font-weight: 700; color: #111;
+  background: none; border: none; font-size: 15px; font-weight: 700; color: var(--sn-text);
   cursor: pointer; display: flex; align-items: center; gap: 4px; transition: 0.2s;
 }
 .detail-link .arrow { transition: transform 0.2s; }
@@ -502,17 +502,17 @@ WHOOP 风格数据卡片 (核心)
 
 /* --- 洞察弹窗 (Insights Dialog) --- */
 :deep(.whoop-insight-dialog) {
-  border-radius: var(--sn-radius-xl) !important; overflow: hidden; padding: 0; border: 1px solid #E5E7EB;
+  border-radius: var(--sn-radius-xl) !important; overflow: hidden; padding: 0; border: 1px solid var(--sn-border);
 }
 :deep(.whoop-insight-dialog .el-dialog__header) {
   padding: 32px 40px 16px 40px; margin: 0;
 }
 :deep(.whoop-insight-dialog .el-dialog__title) {
-  font-size: 28px; font-weight: 900; color: #111; letter-spacing: -0.5px;
+  font-size: 28px; font-weight: 900; color: var(--sn-text); letter-spacing: -0.5px;
 }
 .insight-content { padding: 0 40px 24px 40px; min-height: 150px; }
-.insight-result { background: #F9FAFB; border-radius: var(--sn-radius-lg); padding: 32px; }
-.insight-text { font-size: 16px; line-height: 1.8; color: #374151; }
+.insight-result { background: var(--sn-slate-light); border-radius: var(--sn-radius-lg); padding: 32px; }
+.insight-text { font-size: 16px; line-height: 1.8; color: var(--sn-text-secondary); }
 
 .insight-actions { display: flex; justify-content: space-between; width: 100%; padding: 0 24px; }
 .right-group { display: flex; gap: 12px; }
@@ -529,7 +529,7 @@ WHOOP 风格数据卡片 (核心)
 :deep(.whoop-detail-dialog .el-dialog__title) {
   font-size: 26px;
   font-weight: 900;
-  color: #111;
+  color: var(--sn-text);
 }
 .detail-content { padding: 8px 32px 32px 32px; }
 .detail-summary {
@@ -537,8 +537,8 @@ WHOOP 风格数据卡片 (核心)
   justify-content: space-between;
   align-items: center;
   gap: 24px;
-  background: #F9FAFB;
-  border: 1px solid #E5E7EB;
+  background: var(--sn-slate-light);
+  border: 1px solid var(--sn-border);
   border-radius: var(--sn-radius-lg);
   padding: 24px;
   margin-bottom: 24px;
@@ -546,7 +546,7 @@ WHOOP 风格数据卡片 (核心)
 .detail-date {
   font-size: 22px;
   font-weight: 900;
-  color: #111;
+  color: var(--sn-text);
   margin-bottom: 10px;
 }
 .detail-risk {
@@ -561,7 +561,7 @@ WHOOP 风格数据卡片 (核心)
   height: 118px;
   border-radius: 59px;
   background: var(--sn-primary);
-  color: #FFFFFF;
+  color: var(--sn-surface);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -584,14 +584,14 @@ WHOOP 风格数据卡片 (核心)
   margin-bottom: 28px;
 }
 .detail-dim {
-  border: 1px solid #E5E7EB;
-  background: #FFFFFF;
+  border: 1px solid var(--sn-border);
+  background: var(--sn-surface);
   border-radius: var(--sn-radius-md);
   padding: 18px;
 }
 .detail-dim.alert {
-  background: #FEF2F2;
-  border-color: #FECACA;
+  background: var(--sn-danger-light);
+  border-color: var(--sn-danger-border);
 }
 .detail-dim span,
 .detail-dim strong,
@@ -600,29 +600,29 @@ WHOOP 风格数据卡片 (核心)
 }
 .detail-dim span {
   font-size: 14px;
-  color: #6B7280;
+  color: var(--sn-text-secondary);
   font-weight: 800;
 }
 .detail-dim strong {
   font-size: 26px;
-  color: #111;
+  color: var(--sn-text);
   margin: 8px 0 4px 0;
 }
 .detail-dim em {
   font-style: normal;
   font-size: 13px;
-  color: #6B7280;
+  color: var(--sn-text-secondary);
   font-weight: 700;
 }
-.detail-dim.alert em { color: #DC2626; }
+.detail-dim.alert em { color: var(--sn-danger-dark); }
 .detail-recommendations h3 {
   margin: 0 0 16px 0;
   font-size: 22px;
   font-weight: 900;
-  color: #111;
+  color: var(--sn-text);
 }
 .detail-rec-group {
-  background: #F9FAFB;
+  background: var(--sn-slate-light);
   border-radius: var(--sn-radius-md);
   padding: 18px 22px;
   margin-bottom: 14px;
@@ -631,12 +631,12 @@ WHOOP 风格数据卡片 (核心)
   margin: 0 0 10px 0;
   font-size: 16px;
   font-weight: 900;
-  color: #111;
+  color: var(--sn-text);
 }
 .detail-rec-group ul {
   margin: 0;
   padding-left: 20px;
-  color: #374151;
+  color: var(--sn-text-secondary);
   line-height: 1.8;
   font-weight: 600;
 }

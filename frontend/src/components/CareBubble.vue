@@ -83,7 +83,7 @@ const handleLater = () => {
 }
 
 .care-icon {
-  color: #409eff;
+  color: var(--sn-primary);
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
@@ -92,7 +92,7 @@ const handleLater = () => {
 
 .care-message {
   font-size: 18px;
-  color: #333;
+  color: var(--sn-text);
   line-height: 1.6;
   margin: 0 0 24px 0;
   padding: 0 20px;
