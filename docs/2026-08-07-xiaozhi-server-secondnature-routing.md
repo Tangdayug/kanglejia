@@ -91,6 +91,19 @@ docker restart xiaozhi-esp32-server
 
 生产环境应保留认证，并给代理连接提供有效 token。
 
+## 声纹/设备绑定（可选）
+
+SecondNature 默认不再强制要求小智硬件提前注册声纹。只要 `XIAOZHI_DEVICE_WHITELIST_ENABLED=false`（默认值），未绑定的设备会自动归入系统内置的默认硬件账号，直接开始健康对话。
+
+如需严格的账号隔离（例如子女分别管理不同老人的设备），可开启白名单：
+
+```yaml
+environment:
+  - XIAOZHI_DEVICE_WHITELIST_ENABLED=true
+```
+
+开启后，新设备首次连接会被登记为 `pending` 状态并绑定到当前 JWT 用户；无 JWT 时绑定到默认账号。
+
 ## SecondNature 侧设置
 
 SecondNature 默认智能体名称为 `second-nature`（`XIAOZHI_AGENT_NAME` 默认即此值）。

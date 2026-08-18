@@ -238,6 +238,33 @@ def validate_xiaozhi_agent_name(agent_name: Optional[str]) -> bool:
     return agent_name.strip().lower() == XIAOZHI_AGENT_NAME.strip().lower()
 
 
+def _get_or_create_default_hardware_user(db_session: Session) -> int:
+    """
+    为未绑定账号的小智硬件自动创建/复用默认用户。
+
+    当系统不依赖声纹做账号归属（XIAOZHI_DEVICE_WHITELIST_ENABLED=false）且硬件未携带
+    用户 JWT 时，自动把设备归到默认账号，实现“不注册也能聊”。
+    """
+    from model.user import User
+    from common.auth import auth_handler
+
+    user = db_session.get(User, 1)
+    if user is not None:
+        return user.id
+
+    user = User()
+    user.id = 1
+    user.username = "hardware_default"
+    user.password = auth_handler.get_password_hash("hardware_default")
+    user.name = "默认硬件用户"
+    user.gender = "未设置"
+    user.role = "USER"
+    db_session.add(user)
+    db_session.commit()
+    db_session.refresh(user)
+    return user.id
+
+
 def is_voiceprint_allowed(
     voiceprint_id: str,
     db_session: Session,
@@ -285,7 +312,7 @@ def is_voiceprint_allowed(
     # 开启白名单：新声纹自动登记为 pending，绑定到当前用户
     new_mapping = XiaozhiVoiceprint()
     new_mapping.voiceprint_id = voiceprint_id
-    new_mapping.user_id = current_user_id if current_user_id is not None else 1
+    new_mapping.user_id = current_user_id if current_user_id is not None else _get_or_create_default_hardware_user(db_session)
     new_mapping.is_allowed = True
     new_mapping.verification_status = "pending"
     db_session.add(new_mapping)
@@ -656,6 +683,24 @@ class XiaozhiDialogueManager:
                 raise PermissionError("该声纹/设备已绑定到其他账号，无法接入本系统")
 
             user_id = recognized_user_id if recognized_user_id is not None else fallback_user_id
+
+            # 未开启声纹白名单且无 JWT 时，自动归到默认硬件账号，实现“免绑定接入”
+            if user_id is None:
+                from common.constant import XIAOZHI_DEVICE_WHITELIST_ENABLED
+                if not XIAOZHI_DEVICE_WHITELIST_ENABLED:
+                    user_id = _get_or_create_default_hardware_user(db_session)
+                    # 同时把该设备标识绑定到默认账号，便于后续会话复用
+                    mapping = db_session.execute(
+                        select(XiaozhiVoiceprint).where(XiaozhiVoiceprint.voiceprint_id == voiceprint_id)
+                    ).scalar_one_or_none()
+                    if mapping is None:
+                        mapping = XiaozhiVoiceprint()
+                        mapping.voiceprint_id = voiceprint_id
+                    mapping.user_id = user_id
+                    mapping.is_allowed = True
+                    mapping.verification_status = "allowed"
+                    db_session.add(mapping)
+                    db_session.commit()
 
         # 账号隔离：无法识别归属账号时拒绝接入，避免数据落入默认账号
         if user_id is None:
