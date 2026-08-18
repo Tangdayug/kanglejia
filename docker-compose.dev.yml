@@ -33,7 +33,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "1.0"
-          memory: 1G
+          cpus: "2.0"
+          memory: 2G
     # 不对外暴露端口；构建产物通过 ./frontend/dist 共享给 app 服务
     ports: []

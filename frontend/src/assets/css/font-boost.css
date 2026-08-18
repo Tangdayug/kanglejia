@@ -1,0 +1,274 @@
+/* ============================================================
+   全站字号二次放大补丁（font-boost.css）
+   作用：覆盖各组件里写死的偏小字号，保证老年/弱视力用户可读。
+   加载顺序：在 Element Plus 之后引入，因此优先级高于组件默认样式。
+   ============================================================ */
+
+/* ---------- 0. 安全兜底：关键 Element Plus 组件使用更大基础字号 ---------- */
+.el-button,
+.el-input__inner,
+.el-textarea__inner,
+.el-select .el-input__inner,
+.el-radio__label,
+.el-checkbox__label,
+.el-form-item__label,
+.el-dialog__title,
+.el-message-box__message,
+.el-tabs__item,
+.el-menu-item,
+.el-sub-menu__title {
+  font-size: var(--el-font-size-base, 18px);
+}
+
+/* ---------- 1. 顶部与导航 ---------- */
+.sn-back-btn,
+.back-nav-btn {
+  font-size: 18px !important;
+}
+.sn-page-title {
+  font-size: 44px !important;
+}
+.sn-page-subtitle {
+  font-size: 20px !important;
+}
+
+/* 侧边栏 */
+.sidebar-brand-name {
+  font-size: 20px !important;
+}
+.menu-group-title {
+  font-size: 16px !important;
+}
+.el-menu-item,
+.el-sub-menu__title {
+  font-size: 18px !important;
+}
+
+/* ---------- 2. 聊天对话（ChatAI / ChatMessage） ---------- */
+.message-text {
+  font-size: 24px !important;
+  line-height: 1.7 !important;
+}
+.message-role {
+  font-size: 17px !important;
+}
+.message-time,
+.source-tag {
+  font-size: 16px !important;
+}
+.detail-toggle-btn {
+  font-size: 17px !important;
+  padding: 8px 16px !important;
+}
+.chat-message-text,
+.message-content {
+  font-size: 24px !important;
+}
+
+/* 聊天输入框与底部区域 */
+:deep(.message-input .el-textarea__inner),
+.message-input .el-textarea__inner,
+.glass-input-wrapper .el-textarea__inner {
+  font-size: 20px !important;
+}
+.send-button,
+.ai-disclaimer {
+  font-size: 18px !important;
+}
+.help-btn {
+  font-size: 17px !important;
+}
+.bento-card {
+  font-size: 18px !important;
+}
+.greeting-subtitle {
+  font-size: 24px !important;
+}
+
+/* ---------- 3. 健康科普 ---------- */
+.card-title,
+.article-title {
+  font-size: 24px !important;
+}
+.card-summary,
+.article-summary {
+  font-size: 18px !important;
+}
+.category-pill,
+.date-text,
+.type-badge {
+  font-size: 16px !important;
+}
+.detail-content {
+  font-size: 20px !important;
+  line-height: 1.8 !important;
+}
+.cta-black-btn {
+  font-size: 18px !important;
+}
+
+/* ---------- 4. 首页（Home） ---------- */
+.welcome-title {
+  font-size: 44px !important;
+}
+.welcome-text {
+  font-size: 22px !important;
+}
+.date-capsule {
+  font-size: 18px !important;
+}
+.control-btn {
+  font-size: 18px !important;
+}
+.card-mini-title {
+  font-size: 16px !important;
+}
+.card-text h4 {
+  font-size: 20px !important;
+}
+.card-text p {
+  font-size: 17px !important;
+}
+.user-name {
+  font-size: 24px !important;
+}
+.user-role {
+  font-size: 16px !important;
+}
+.item-left {
+  font-size: 18px !important;
+}
+.guide-title {
+  font-size: 30px !important;
+}
+.step-title {
+  font-size: 19px !important;
+}
+.step-desc {
+  font-size: 17px !important;
+}
+
+/* ---------- 5. 健康档案与评估 ---------- */
+.card-title {
+  font-size: 24px !important;
+}
+.question-text {
+  font-size: 22px !important;
+}
+.support-label {
+  font-size: 19px !important;
+}
+.support-group :deep(.el-checkbox__label) {
+  font-size: 18px !important;
+}
+.m-name {
+  font-size: 17px !important;
+}
+.m-val {
+  font-size: 28px !important;
+}
+.score-value {
+  font-size: 56px !important;
+}
+.meta-date {
+  font-size: 28px !important;
+}
+.insight-text {
+  font-size: 20px !important;
+}
+
+/* ---------- 6. 健康测试 ---------- */
+.hero-title {
+  font-size: 64px !important;
+}
+.hero-subtitle {
+  font-size: 24px !important;
+}
+.q-statement {
+  font-size: 48px !important;
+}
+.choice-card {
+  font-size: 36px !important;
+}
+.tag {
+  font-size: 16px !important;
+}
+.progress-count {
+  font-size: 17px !important;
+}
+
+/* ---------- 7. 登录/注册/模式选择 ---------- */
+.brand-name {
+  font-size: 30px !important;
+}
+.auth-box h3 {
+  font-size: 28px !important;
+}
+.mode-pill .txt {
+  font-size: 26px !important;
+}
+
+/* ---------- 8. 弹窗与表单 ---------- */
+.el-dialog__title {
+  font-size: 26px !important;
+}
+.el-message-box__title {
+  font-size: 26px !important;
+}
+.el-message-box__message {
+  font-size: 19px !important;
+}
+.el-form-item__label {
+  font-size: 18px !important;
+}
+.el-button {
+  font-size: 17px !important;
+}
+.modern-confirm-dialog .el-message-box__message {
+  font-size: 19px !important;
+}
+.modern-confirm-dialog .el-button {
+  font-size: 18px !important;
+}
+
+/* ---------- 9. 干预日志 ---------- */
+.row-content {
+  font-size: 18px !important;
+}
+.row-sub-meta,
+.row-date {
+  font-size: 16px !important;
+}
+
+/* ---------- 10. 老年人模式在以上基础上再放大一档 ---------- */
+html[data-accessibility="elderly"] .message-text {
+  font-size: 28px !important;
+}
+html[data-accessibility="elderly"] .card-title,
+html[data-accessibility="elderly"] .article-title {
+  font-size: 30px !important;
+}
+html[data-accessibility="elderly"] .card-summary,
+html[data-accessibility="elderly"] .article-summary {
+  font-size: 24px !important;
+}
+html[data-accessibility="elderly"] .detail-content {
+  font-size: 26px !important;
+}
+html[data-accessibility="elderly"] .welcome-title {
+  font-size: 56px !important;
+}
+html[data-accessibility="elderly"] .welcome-text {
+  font-size: 28px !important;
+}
+html[data-accessibility="elderly"] .sn-page-title {
+  font-size: 52px !important;
+}
+html[data-accessibility="elderly"] .control-btn,
+html[data-accessibility="elderly"] .item-left {
+  font-size: 24px !important;
+}
+html[data-accessibility="elderly"] .el-menu-item,
+html[data-accessibility="elderly"] .el-sub-menu__title {
+  font-size: 24px !important;
+}

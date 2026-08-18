@@ -8,6 +8,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import '@/assets/css/global.css'
 import '@/assets/css/accessibility.css'
 import '@/assets/css/responsive.css'
+import '@/assets/css/font-boost.css'
 import { initAccessibility } from '@/composables/useAccessibility'
 
 // 初始化无障碍模式

@@ -4,20 +4,20 @@
   --sn-font-family: AlibabaHealthFont, 'PingFang SC', 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
   --el-font-family: AlibabaHealthFont, 'PingFang SC', 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
 
-  /* 字体大小基准（整体放大一级，兼顾可读性与布局） */
-  --font-size-base: 18px;
+  /* 字体大小基准（适老化，整体再放大一级） */
+  --font-size-base: 20px;
 
   /* 标题字体 */
-  --font-size-h1: 3.5rem;        /* 63px */
-  --font-size-h2: 2.125rem;      /* 38px */
-  --font-size-h3: 1.625rem;      /* 29px */
-  --font-size-h4: 1.375rem;      /* 25px */
+  --font-size-h1: 4rem;          /* 80px */
+  --font-size-h2: 2.5rem;        /* 50px */
+  --font-size-h3: 2rem;          /* 40px */
+  --font-size-h4: 1.625rem;      /* 32px */
 
   /* 正文字体 */
-  --font-size-large: 1.375rem;   /* 25px */
-  --font-size-medium: 1.25rem;   /* 22px */
-  --font-size-normal: 1.125rem;  /* 18px */
-  --font-size-small: 1rem;       /* 18px */
+  --font-size-large: 1.625rem;   /* 32px */
+  --font-size-medium: 1.375rem;  /* 27px */
+  --font-size-normal: 1.25rem;   /* 25px */
+  --font-size-small: 1.125rem;   /* 22px */
 
   /* 行高 */
   --line-height-normal: 1.6;
@@ -64,11 +64,11 @@
   --sn-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.10);
 
   /* 覆盖 Element Plus 基础字号，让所有组件文字同步放大 */
-  --el-font-size-extra-small: 14px;
-  --el-font-size-small: 16px;
-  --el-font-size-base: 18px;
-  --el-font-size-large: 20px;
-  --el-font-size-extra-large: 24px;
+  --el-font-size-extra-small: 16px;
+  --el-font-size-small: 18px;
+  --el-font-size-base: 20px;
+  --el-font-size-large: 24px;
+  --el-font-size-extra-large: 28px;
 
   /* 覆盖 Element Plus 主题色（与 --sn-primary 保持一致） */
   --el-color-primary: #0D9488;
@@ -140,19 +140,19 @@ a {
 
 html[data-accessibility="elderly"] {
   /* 1. 🌟 核心魔法：覆盖 Element Plus 全局字体变量，所有组件文字自动变大 */
-  --el-font-size-extra-small: 16px !important;
-  --el-font-size-small: 18px !important;
-  --el-font-size-base: 20px !important;      /* 基础字号飙升到 20px */
-  --el-font-size-large: 24px !important;
-  --el-font-size-extra-large: 28px !important;
+  --el-font-size-extra-small: 18px !important;
+  --el-font-size-small: 20px !important;
+  --el-font-size-base: 24px !important;      /* 基础字号飙升到 24px */
+  --el-font-size-large: 28px !important;
+  --el-font-size-extra-large: 32px !important;
 
   /* 2. 🌟 放大所有组件(输入框/按钮/选择器)的物理高度，防止大字被上下切边 */
-  --el-component-size: 50px !important;
-  --el-component-size-large: 60px !important;
-  --el-component-size-small: 42px !important;
+  --el-component-size: 56px !important;
+  --el-component-size-large: 68px !important;
+  --el-component-size-small: 46px !important;
 
   /* 3. 基础网页字号 */
-  font-size: 20px !important;
+  font-size: 24px !important;
 }
 
 /* --- 针对核心区域的精准强制放大 --- */
@@ -168,25 +168,25 @@ html[data-accessibility="elderly"] .el-menu-item,
 html[data-accessibility="elderly"] .el-sub-menu__title,
 html[data-accessibility="elderly"] .el-menu-item span,
 html[data-accessibility="elderly"] .el-sub-menu__title span {
-  font-size: 24px !important;   /* 🌟 字体从 22px 放大到 24px */
-  height: 85px !important;
-  line-height: 85px !important;
+  font-size: 26px !important;   /* 🌟 字体从 24px 放大到 26px */
+  height: 92px !important;
+  line-height: 92px !important;
 }
 
 /* 二级子菜单放大 */
 html[data-accessibility="elderly"] .el-sub-menu .el-menu-item {
-  font-size: 24px !important;
-  height: 85px !important;
-  line-height: 85px !important;
-  padding-left: 55px !important;
+  font-size: 26px !important;
+  height: 92px !important;
+  line-height: 92px !important;
+  padding-left: 60px !important;
 }
 
 /* 图标同步放大 */
 html[data-accessibility="elderly"] .el-menu-item .el-icon,
 html[data-accessibility="elderly"] .el-sub-menu__title .el-icon {
-  font-size: 28px !important;
-  width: 34px !important;
-  margin-right: 15px !important;
+  font-size: 30px !important;
+  width: 38px !important;
+  margin-right: 16px !important;
 }
 
 

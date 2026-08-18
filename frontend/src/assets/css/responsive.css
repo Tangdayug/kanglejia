@@ -2,17 +2,13 @@
    通用响应式与移动端兜底样式（Element Plus 版）
    ============================================================ */
 
-/* 根元素基准字号 */
+/* 根元素基准字号：统一使用 global.css 的 --font-size-base，不再缩小 */
 html {
-  font-size: 15px;
-}
-
-@media (min-width: 768px) {
-  html { font-size: 16px; }
+  font-size: var(--font-size-base);
 }
 
 @media (max-width: 360px) {
-  html { font-size: 14px; }
+  html { font-size: calc(var(--font-size-base) - 2px); }
 }
 
 /* 防止移动端出现横向滚动条 */
