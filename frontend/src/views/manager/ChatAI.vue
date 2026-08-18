@@ -86,6 +86,8 @@
               :sources="message.sources"
               :created-at="message.createdAt"
               :is-speaking="currentlySpeakingMessageId === message.id"
+              @speak="speakMessage"
+              @pause="pauseMessage"
             />
 
             <div v-if="isStreaming && (!messages.length || messages[messages.length - 1].role !== 'assistant')" class="ai-thinking-row">
@@ -132,6 +134,7 @@ import ChatInput from '@/components/ChatInput.vue'
 import { createSession, getMessages, streamMessage, getRecommendations, checkReadiness } from '@/api/chatAI'
 import { submitFeedback } from '@/api/care'
 import { useSpeech } from '@/composables/useSpeech'
+import tts from '@/utils/tts'
 
 const router = useRouter()
 const route = useRoute()
@@ -156,6 +159,8 @@ const messagesRef = ref(null)
 const interventionContext = ref(null)
 const hasProcessedCareMessage = ref(false)
 const sidebarOpen = ref(false)
+const autoPlayVoice = ref(true)
+const pollTimer = ref(null)
 
 onMounted(async () => {
   await checkUserReadiness()
@@ -163,6 +168,14 @@ onMounted(async () => {
   currentSession.value = null
   messages.value = []
   await loadRecommendations()
+
+  // 初始化语音播报（用于健康对话自动播报）
+  if (autoPlayVoice.value) {
+    tts.init().catch(() => {})
+  }
+
+  // 定时轮询当前会话消息，实现硬件/网页对话实时同步
+  startPolling()
 
   const careMessage = route.query.careMessage
   const interventionId = route.query.interventionId
@@ -175,7 +188,34 @@ onMounted(async () => {
   }
 })
 
-onUnmounted(() => { stop() })
+onUnmounted(() => {
+  stop()
+  stopPolling()
+})
+
+function startPolling() {
+  stopPolling()
+  pollTimer.value = setInterval(async () => {
+    if (!currentSession.value?.id || isStreaming.value) return
+    try {
+      const res = await getMessages(currentSession.value.id)
+      const freshMessages = res.data.messages || []
+      if (freshMessages.length !== messages.value.length) {
+        messages.value = freshMessages
+        scrollToBottom()
+      }
+    } catch (error) {
+      // 静默忽略轮询失败，避免打断用户
+    }
+  }, 2000)
+}
+
+function stopPolling() {
+  if (pollTimer.value) {
+    clearInterval(pollTimer.value)
+    pollTimer.value = null
+  }
+}
 
 function stripMarkdown(text) {
   if (!text) return ''
@@ -185,15 +225,41 @@ function stripMarkdown(text) {
     .replace(/\n{3,}/g, '\n\n').trim()
 }
 
+function speakMessage(content, messageId) {
+  if (!content) return
+  const id = messageId || Date.now()
+  lastSpokenMessageId.value = id
+  currentlySpeakingMessageId.value = id
+  const plainText = stripMarkdown(content)
+  if (!plainText) {
+    currentlySpeakingMessageId.value = null
+    return
+  }
+  tts.speak(plainText, {
+    onEnd: () => {
+      if (currentlySpeakingMessageId.value === id) {
+        currentlySpeakingMessageId.value = null
+      }
+    },
+    onError: () => {
+      if (currentlySpeakingMessageId.value === id) {
+        currentlySpeakingMessageId.value = null
+      }
+    }
+  })
+}
+
+function pauseMessage() {
+  tts.stop()
+  currentlySpeakingMessageId.value = null
+}
+
 watch(messages, (newMessages, oldMessages) => {
-  if (!speechEnabled.value) return
   if (newMessages.length > (oldMessages?.length || 0)) {
     const latestMessage = newMessages[newMessages.length - 1]
-    if (latestMessage.role === 'assistant' && latestMessage.id !== lastSpokenMessageId.value && !isStreaming.value) {
-      lastSpokenMessageId.value = latestMessage.id
-      currentlySpeakingMessageId.value = latestMessage.id
-      const plainText = stripMarkdown(latestMessage.content)
-      if (plainText) speakWithCallback(plainText, () => { currentlySpeakingMessageId.value = null }, 500)
+    // 自动播报 AI 回复（默认开启）
+    if (autoPlayVoice.value && latestMessage.role === 'assistant' && latestMessage.id !== lastSpokenMessageId.value && !isStreaming.value) {
+      speakMessage(latestMessage.content, latestMessage.id)
     }
     if (latestMessage.role === 'user' && interventionContext.value && currentSession.value) {
       submitFeedback({ interventionId: interventionContext.value.id, feedback: latestMessage.content, sessionId: currentSession.value.id })
@@ -203,14 +269,10 @@ watch(messages, (newMessages, oldMessages) => {
 }, { deep: true })
 
 watch(isStreaming, (newValue, oldValue) => {
-  if (!speechEnabled.value) return
   if (oldValue === true && newValue === false && messages.value.length > 0) {
     const latestMessage = messages.value[messages.value.length - 1]
-    if (latestMessage.role === 'assistant' && latestMessage.id !== lastSpokenMessageId.value) {
-      lastSpokenMessageId.value = latestMessage.id
-      currentlySpeakingMessageId.value = latestMessage.id
-      const plainText = stripMarkdown(latestMessage.content)
-      if (plainText) speakWithCallback(plainText, () => { currentlySpeakingMessageId.value = null }, 300)
+    if (autoPlayVoice.value && latestMessage.role === 'assistant' && latestMessage.id !== lastSpokenMessageId.value) {
+      speakMessage(latestMessage.content, latestMessage.id)
     }
   }
 })

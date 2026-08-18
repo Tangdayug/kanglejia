@@ -27,18 +27,41 @@
         />
       </div>
       <div class="message-bubble">
-        <div class="message-text" v-html="formatMessage(content)"></div>
+        <!-- 用户消息保持原样；AI 消息拆分为简要 + 详情两部分 -->
+        <div v-if="role === 'user'" class="message-text" v-html="formatMessage(content)"></div>
+        <div v-else class="message-text ai-message-text">
+          <div class="message-summary" v-html="summaryHtml"></div>
+          <div v-if="hasDetail && showDetail" class="message-detail" v-html="detailHtml"></div>
+          <button
+            v-if="hasDetail"
+            class="detail-toggle-btn"
+            @click.stop="toggleDetail"
+          >
+            {{ showDetail ? '收起详情' : '查看详情' }}
+          </button>
+        </div>
       </div>
       <!-- 移除灰色来源标签，AI回复中已标注知识来源 -->
-      <div class="message-time">{{ formatTime(createdAt) }}</div>
+      <div class="message-actions">
+        <span class="message-time">{{ formatTime(createdAt) }}</span>
+        <button
+          v-if="role === 'assistant'"
+          class="message-speaker-btn"
+          :class="{ 'is-speaking': isSpeaking }"
+          @click.stop="handleSpeakerClick"
+          title="语音播报"
+        >
+          <el-icon><component :is="isSpeaking ? 'VideoPause' : 'Microphone'" /></el-icon>
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { defineProps, computed } from 'vue'
+import { defineProps, defineEmits, computed, ref } from 'vue'
 import { marked } from 'marked'
-import { VideoPause } from '@element-plus/icons-vue'
+import { VideoPause, Microphone } from '@element-plus/icons-vue'
 import { useSpeech } from '@/composables/useSpeech'
 
 const { stop } = useSpeech()
@@ -67,8 +90,26 @@ const props = defineProps({
   }
 })
 
+const emit = defineEmits(['speak', 'pause'])
+
+const showDetail = ref(false)
+
 const handlePause = () => {
   stop()
+  emit('pause')
+}
+
+const handleSpeakerClick = () => {
+  if (props.isSpeaking) {
+    stop()
+    emit('pause')
+  } else {
+    emit('speak', props.content)
+  }
+}
+
+const toggleDetail = () => {
+  showDetail.value = !showDetail.value
 }
 
 // Configure marked for better rendering
@@ -82,16 +123,26 @@ marked.setOptions({
 function formatMessage(content) {
   if (!content) return ''
 
-  // Only parse markdown for assistant messages
-  // For user messages, just convert newlines to prevent potential issues
   try {
     return marked.parse(content)
   } catch (error) {
     console.error('Markdown parsing error:', error)
-    // Fallback to simple newline conversion
     return content.replace(/\n/g, '<br>')
   }
 }
+
+const messageParts = computed(() => {
+  if (!props.content) return { summary: '', detail: '' }
+  const parts = props.content.split(/\n\s*\n/)
+  return {
+    summary: parts[0] || '',
+    detail: parts.slice(1).join('\n\n') || ''
+  }
+})
+
+const summaryHtml = computed(() => formatMessage(messageParts.value.summary))
+const detailHtml = computed(() => formatMessage(messageParts.value.detail))
+const hasDetail = computed(() => messageParts.value.detail.trim().length > 0)
 
 function formatTime(dateStr) {
   if (!dateStr) return ''
@@ -110,9 +161,9 @@ function formatTime(dateStr) {
 <style scoped>
 /* 1. 核心文本容器：禁用 pre-wrap 以免与 Markdown 的 <br> 冲突 */
  .message-text {
-  line-height: 1.6 !important;
+  line-height: 1.7 !important;
   letter-spacing: 0 !important;
-  font-size: 16px;
+  font-size: 18px;
   word-break: break-word;
   white-space: normal !important; /* 关键修复：让 HTML 标签控制换行 */
 }
@@ -357,6 +408,34 @@ function formatTime(dateStr) {
   border-top-color: rgba(255, 255, 255, 0.2) !important;
 }
 
+/* === AI 消息：简要 / 详情折叠 === */
+.message-summary {
+  font-weight: 500;
+}
+
+.message-detail {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(0, 0, 0, 0.08);
+}
+
+.detail-toggle-btn {
+  margin-top: 10px;
+  padding: 6px 12px;
+  background: transparent;
+  border: 1px solid var(--sn-primary);
+  color: var(--sn-primary);
+  border-radius: var(--sn-radius-md);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.detail-toggle-btn:hover {
+  background: rgba(23, 114, 246, 0.06);
+}
+
 /* === Sources & Time === */
 .message-sources {
   margin-top: 8px !important;
@@ -366,7 +445,7 @@ function formatTime(dateStr) {
 }
 
 .source-tag {
-  font-size: 11px;
+  font-size: 13px;
   padding: 3px 8px !important;
   border-radius: 4px;
   font-weight: 500;
@@ -375,11 +454,42 @@ function formatTime(dateStr) {
   border: 1px solid #eee;
 }
 
+.message-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
 .message-time {
-  font-size: 12px;
+  font-size: 13px;
   color: #888;
-  margin-top: 6px !important;
   font-weight: 500;
+}
+
+.message-speaker-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #E5E7EB;
+  background: #FFF;
+  color: #666;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.message-speaker-btn:hover {
+  border-color: var(--sn-primary);
+  color: var(--sn-primary);
+}
+
+.message-speaker-btn.is-speaking {
+  background: var(--sn-primary);
+  border-color: var(--sn-primary);
+  color: #FFF;
 }
 
 /* === Streaming indicator === */

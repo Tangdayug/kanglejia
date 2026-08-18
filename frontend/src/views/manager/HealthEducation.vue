@@ -42,8 +42,11 @@
           class="modern-card"
           @click="viewArticle(article); speakArticle(article)"
         >
-          <div class="card-cover" v-if="article.coverImage">
-            <img :src="article.coverImage" :alt="article.title" />
+          <div class="card-cover" v-if="article.coverImage || article.type === 'video'">
+            <img v-if="article.coverImage" :src="article.coverImage" :alt="article.title" />
+            <div v-else-if="article.type === 'video'" class="video-placeholder">
+              <el-icon :size="48"><VideoPlay /></el-icon>
+            </div>
             <div class="type-badge" :class="article.type">
               {{ getTypeText(article.type) }}
             </div>
@@ -100,7 +103,21 @@
         <el-form-item label="正文内容" required>
           <el-input v-model="uploadForm.content" type="textarea" :rows="8" placeholder="编写正文..." />
         </el-form-item>
-        <el-form-item label="视频地址" v-if="uploadForm.type === 'video'">
+        <el-form-item label="上传视频" v-if="uploadForm.type === 'video'">
+          <el-upload
+            class="modern-video-uploader"
+            action="#"
+            :show-file-list="false"
+            :before-upload="handleVideoUpload"
+            accept="video/*"
+          >
+            <video v-if="uploadForm.videoUrl && uploadForm.videoUrl.startsWith('data:video')" :src="uploadForm.videoUrl" class="video-preview" controls />
+            <div v-else class="uploader-placeholder">
+              <el-icon><Plus /></el-icon><span>点击上传视频</span>
+            </div>
+          </el-upload>
+        </el-form-item>
+        <el-form-item label="或填写视频地址" v-if="uploadForm.type === 'video'">
           <el-input v-model="uploadForm.videoUrl" placeholder="https://..." />
         </el-form-item>
       </el-form>
@@ -134,7 +151,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router' // 引入路由用于返回
 import { ElMessage } from 'element-plus'
-import { Plus, Microphone, VideoPause, ArrowLeft } from '@element-plus/icons-vue' // 引入 ArrowLeft
+import { Plus, Microphone, VideoPause, ArrowLeft, VideoPlay } from '@element-plus/icons-vue' // 引入 ArrowLeft
 import { useSpeech } from '@/composables/useSpeech'
 import request from '@/utils/request'
 
@@ -227,6 +244,21 @@ function handleCoverUpload(file) {
   reader.onload = (e) => { uploadForm.value.coverImage = e.target.result }
   reader.readAsDataURL(file)
   return false 
+}
+
+function handleVideoUpload(file) {
+  if (!file.type.startsWith('video/')) {
+    ElMessage.warning('请选择视频文件')
+    return false
+  }
+  if (file.size > 50 * 1024 * 1024) {
+    ElMessage.warning('视频文件大小不能超过 50MB')
+    return false
+  }
+  const reader = new FileReader()
+  reader.onload = (e) => { uploadForm.value.videoUrl = e.target.result }
+  reader.readAsDataURL(file)
+  return false
 }
 
 async function handleUpload() {
@@ -370,6 +402,20 @@ async function viewArticle(article) {
 .uploader-placeholder { height: 160px; background: #F5F5F5; border-radius: var(--sn-radius-md); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #999; gap: 8px; transition: 0.3s; cursor: pointer; }
 .uploader-placeholder:hover { background: #EAEAEA; color: #111; }
 .cover-preview { width: 100%; height: 160px; border-radius: var(--sn-radius-md); object-fit: cover; }
+
+.modern-video-uploader { width: 100%; }
+.modern-video-uploader .uploader-placeholder { height: 200px; }
+.video-preview { width: 100%; height: 200px; border-radius: var(--sn-radius-md); object-fit: cover; }
+.video-placeholder {
+  width: 100%;
+  height: 220px;
+  background: #F5F5F5;
+  border-radius: var(--sn-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+}
 
 .modern-btn-submit { background: var(--sn-primary); border: none; border-radius: var(--sn-radius-md); font-weight: 700; }
 .modern-btn-cancel { border-radius: var(--sn-radius-md); font-weight: 600; }

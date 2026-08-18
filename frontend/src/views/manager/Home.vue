@@ -225,6 +225,12 @@
     </el-dialog>
 
     <OnboardingDialog v-model:visible="onboardingVisible" @complete="handleOnboardingComplete" />
+    <CareBubble
+      :visible="careVisible"
+      :care-message="careMessage"
+      @chat="onCareChat"
+      @later="onCareLater"
+    />
   </div>
 </template>
 
@@ -239,7 +245,9 @@ import {
 import { useSpeech } from '@/composables/useSpeech'
 import { useAccessibility } from '@/composables/useAccessibility'
 import { useOnboarding } from '@/composables/useOnboarding'
+import { useDailyCare } from '@/composables/useDailyCare'
 import OnboardingDialog from '@/components/OnboardingDialog.vue'
+import CareBubble from '@/components/CareBubble.vue'
 import SpeakerIcon from '@/components/SpeakerIcon.vue'
 import { checkReadiness } from '@/api/chatAI'
 const greeting = computed(() => {
@@ -260,8 +268,10 @@ const router = useRouter()
 const { speak, stop } = useSpeech()
 const { isElderlyMode, toggleMode } = useAccessibility()
 const { checkOnboardingStatus, markOnboardingComplete } = useOnboarding()
+const { visible: careVisible, careMessage, showCare, handleChat: careHandleChat, handleLater: careHandleLater } = useDailyCare()
 
 const user = JSON.parse(localStorage.getItem('student-user') || '{}')
+const CARE_DATE_KEY = (uid) => `care-bubble-date-${uid || 'guest'}`
 
 // 弹窗可见性控制变量
 const modeDialogVisible = ref(false)
@@ -303,6 +313,8 @@ onMounted(async () => {
       onboardingVisible.value = true
       hasShownOnboarding.value = true
     }, 500)
+  } else {
+    maybeShowDailyCare()
   }
 })
 
@@ -390,7 +402,34 @@ function goToInfo() { dismissHomeGuide(); router.push('/health-record/info') }
 function goToTest() { dismissHomeGuide(); router.push('/test') }
 function goToChat() { router.push('/chat-ai') }
 function skipGuide() { dismissHomeGuide() }
-function handleOnboardingComplete() { markOnboardingComplete() }
+function handleOnboardingComplete() {
+  markOnboardingComplete()
+  setTimeout(maybeShowDailyCare, 300)
+}
+
+function getCareDateKey() {
+  return `care-bubble-date-${user.id || user.username || 'guest'}`
+}
+
+function markCareShownToday() {
+  const today = new Date().toLocaleDateString('zh-CN')
+  localStorage.setItem(getCareDateKey(), today)
+}
+
+function maybeShowDailyCare() {
+  if (careVisible.value) return
+  const today = new Date().toLocaleDateString('zh-CN')
+  if (localStorage.getItem(getCareDateKey()) === today) return
+  showCare().then(() => {
+    if (careVisible.value) markCareShownToday()
+  })
+}
+
+function onCareChat() { careHandleChat() }
+function onCareLater() {
+  careVisible.value = false
+  markCareShownToday()
+}
 </script>
 
 <style scoped>
