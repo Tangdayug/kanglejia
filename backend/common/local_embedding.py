@@ -50,7 +50,7 @@ class LocalEmbedding:
         # 空字符串传给 sentence-transformers 可能报警告，过滤掉
         embeddings = model.encode(
             texts,
-            batch_size=32,
+            batch_size=128,
             show_progress_bar=False,
             convert_to_numpy=True,
             normalize_embeddings=False,

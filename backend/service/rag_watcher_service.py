@@ -17,7 +17,7 @@ from rag.retriever_faiss import get_rag_retriever
 class RAGWatcher:
     """后台线程，自动监听知识库文件变化并触发索引重建。"""
 
-    SUPPORTED_PATTERNS = ("*.pdf", "*.doc", "*.docx")
+    SUPPORTED_PATTERNS = ("*.pdf", "*.doc", "*.docx", "*.txt")
 
     def __init__(self, interval_seconds: int = 30):
         self.interval_seconds = interval_seconds

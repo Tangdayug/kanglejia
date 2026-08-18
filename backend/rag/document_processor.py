@@ -85,6 +85,32 @@ class DocumentProcessor:
 
         return text
 
+    def extract_text_from_txt(self, txt_path: str) -> str:
+        """
+        Extract text from plain text file
+
+        Args:
+            txt_path: Path to TXT file
+
+        Returns:
+            Extracted text content
+        """
+        text = ""
+        try:
+            # 尝试 UTF-8；失败则回退到 GBK，兼容中文 Windows 生成的文本
+            for encoding in ['utf-8', 'gbk', 'gb2312', 'latin-1']:
+                try:
+                    with open(txt_path, 'r', encoding=encoding) as file:
+                        text = file.read()
+                    break
+                except UnicodeDecodeError:
+                    continue
+        except Exception as e:
+            print(f"Error reading TXT {txt_path}: {e}")
+            return ""
+
+        return text
+
     def chunk_text(self, text: str, metadata: Dict[str, Any] = None) -> List[Dict[str, Any]]:
         """
         Split text into chunks for vectorization
@@ -151,6 +177,7 @@ class DocumentProcessor:
         # Supported file extensions
         pdf_extensions = ['.pdf']
         docx_extensions = ['.docx', '.doc']
+        txt_extensions = ['.txt']
 
         # Walk through directory
         for file_path in self.knowledge_base_path.rglob('*'):
@@ -166,6 +193,8 @@ class DocumentProcessor:
                     text = self.extract_text_from_pdf(str(file_path))
                 elif ext in docx_extensions:
                     text = self.extract_text_from_docx(str(file_path))
+                elif ext in txt_extensions:
+                    text = self.extract_text_from_txt(str(file_path))
                 else:
                     continue
 

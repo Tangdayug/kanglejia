@@ -11,6 +11,9 @@ services:
       - HF_ENDPOINT=https://hf-mirror.com
       - HF_HUB_DOWNLOAD_TIMEOUT=20
       - HF_HUB_ETAG_TIMEOUT=20
+      # 模型已预下载到镜像/卷，避免启动时联网检查导致挂起
+      - TRANSFORMERS_OFFLINE=1
+      - HF_HUB_OFFLINE=1
     volumes:
       # 后端代码热挂载：保存 .py 后 uvicorn 自动重载
       - ./backend:/app/backend

@@ -176,14 +176,13 @@ class VectorStore:
         return results
 
     def clear_collection(self):
-        """清空索引中的所有文档"""
-        # 重新创建空索引
-        if self.embedding_dimension is None:
-            self.embedding_dimension = self.embedding_model.get_dimension()
+        """清空索引中的所有文档，并以当前 embedding 模型维度重建空索引"""
+        # 始终使用当前 embedding 模型的维度，避免模型变更后维度不一致
+        self.embedding_dimension = self.embedding_model.get_dimension()
         self.index = faiss.IndexFlatIP(self.embedding_dimension)
         self.metadatas = []
         self._save()
-        print(f"✅ 已清空索引: {self.index_name}")
+        print(f"✅ 已清空索引: {self.index_name}，维度: {self.embedding_dimension}")
 
     def get_collection_info(self) -> Dict[str, Any]:
         """获取索引信息"""

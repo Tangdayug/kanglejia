@@ -2,8 +2,12 @@
 RAG Retriever - Combine knowledge base search with user profile for context-aware retrieval
 支持 FAISS 和 ChromaDB 两种向量数据库
 """
+import threading
 from typing import List, Dict, Any, Optional
 from dataclasses import dataclass
+
+# 全局重建锁：防止 RAG Watcher、热更新接口和启动预热同时重建索引
+_rag_rebuild_lock = threading.Lock()
 
 
 @dataclass
@@ -223,22 +227,32 @@ class RAGRetriever:
         Returns:
             Status information
         """
-        print("🔄 收到热更新请求，开始重建知识库...")
+        if not _rag_rebuild_lock.acquire(blocking=False):
+            print("🔄 已有重建任务在进行中，跳过本次重建")
+            return {
+                'status': 'skipped',
+                'message': '已有重建任务在进行中'
+            }
 
-        if self.document_processor is None:
-            from rag.document_processor import get_document_processor
-            self.document_processor = get_document_processor()
+        try:
+            print("🔄 收到热更新请求，开始重建知识库...")
 
-        # 清空现有索引
-        self.vector_store.clear_collection()
-        print("✅ 已清空旧向量索引")
+            if self.document_processor is None:
+                from rag.document_processor import get_document_processor
+                self.document_processor = get_document_processor()
 
-        result = self._load_and_index_documents()
-        if result.get('status') == 'initialized':
-            result['status'] = 'rebuilt'
-            result['message'] = '知识库热更新成功'
-        print(f"🔄 热更新完成: {result}")
-        return result
+            # 清空现有索引
+            self.vector_store.clear_collection()
+            print("✅ 已清空旧向量索引")
+
+            result = self._load_and_index_documents()
+            if result.get('status') == 'initialized':
+                result['status'] = 'rebuilt'
+                result['message'] = '知识库热更新成功'
+            print(f"🔄 热更新完成: {result}")
+            return result
+        finally:
+            _rag_rebuild_lock.release()
 
 
 class NoOpRetriever(RAGRetriever):
