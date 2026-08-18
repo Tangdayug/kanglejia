@@ -112,6 +112,42 @@ session 复用	当天内同一用户复用健康档案	不用每次重新问基�
 - SQLite 数据库存储在容器内 `/app/backend/data/secondnature.db`
 - 已通过命名卷 `secondnature-data` 持久化
 
+## 提交代码
+
+仓库地址：`https://github.com/jiayusu/kanglejia.git`
+
+本地提交与推送流程：
+
+```bash
+# 1. 查看改动
+git status
+
+# 2. 添加修改的文件（不要添加 .env 等密钥文件，它们已被 .gitignore 忽略）
+git add <file1> <file2>
+# 或一次性添加所有改动
+git add .
+
+# 3. 提交，写清楚本次改动
+git commit -m "feat(scope): 简短描述
+
+详细说明本次改动了什么、为什么改动、如何验证。"
+
+# 4. 推送到 GitHub
+# 使用 HTTPS + Personal Access Token
+git push https://<username>:<token>@github.com/jiayusu/kanglejia.git master
+
+# 或使用 SSH（推荐长期开发）
+git push origin master
+```
+
+### 注意事项
+- `.env`、`docker-compose.override.yml` 等含密钥的文件已加入 `.gitignore`，**不要**手动强制提交。
+- 提交信息参考格式：`type(scope): subject`，例如：
+  - `fix(rag): lazy-load embedding model to avoid blocking startup`
+  - `feat(xiaozhi): allow hardware connection without voiceprint binding`
+  - `docs(readme): add commit workflow`
+- 提交前确保 Docker 服务还能正常启动，关键接口可 `curl http://localhost:8006/api/health` 验证。
+
 ## 沉淀文档
 - 每次更新代码逻辑需要在本目录的子目录下新建md文档详细记录
 - 注意记录主要功能的更新
