@@ -263,15 +263,23 @@ const answers = reactive({
 const timer = reactive({ running: false, startTime: null, elapsed: 0 })
 const testResult = reactive({ scores: null, risks: null, recommendations: null }) 
 
-// --- 监听进入结果页，自动播报评估结果后弹出AI弹窗 ---
+// --- 监听步骤变化，自动播报题目/评估结果 ---
 watch(currentStep, (newStep, oldStep) => {
   if (aiConnectTimer) {
     clearTimeout(aiConnectTimer)
     aiConnectTimer = null
   }
 
-  // 进入结果页面后，先语音播报评估结果摘要，播报完成后再弹出 AI 连线提示
-  if (newStep === 'results' && oldStep !== 'results') {
+  if (newStep.startsWith('q') && newStep !== oldStep) {
+    // 进入每一道题目后自动播报题干
+    stop()
+    let text = getCurrentQuestion().text
+    if (newStep === 'q2_result') {
+      text = `您完成测试用时 ${formatTime(timer.elapsed)} 秒。请问您能否在14秒内完成5次起坐？`
+    }
+    setTimeout(() => speak(text), 400)
+  } else if (newStep === 'results' && oldStep !== 'results') {
+    // 进入结果页面后，先语音播报评估结果摘要，播报完成后再弹出 AI 连线提示
     stop()
     setTimeout(() => {
       speakResultSummary(() => {
