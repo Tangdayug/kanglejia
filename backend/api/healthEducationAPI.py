@@ -107,7 +107,8 @@ async def get_articles():
             if file_path.exists():
                 content = parse_markdown_file(file_path)
         else:  # video
-            video_url = f"/health-education/video/{item['id']}"
+            # 走 /api 前缀，让 nginx 正确代理到后端
+            video_url = f"/api/health-education/video/{item['id']}"
 
         article = Article(
             id=item["id"],
@@ -142,7 +143,8 @@ async def get_article_detail(article_id: int):
         if file_path.exists():
             content = parse_markdown_file(file_path)
     else:  # video
-        video_url = f"/health-education/video/{article_id}"
+        # 走 /api 前缀，让 nginx 正确代理到后端
+        video_url = f"/api/health-education/video/{article_id}"
 
     return Article(
         id=article_config["id"],
