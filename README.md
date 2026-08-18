@@ -76,7 +76,113 @@ curl -X POST http://localhost:8006/api/rag/rebuild \
   -H "Authorization: Bearer <your_jwt_token>"
 ```
 
-### 5. 停止
+### 5. 外部系统接入知识库文件 API
+
+SecondNature 提供一组 REST 接口，供外部系统直接管理知识库源文件（上传、更新、删除、下载、列表）。
+所有接口都需要在请求头中携带当前登录用户的 JWT：`Authorization: Bearer <your_jwt_token>`。
+
+支持的文件类型：`.pdf`、`.doc`、`.docx`、`.txt`  
+单文件大小限制：`50 MB`  
+知识库物理路径：`backend/rag/data/`（可通过环境变量 `RAG_KNOWLEDGE_BASE_PATH` 修改）
+
+#### 5.1 列出知识库文件
+
+```bash
+curl -X GET http://localhost:8006/api/rag/files \
+  -H "Authorization: Bearer <your_jwt_token>"
+```
+
+返回示例：
+
+```json
+{
+  "code": "200",
+  "message": "success",
+  "data": {
+    "path": "rag/data",
+    "count": 12,
+    "files": [
+      {
+        "filename": "老年人运动指导.pdf",
+        "relative_path": "老年人运动指导.pdf",
+        "size": 1024000,
+        "modified_at": 1724001234,
+        "extension": ".pdf"
+      }
+    ]
+  }
+}
+```
+
+#### 5.2 上传文件
+
+```bash
+curl -X POST http://localhost:8006/api/rag/files \
+  -H "Authorization: Bearer <your_jwt_token>" \
+  -F "file=@/path/to/local/老年人饮食建议.txt"
+```
+
+如果目标文件名已存在，接口会返回错误；需要先删除旧文件或使用更新接口。
+
+#### 5.3 更新（覆盖）文件
+
+```bash
+curl -X PUT "http://localhost:8006/api/rag/files/老年人饮食建议.txt" \
+  -H "Authorization: Bearer <your_jwt_token>" \
+  -F "file=@/path/to/local/老年人饮食建议_v2.txt"
+```
+
+更新时会自动保留一份 `.bak` 备份。
+
+#### 5.4 删除文件
+
+```bash
+curl -X DELETE "http://localhost:8006/api/rag/files/老年人饮食建议.txt" \
+  -H "Authorization: Bearer <your_jwt_token>"
+```
+
+删除文件时会同步清理对应的 `.bak` 备份。
+
+#### 5.5 下载文件
+
+```bash
+curl -X GET "http://localhost:8006/api/rag/files/老年人饮食建议.txt/download" \
+  -H "Authorization: Bearer <your_jwt_token>" \
+  -O
+```
+
+#### 5.6 文件变更后重建向量索引
+
+上传、更新或删除文件后，系统会在后台自动触发向量库重建。如果需要立即确认状态，可主动调用重建接口：
+
+```bash
+curl -X POST http://localhost:8006/api/rag/rebuild \
+  -H "Authorization: Bearer <your_jwt_token>"
+```
+
+查看向量库状态：
+
+```bash
+curl -X GET http://localhost:8006/api/rag/status \
+  -H "Authorization: Bearer <your_jwt_token>"
+```
+
+返回示例：
+
+```json
+{
+  "code": "200",
+  "message": "success",
+  "data": {
+    "status": "ok",
+    "vectorCount": 3460,
+    "dimension": 384,
+    "persistDirectory": "rag/indices/faiss"
+  }
+}
+```
+
+### 6. 停止
 
 ```bash
 docker compose down
