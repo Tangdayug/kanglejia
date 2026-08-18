@@ -43,23 +43,29 @@ docker compose logs --tail 50 -f
 
 访问：http://localhost:8006
 
-### 3. 开发模式（启用热重载）
+### 3. 开发模式（前后端全部热更新，无需重启容器）
 
 ```bash
-cp docker-compose.override.example.yml docker-compose.override.yml
-# 编辑 docker-compose.override.yml，填入真实密钥
-docker compose up --build -d
+# 1. 准备本地密钥
+ cp backend/.env.example backend/.env
+# 编辑 backend/.env，填入 DEEPSEEK_API_KEY 和 JWT_SECRET_KEY
+
+# 2. 启动开发组合（backend 热重载 + frontend 自动构建）
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 ```
 
-或直接在项目根目录创建 `.env`：
+开发时：
+- 修改 `backend/` 下的 `.py` 文件 → uvicorn 自动重载后端。
+- 修改 `frontend/src/` 下的 `.vue` / `.css` / `.scss` → `frontend` 服务自动重新构建 `dist/`，nginx 立即 serving 最新前端。
+- 都不需要重启容器。
+
+如果你习惯用 `docker-compose.override.yml`（已加入 `.gitignore`），也可以：
 
 ```bash
-RELOAD=true
-DEEPSEEK_API_KEY=your_key
-JWT_SECRET_KEY=your_secret
+cp docker-compose.dev.yml docker-compose.override.yml
+# 按需编辑，填入密钥等
+docker compose up -d
 ```
-
-修改 `backend/` 下的 Python 文件后，uvicorn 会自动重载，无需重启容器。
 
 ### 4. 更新向量知识库（不重启服务）
 

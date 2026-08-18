@@ -1,0 +1,39 @@
+version: "3.8"
+
+# 本地开发组合配置（可提交到 Git，不含密钥）
+# 用法：docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+services:
+  app:
+    environment:
+      # 启用后端代码热重载（uvicorn --reload）
+      - RELOAD=true
+      # 国内下载 HuggingFace 模型镜像
+      - HF_ENDPOINT=https://hf-mirror.com
+      - HF_HUB_DOWNLOAD_TIMEOUT=20
+      - HF_HUB_ETAG_TIMEOUT=20
+    volumes:
+      # 后端代码热挂载：保存 .py 后 uvicorn 自动重载
+      - ./backend:/app/backend
+      # 前端构建产物挂载：由 frontend 服务持续生成
+      - ./frontend/dist:/app/frontend/dist
+
+  # 前端源码热构建服务：保存 .vue/.css/.scss 后自动重新生成 dist/
+  frontend:
+    image: node:20-alpine
+    container_name: secondnature-frontend-watcher
+    working_dir: /app/frontend
+    command: >
+      sh -c "npm config set registry https://registry.npmmirror.com &&
+             npm install --no-audit --no-fund &&
+             npm run build:watch"
+    volumes:
+      - ./frontend:/app/frontend
+    environment:
+      - NODE_ENV=development
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1G
+    # 不对外暴露端口；构建产物通过 ./frontend/dist 共享给 app 服务
+    ports: []
