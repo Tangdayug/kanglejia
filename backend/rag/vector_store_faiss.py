@@ -20,6 +20,9 @@ class VectorStore:
         """
         初始化向量数据库
 
+        为加速启动，嵌入模型延迟加载：只有真正需要生成/查询向量时
+        才会触发 sentence-transformers 模型下载与加载。
+
         Args:
             persist_directory: 向量数据库持久化目录
             index_name: 索引名称
@@ -27,20 +30,28 @@ class VectorStore:
         if faiss is None:
             raise ImportError("faiss 未安装，请运行: pip install faiss-cpu")
 
-        from common.local_embedding import get_local_embedding
-
         self.persist_directory = Path(persist_directory)
         self.persist_directory.mkdir(parents=True, exist_ok=True)
         self.index_name = index_name
         self.index_path = self.persist_directory / f"{index_name}.faiss"
         self.metadata_path = self.persist_directory / f"{index_name}_metadata.pkl"
 
-        # 初始化本地嵌入模型（首次加载会下载模型文件）
-        self.embedding_model = get_local_embedding()
-        self.embedding_dimension = self.embedding_model.get_dimension()
+        # 延迟加载 embedding 模型，避免启动时阻塞 HuggingFace 下载
+        self._embedding_model = None
+        self.embedding_dimension = None
 
-        # 加载或创建索引
+        # 加载或创建索引（优先从已有索引推断维度，避免启动时加载模型）
         self._load_or_create_index()
+
+    @property
+    def embedding_model(self):
+        """懒加载本地嵌入模型。"""
+        if self._embedding_model is None:
+            from common.local_embedding import get_local_embedding
+            self._embedding_model = get_local_embedding()
+            if self.embedding_dimension is None:
+                self.embedding_dimension = self._embedding_model.get_dimension()
+        return self._embedding_model
 
     def _load_or_create_index(self):
         """加载或创建FAISS索引"""
@@ -49,13 +60,13 @@ class VectorStore:
             self.index = faiss.read_index(str(self.index_path))
             with open(self.metadata_path, 'rb') as f:
                 self.metadatas = pickle.load(f)
-            print(f"✅ 已加载向量索引: {self.index.ntotal} 个向量")
+            self.embedding_dimension = self.index.d
+            print(f"✅ 已加载向量索引: {self.index.ntotal} 个向量，维度: {self.embedding_dimension}")
         else:
-            # 创建新索引
-            # 使用 Inner Product (cosine similarity 需要归一化)
-            self.index = faiss.IndexFlatIP(self.embedding_dimension)
+            # 创建新索引：此时还不需要知道维度，首次 add_documents 时创建
+            self.index = None
             self.metadatas = []
-            print(f"✅ 创建新索引，维度: {self.embedding_dimension}")
+            print("✅ 索引尚未创建，将在首次添加文档时初始化")
 
     def add_documents(self, chunks: List[Dict[str, Any]]):
         """
@@ -67,6 +78,12 @@ class VectorStore:
         if not chunks:
             print("没有文档块可添加")
             return
+
+        # 首次添加时创建索引（此时才会触发模型加载）
+        if self.index is None:
+            self.embedding_dimension = self.embedding_model.get_dimension()
+            self.index = faiss.IndexFlatIP(self.embedding_dimension)
+            print(f"✅ 创建新索引，维度: {self.embedding_dimension}")
 
         texts = [chunk['text'] for chunk in chunks]
         metadatas = [chunk['metadata'] for chunk in chunks]
@@ -96,6 +113,8 @@ class VectorStore:
 
     def _save(self):
         """保存索引到磁盘"""
+        if self.index is None:
+            return
         faiss.write_index(self.index, str(self.index_path))
         with open(self.metadata_path, 'wb') as f:
             pickle.dump(self.metadatas, f)
@@ -117,7 +136,7 @@ class VectorStore:
         Returns:
             搜索结果列表，包含文本和元数据
         """
-        if self.index.ntotal == 0:
+        if self.index is None or self.index.ntotal == 0:
             return []
 
         # 生成查询嵌入向量
@@ -159,6 +178,8 @@ class VectorStore:
     def clear_collection(self):
         """清空索引中的所有文档"""
         # 重新创建空索引
+        if self.embedding_dimension is None:
+            self.embedding_dimension = self.embedding_model.get_dimension()
         self.index = faiss.IndexFlatIP(self.embedding_dimension)
         self.metadatas = []
         self._save()
@@ -168,14 +189,14 @@ class VectorStore:
         """获取索引信息"""
         return {
             'name': self.index_name,
-            'count': int(self.index.ntotal),
+            'count': int(self.index.ntotal) if self.index is not None else 0,
             'dimension': self.embedding_dimension,
             'persist_directory': str(self.persist_directory)
         }
 
     def is_empty(self) -> bool:
         """检查索引是否为空"""
-        return self.index.ntotal == 0
+        return self.index is None or self.index.ntotal == 0
 
 
 # 单例模式：全局向量数据库实例
