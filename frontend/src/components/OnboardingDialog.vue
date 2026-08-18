@@ -1,7 +1,7 @@
 <template>
   <Teleport to="body">
     <Transition name="tour-fade">
-      <div v-if="visible" class="spotlight-tour" @click="handleBackdropClick">
+      <div v-if="visible" class="spotlight-tour">
         <!-- 高亮框：镂空目标元素 -->
         <div
           v-if="currentStep.target && targetRect"
@@ -37,9 +37,6 @@
           </div>
 
           <div class="tour-footer">
-            <button class="tour-btn tour-btn--text" @click="handleSkip">
-              {{ isLastStep ? '' : '跳过' }}
-            </button>
             <div class="tour-actions">
               <button
                 v-if="activeIndex > 0"
@@ -87,7 +84,7 @@ const steps = [
   {
     icon: House,
     title: '欢迎使用康乐家',
-    description: '接下来用一分钟带您了解首页与左侧导航的作用。您可以随时跳过。',
+    description: '接下来用一分钟带您了解首页与左侧导航的作用，请按步骤浏览到最后。',
     position: 'center'
   },
   {
@@ -357,10 +354,6 @@ function handlePrev() {
   }
 }
 
-function handleSkip() {
-  closeTour(true)
-}
-
 function closeTour(completed) {
   emit('update:visible', false)
   if (completed) emit('complete')
@@ -368,13 +361,9 @@ function closeTour(completed) {
   targetRect.value = null
 }
 
-function handleBackdropClick() {
-  closeTour(false)
-}
-
 function handleKeydown(e) {
   if (!props.visible) return
-  if (e.key === 'Escape') closeTour(false)
+  // 禁止 Escape 关闭引导；仅保留方向键翻页
   if (e.key === 'ArrowRight') handleNext()
   if (e.key === 'ArrowLeft') handlePrev()
 }
