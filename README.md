@@ -254,6 +254,61 @@ git push origin master
   - `docs(readme): add commit workflow`
 - 提交前确保 Docker 服务还能正常启动，关键接口可 `curl http://localhost:8006/api/health` 验证。
 
+## Fork 本仓库后的协作流程
+
+如果你 Fork 了 `jiayusu/kanglejia`，在本地修改期间主仓库也在更新，按以下步骤同步：
+
+### 1. 添加 upstream（只需一次）
+
+```bash
+git remote add upstream https://github.com/jiayusu/kanglejia.git
+```
+
+### 2. 开始新功能前，先同步主仓库最新代码
+
+```bash
+# 拉取主仓库更新
+git fetch upstream
+
+# 切回自己的 main/master 分支
+git checkout master
+
+# 把主仓库更新合并到本地分支
+git merge upstream/master
+
+# 如果有冲突，手动解决冲突后重新提交
+git add .
+git commit -m "merge upstream/master"
+```
+
+### 3. 在功能分支上开发（推荐）
+
+```bash
+# 从最新代码切出功能分支
+git checkout -b feat/my-feature
+
+# 修改代码...
+git add .
+git commit -m "feat(scope): 描述"
+
+# 推送到你自己的 Fork
+git push origin feat/my-feature
+```
+
+### 4. 向主仓库提交 Pull Request
+
+1. 打开你的 Fork 页面：`https://github.com/<你的用户名>/kanglejia`
+2. 点击 **Compare & pull request**
+3. 选择 `base: jiayusu/kanglejia/master` ← `compare: 你的分支`
+4. 填写 PR 标题和描述，说明改动内容
+5. 等待主仓库维护者 review 合并
+
+### 冲突处理原则
+
+- 主仓库维护者（你）优先合并 PR；
+- 如果主仓库已推送新代码，fork 贡献者在提交 PR 前**必须先执行** `git fetch upstream && git merge upstream/master` 解决冲突；
+- 不要直接推送到 `jiayusu/kanglejia`（除非你是仓库维护者并拥有写权限）。
+
 ## 沉淀文档
 - 每次更新代码逻辑需要在本目录的子目录下新建md文档详细记录
 - 注意记录主要功能的更新
