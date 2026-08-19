@@ -220,7 +220,7 @@ const goToLogin = () => {
   background-color: var(--sn-primary-light) !important;
   border-color: var(--sn-primary-light) !important;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(10, 127, 206, 0.25);
+  box-shadow: 0 4px 12px rgba(4, 120, 87, 0.25);
 }
 
 /* --- 其他排版 --- */

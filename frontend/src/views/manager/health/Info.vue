@@ -1130,7 +1130,7 @@ onUnmounted(() => { stopAutoSave(); stop() })
   display: inline-flex; align-items: center; gap: 8px;
   cursor: pointer; transition: 0.2s;
 }
-.ocr-btn:hover { background: rgba(10, 127, 206, 0.06); transform: translateY(-1px); }
+.ocr-btn:hover { background: rgba(4, 120, 87, 0.06); transform: translateY(-1px); }
 .ocr-btn-secondary { background: var(--sn-surface); color: var(--sn-text); border: 1px solid var(--sn-border); }
 .ocr-btn-secondary:hover { background: var(--sn-slate-light); border-color: var(--sn-border); }
 .ocr-loading { display: flex; align-items: center; gap: 10px; color: var(--sn-primary); font-weight: 600; }
@@ -1373,7 +1373,7 @@ onUnmounted(() => { stopAutoSave(); stop() })
   align-items: center;
   transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 }
-.cta-black-giant:hover { background: rgba(10, 127, 206, 0.06); transform: translateY(-2px); }
+.cta-black-giant:hover { background: rgba(4, 120, 87, 0.06); transform: translateY(-2px); }
 .icon-space { margin-right: 12px; font-size: 24px; }
 .is-spinning { animation: rotating 2s linear infinite; }
 @keyframes rotating { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -1466,12 +1466,12 @@ html[data-accessibility="elderly"] .exercise-inner span { font-size: 18px; }
 .modern-confirm-dialog .el-button--primary {
   background: var(--sn-primary) !important;
   color: var(--sn-surface) !important;
-  box-shadow: 0 4px 12px rgba(10, 127, 206,0.15) !important;
+  box-shadow: 0 4px 12px rgba(4, 120, 87,0.15) !important;
 }
 .modern-confirm-dialog .el-button--primary:hover {
   background: var(--sn-primary-dark) !important;
   transform: translateY(-2px) !important;
-  box-shadow: 0 8px 24px rgba(10, 127, 206,0.2) !important;
+  box-shadow: 0 8px 24px rgba(4, 120, 87,0.2) !important;
 }
 
 /* 针对危险操作（如删除）的特殊颜色 */

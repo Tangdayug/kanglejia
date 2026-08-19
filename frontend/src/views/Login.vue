@@ -280,7 +280,7 @@ const doAuth = () => {
 .cta-black { 
   background: transparent; color: var(--sn-primary); border-color: var(--sn-primary);
 }
-.cta-black:hover { background: rgba(10, 127, 206, 0.06); border-color: var(--sn-primary-dark); color: var(--sn-primary-dark); }
+.cta-black:hover { background: rgba(4, 120, 87, 0.06); border-color: var(--sn-primary-dark); color: var(--sn-primary-dark); }
 
 .auth-group { display: flex; align-items: center; gap: 12px; }
 
@@ -301,7 +301,7 @@ const doAuth = () => {
 }
 .giant-prompt-box.is-active {
   border-color: var(--sn-primary); transform: translateY(-10px);
-  box-shadow: 0 40px 100px rgba(10, 127, 206,0.12);
+  box-shadow: 0 40px 100px rgba(4, 120, 87,0.12);
 }
 
 .main-prompt-input {
@@ -323,13 +323,13 @@ const doAuth = () => {
   font-size: 16px; font-weight: 700; cursor: pointer;
   transition: 0.3s;
 }
-.start-text-btn:hover { background: rgba(10, 127, 206, 0.06); transform: translateY(-2px); }
+.start-text-btn:hover { background: rgba(4, 120, 87, 0.06); transform: translateY(-2px); }
 .submit-action-btn {
   width: 76px; height: 76px; border-radius: 50%;
   border: 1px solid var(--sn-border); background: var(--sn-surface); color: var(--sn-text); font-size: 32px; cursor: pointer; transition: 0.3s;
 }
 .submit-action-btn.ready { background: transparent; color: var(--sn-primary); border-color: var(--sn-primary); transform: scale(1.1); }
-.submit-action-btn.ready:hover { background: rgba(10, 127, 206, 0.06); }
+.submit-action-btn.ready:hover { background: rgba(4, 120, 87, 0.06); }
 
 /* 4. 底部品牌宣言 */
 .footer-slogan {
@@ -351,7 +351,7 @@ const doAuth = () => {
 .auth-box { padding: 30px; text-align: center; }
 .auth-field :deep(.el-input__wrapper) { background: var(--sn-slate-light); border-radius: 12px; height: 52px; box-shadow: none !important; }
 .auth-submit-btn { width: 100%; height: 52px; background: transparent; color: var(--sn-primary); border: 1px solid var(--sn-primary); border-radius: 12px; font-weight: 700; margin-top: 20px; }
-.auth-submit-btn:hover { background: rgba(10, 127, 206, 0.06); }
+.auth-submit-btn:hover { background: rgba(4, 120, 87, 0.06); }
 .auth-toggle { margin-top: 24px; color: var(--sn-text); font-weight: 700; cursor: pointer; text-decoration: underline; }
 
 .mobile-auth-card {
@@ -372,7 +372,7 @@ html[data-accessibility="elderly"] .case-background { opacity: 0.12; filter: gra
 html[data-accessibility="elderly"] .floating-nav-capsule {
   background: rgba(255, 255, 255, 0.98);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
-  border-color: rgba(10, 127, 206, 0.15);
+  border-color: rgba(4, 120, 87, 0.15);
 }
 html[data-accessibility="elderly"] .nav-action-btn {
   height: 60px;
@@ -404,7 +404,7 @@ html[data-accessibility="elderly"] .cta-black {
   font-weight: 800;
 }
 html[data-accessibility="elderly"] .cta-black:hover {
-  background: rgba(10, 127, 206, 0.06);
+  background: rgba(4, 120, 87, 0.06);
 }
 
 /* 中央输入区长辈模式强化 */
@@ -418,7 +418,7 @@ html[data-accessibility="elderly"] .giant-prompt-box {
 }
 html[data-accessibility="elderly"] .giant-prompt-box.is-active {
   border-color: var(--sn-primary);
-  box-shadow: 0 40px 100px rgba(10, 127, 206, 0.18);
+  box-shadow: 0 40px 100px rgba(4, 120, 87, 0.18);
 }
 html[data-accessibility="elderly"] .main-prompt-input,
 html[data-accessibility="elderly"] .placeholder-animation {
@@ -437,7 +437,7 @@ html[data-accessibility="elderly"] .start-text-btn {
   border: 2px solid var(--sn-primary);
 }
 html[data-accessibility="elderly"] .start-text-btn:hover {
-  background: rgba(10, 127, 206, 0.06);
+  background: rgba(4, 120, 87, 0.06);
 }
 html[data-accessibility="elderly"] .submit-action-btn {
   width: 88px;
@@ -448,7 +448,7 @@ html[data-accessibility="elderly"] .submit-action-btn {
   border: 2px solid var(--sn-primary);
 }
 html[data-accessibility="elderly"] .submit-action-btn.ready:hover {
-  background: rgba(10, 127, 206, 0.06);
+  background: rgba(4, 120, 87, 0.06);
 }
 
 /* 底部品牌宣言长辈模式 */
@@ -486,7 +486,7 @@ html[data-accessibility="elderly"] .auth-submit-btn {
   border: 2px solid var(--sn-primary);
 }
 html[data-accessibility="elderly"] .auth-submit-btn:hover {
-  background: rgba(10, 127, 206, 0.06);
+  background: rgba(4, 120, 87, 0.06);
 }
 html[data-accessibility="elderly"] .auth-toggle {
   font-size: 18px;

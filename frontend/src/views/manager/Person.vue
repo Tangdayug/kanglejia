@@ -754,7 +754,7 @@ html[data-accessibility="elderly"] .modern-bottom-actions { left: 320px; } /* è€
   align-items: center;
   transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 }
-.cta-black-giant:hover { background: rgba(10, 127, 206, 0.06); transform: translateY(-2px); }
+.cta-black-giant:hover { background: rgba(4, 120, 87, 0.06); transform: translateY(-2px); }
 .icon-space { margin-right: 12px; font-size: 24px; }
 .is-spinning { animation: rotating 2s linear infinite; }
 @keyframes rotating { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }

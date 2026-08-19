@@ -160,11 +160,11 @@ SaaS 现代化框架样式 (扁平导航优化)
 }
 
 :deep(.el-menu-item:hover) {
-  background-color: rgba(10, 127, 206, 0.06) !important; color: var(--sn-primary);
+  background-color: rgba(4, 120, 87, 0.06) !important; color: var(--sn-primary);
 }
 
 :deep(.el-menu-item.is-active) {
-  background-color: rgba(10, 127, 206, 0.1) !important; color: var(--sn-primary) !important;
+  background-color: rgba(4, 120, 87, 0.1) !important; color: var(--sn-primary) !important;
   font-weight: 700;
 }
 

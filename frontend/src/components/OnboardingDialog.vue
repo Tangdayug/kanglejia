@@ -413,8 +413,8 @@ onUnmounted(() => {
   z-index: 1;
   box-shadow:
     0 0 0 9999px rgba(0, 0, 0, 0.62),
-    0 0 0 4px rgba(10, 127, 206, 0.35),
-    0 8px 32px rgba(10, 127, 206, 0.18);
+    0 0 0 4px rgba(4, 120, 87, 0.35),
+    0 8px 32px rgba(4, 120, 87, 0.18);
   transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -422,7 +422,7 @@ onUnmounted(() => {
   position: absolute;
   inset: -4px;
   border-radius: inherit;
-  border: 2px solid rgba(10, 127, 206, 0.5);
+  border: 2px solid rgba(4, 120, 87, 0.5);
   animation: pulse-ring 2s ease-out infinite;
   pointer-events: none;
 }
@@ -533,7 +533,7 @@ onUnmounted(() => {
 .tour-btn--primary {
   background: var(--sn-primary);
   color: var(--sn-surface);
-  box-shadow: 0 4px 12px rgba(10, 127, 206, 0.2);
+  box-shadow: 0 4px 12px rgba(4, 120, 87, 0.2);
 }
 
 .tour-btn--primary:hover {
@@ -601,8 +601,8 @@ html[data-accessibility="elderly"] .tour-icon {
 html[data-accessibility="elderly"] .spotlight-hole {
   box-shadow:
     0 0 0 9999px rgba(0, 0, 0, 0.68),
-    0 0 0 5px rgba(10, 127, 206, 0.45),
-    0 8px 32px rgba(10, 127, 206, 0.22);
+    0 0 0 5px rgba(4, 120, 87, 0.45),
+    0 8px 32px rgba(4, 120, 87, 0.22);
 }
 
 html[data-accessibility="elderly"] .spotlight-pulse {

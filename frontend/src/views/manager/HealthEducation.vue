@@ -322,7 +322,7 @@ async function viewArticle(article) {
   cursor: pointer;
   transition: all 0.3s;
 }
-.cta-black-btn:hover { background: rgba(10, 127, 206, 0.06); transform: translateY(-2px); }
+.cta-black-btn:hover { background: rgba(4, 120, 87, 0.06); transform: translateY(-2px); }
 
 /* 深度重写 Tabs (变成胶囊形式) */
 .modern-tabs :deep(.el-tabs__nav-wrap::after) { display: none; }

@@ -210,7 +210,7 @@ Linear 设计系统：核心样式
   border-color: var(--sn-primary);
   box-shadow: none;
 }
-.linear-btn-primary:hover { background: rgba(10, 127, 206, 0.06); }
+.linear-btn-primary:hover { background: rgba(4, 120, 87, 0.06); }
 .linear-btn-secondary {
   background: var(--sn-surface); color: var(--sn-text-secondary);
   border-color: var(--sn-border); box-shadow: 0 1px 2px rgba(0,0,0,0.02);
@@ -271,7 +271,7 @@ Linear 设计系统：核心样式
 
 .status-trigger:hover .status-circle:not(.completed) {
   border-color: var(--sn-primary);
-  background: rgba(10, 127, 206, 0.05);
+  background: rgba(4, 120, 87, 0.05);
 }
 
 .status-circle.completed {
