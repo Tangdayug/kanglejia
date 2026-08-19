@@ -465,7 +465,7 @@ function scrollToBottom() {
   background: transparent; border: 1px solid var(--sn-primary); border-radius: 12px;
   font-size: 15px; font-weight: 700; color: var(--sn-primary); cursor: pointer; transition: 0.2s;
 }
-.back-nav-btn:hover { background: rgba(13, 148, 136, 0.06); }
+.back-nav-btn:hover { background: rgba(10, 127, 206, 0.06); }
 .back-nav-btn .el-icon { font-size: 16px; }
 
 /* ===============================================
@@ -541,9 +541,9 @@ function scrollToBottom() {
 .r-actions { display: flex; gap: 16px; flex-wrap: wrap; }
 .r-btn { min-height: 48px; padding: 0 24px; border-radius: var(--sn-radius-md); font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.2s; border: 2px solid transparent; }
 .r-btn.primary { background: transparent; color: var(--sn-primary); border-color: var(--sn-primary); }
-.r-btn.primary:hover { background: rgba(13, 148, 136, 0.06); }
+.r-btn.primary:hover { background: rgba(10, 127, 206, 0.06); }
 .r-btn.secondary { background: var(--sn-surface); color: var(--sn-primary); border-color: var(--sn-primary); }
-.r-btn.secondary:hover { background: rgba(13, 148, 136, 0.06); }
+.r-btn.secondary:hover { background: rgba(10, 127, 206, 0.06); }
 
 .bento-suggestions {
   width: 100%; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 40px;
@@ -603,7 +603,7 @@ function scrollToBottom() {
 }
 :deep(.message-input .el-textarea__inner::-webkit-scrollbar) { display: none; }
 :deep(.send-button) { border-radius: var(--sn-radius-md) !important; height: 40px !important; padding: 0 20px !important; font-weight: 600 !important; background: transparent !important; border: 1px solid var(--sn-primary) !important; color: var(--sn-primary) !important; }
-:deep(.send-button:hover) { background: rgba(13, 148, 136, 0.06) !important; }
+:deep(.send-button:hover) { background: rgba(10, 127, 206, 0.06) !important; }
 :deep(.send-button:disabled) { background: var(--sn-border) !important; border-color: var(--sn-border) !important; color: var(--sn-text-muted) !important; }
 :deep(.input-hint) { display: none !important; }
 
@@ -687,7 +687,7 @@ html[data-accessibility="elderly"] :deep(.message-input .el-textarea__inner) { f
 .modern-confirm-dialog .el-button--default { background: var(--sn-slate-light) !important; color: var(--sn-text) !important; }
 .modern-confirm-dialog .el-button--default:hover { background: var(--sn-border) !important; transform: translateY(-2px) !important; }
 
-.modern-confirm-dialog .el-button--primary { background: var(--sn-primary) !important; color: var(--sn-surface) !important; box-shadow: 0 4px 12px rgba(13,148,136,0.15) !important; }
+.modern-confirm-dialog .el-button--primary { background: var(--sn-primary) !important; color: var(--sn-surface) !important; box-shadow: 0 4px 12px rgba(10, 127, 206,0.15) !important; }
 .modern-confirm-dialog .el-button--primary:hover { background: var(--sn-text) !important; transform: translateY(-2px) !important; box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important; }
 
 .modern-confirm-dialog.danger-action .el-button--primary { background: var(--sn-danger) !important; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2) !important; }

@@ -410,7 +410,7 @@ function getRiskLabel(level) {
   cursor: pointer; border: none; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 }
 .whoop-btn-primary { background: transparent; color: var(--sn-primary); border: 1px solid var(--sn-primary); box-shadow: none; }
-.whoop-btn-primary:hover { background: rgba(13, 148, 136, 0.06); transform: translateY(-2px); }
+.whoop-btn-primary:hover { background: rgba(10, 127, 206, 0.06); transform: translateY(-2px); }
 .whoop-btn-secondary { background: var(--sn-surface); color: var(--sn-text); border: 1px solid var(--sn-border); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
 .whoop-btn-secondary:hover { background: var(--sn-slate-light); transform: translateY(-2px); }
 .whoop-btn-text { background: transparent; color: var(--sn-text-secondary); }

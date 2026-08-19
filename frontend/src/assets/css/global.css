@@ -23,11 +23,11 @@
   --line-height-normal: 1.6;
   --line-height-relaxed: 1.7;
 
-  /* 品牌主色：暖青/松石绿，医疗居家感，不蓝不艳 */
-  --sn-primary: #0D9488;
-  --sn-primary-light: #CCFBF1;
-  --sn-primary-soft: #F0FDFA;
-  --sn-primary-dark: #0F766E;
+  /* 品牌主色：蓝色系，与旧版 Second_Nature/ 保持一致 */
+  --sn-primary: #0a7fce;
+  --sn-primary-light: #c1dff2;
+  --sn-primary-soft: #ebf4fb;
+  --sn-primary-dark: #075890;
   --sn-slate: #6B7280;
   --sn-slate-light: #F3F4F6;
   --sn-text: #1F2937;
@@ -39,17 +39,17 @@
   --sn-border: #E5E7EB;
 
   /* 功能色 */
-  --sn-success: #10B981;
+  --sn-success: #08b41f;
   --sn-success-light: var(--sn-success-light);
-  --sn-success-dark: #047857;
-  --sn-danger: #EF4444;
+  --sn-success-dark: #057a16;
+  --sn-danger: #ef3030;
   --sn-danger-light: #FEF2F2;
   --sn-danger-border: #FECACA;
   --sn-danger-hover: #F87171;
   --sn-danger-dark: #DC2626;
-  --sn-warning: #F59E0B;
+  --sn-warning: #e8af56;
   --sn-warning-light: #FFFBEB;
-  --sn-accent-warm: #F59E0B;
+  --sn-accent-warm: #e8af56;
 
   /* 圆角系统：统一收敛，避免过大圆角 */
   --sn-radius-sm: 8px;
@@ -71,13 +71,13 @@
   --el-font-size-extra-large: 28px;
 
   /* 覆盖 Element Plus 主题色（与 --sn-primary 保持一致） */
-  --el-color-primary: #0D9488;
-  --el-color-primary-light-3: #14B8A6;
-  --el-color-primary-light-5: #2DD4BF;
-  --el-color-primary-light-7: #99F6E4;
-  --el-color-primary-light-8: #CCFBF1;
-  --el-color-primary-light-9: #F0FDFA;
-  --el-color-primary-dark-2: #0F766E;
+  --el-color-primary: #0a7fce;
+  --el-color-primary-light-3: #5fabdf;
+  --el-color-primary-light-5: #90c5e8;
+  --el-color-primary-light-7: #c1dff2;
+  --el-color-primary-light-8: #daebf7;
+  --el-color-primary-light-9: #ebf4fb;
+  --el-color-primary-dark-2: #075890;
 }
 
 /* 阿里健康体 */
@@ -591,7 +591,7 @@ html[data-accessibility="elderly"] .el-radio__inner::after {
 .whoop-btn-primary:hover,
 .cta-black-btn:hover,
 .hero-btn:hover {
-  background-color: rgba(13, 148, 136, 0.06) !important;
+  background-color: rgba(10, 127, 206, 0.06) !important;
 }
 
 /* Element Plus 主按钮 */
@@ -608,7 +608,7 @@ html[data-accessibility="elderly"] .el-radio__inner::after {
 /* 侧边栏激活菜单 */
 .saas-menu .el-menu-item.is-active,
 .el-menu-item.is-active {
-  background-color: rgba(13, 148, 136, 0.08) !important;
+  background-color: rgba(10, 127, 206, 0.08) !important;
   color: #111 !important;
 }
 
@@ -645,7 +645,7 @@ html[data-accessibility="elderly"] .el-radio__inner::after {
   box-shadow: none !important;
 }
 .hero-btn:hover {
-  background-color: rgba(13, 148, 136, 0.06) !important;
+  background-color: rgba(10, 127, 206, 0.06) !important;
 }
 .date-capsule {
   color: var(--sn-text-secondary) !important;
@@ -702,7 +702,7 @@ html[data-accessibility="elderly"] .el-radio__inner::after {
 }
 .guide-illustration {
   background: var(--sn-primary-light) !important;
-  box-shadow: 0 8px 24px rgba(13, 148, 136, 0.1) !important;
+  box-shadow: 0 8px 24px rgba(10, 127, 206, 0.1) !important;
 }
 .slide-icon {
   color: var(--sn-primary) !important;

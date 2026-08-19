@@ -1,9 +1,9 @@
 @forward "element-plus/theme-chalk/src/common/var.scss" with ($colors: (
-    "primary": ("base": #0D9488),
-    "success": ("base": #10B981),
-    "warning": ("base": #F59E0B),
-    "danger": ("base": #EF4444),
-    "info": ("base": #0D9488),
+    "primary": ("base": #0a7fce),
+    "success": ("base": #08b41f),
+    "warning": ("base": #e8af56),
+    "danger": ("base": #ef3030),
+    "info": ("base": #5d66ea),
 ));
 
-/* Element Plus 主题色已统一为暖青绿，与 --sn-primary 保持一致 */
+/* Element Plus 主题色已统一为蓝色系，与旧版 Second_Nature/ 保持一致 */

@@ -465,7 +465,7 @@ function onCareLater() {
 .welcome-title { font-size: 36px; font-weight: 800; color: var(--sn-text); margin: 0; letter-spacing: -1px; }
 .welcome-text { font-size: 18px; color: var(--sn-text-secondary); line-height: 1.8; font-weight: 500; margin-bottom: 32px; }
 .hero-btn { background: transparent; color: var(--sn-primary); border: 1px solid var(--sn-primary); padding: 16px 32px; border-radius: var(--sn-radius-md); font-weight: 700; cursor: pointer; transition: 0.3s; }
-.hero-btn:hover { background: rgba(13, 148, 136, 0.06); transform: translateY(-2px); }
+.hero-btn:hover { background: rgba(10, 127, 206, 0.06); transform: translateY(-2px); }
 
 /* 彻底修复：插画定位，贴紧右下角 */
 .bg-illustration { position: absolute; right: 0; bottom: 0; height: 100%; width: 50%; object-fit: contain; object-position: right bottom; pointer-events: none; z-index: 1; }
@@ -493,7 +493,7 @@ function onCareLater() {
   transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
   box-shadow: 0 2px 6px rgba(0,0,0,0.18);
 }
-.toggle-switch.is-active .toggle-thumb { transform: translateX(22px); box-shadow: 0 2px 8px rgba(13, 148, 136,0.25); }
+.toggle-switch.is-active .toggle-thumb { transform: translateX(22px); box-shadow: 0 2px 8px rgba(10, 127, 206,0.25); }
 
 /* 音量内联滑动条 */
 .control-btn.volume-row { flex-direction: column; align-items: stretch; gap: 8px; cursor: default; }
@@ -562,14 +562,14 @@ function onCareLater() {
 :deep(.modern-dialog .el-dialog__footer) { padding: 24px 32px; background: var(--sn-slate-light); border-top: 1px solid var(--sn-slate-light); display: flex; justify-content: flex-end; gap: 12px; }
 .modern-cancel-btn { background: transparent; border: none; font-size: 15px; font-weight: 700; color: var(--sn-text-secondary); padding: 0 20px; height: 44px; border-radius: 100px; cursor: pointer; transition: 0.2s; }
 .modern-cancel-btn:hover { background: var(--sn-border); color: var(--sn-text); }
-.modern-confirm-btn { background: var(--sn-primary); color: var(--sn-surface); border: none; font-size: 15px; font-weight: 700; padding: 0 28px; height: 44px; border-radius: 100px; cursor: pointer; box-shadow: 0 4px 12px rgba(13, 148, 136,0.2); transition: 0.3s; }
-.modern-confirm-btn:hover { background: var(--sn-primary-dark); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(13, 148, 136,0.25); }
+.modern-confirm-btn { background: var(--sn-primary); color: var(--sn-surface); border: none; font-size: 15px; font-weight: 700; padding: 0 28px; height: 44px; border-radius: 100px; cursor: pointer; box-shadow: 0 4px 12px rgba(10, 127, 206,0.2); transition: 0.3s; }
+.modern-confirm-btn:hover { background: var(--sn-primary-dark); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(10, 127, 206,0.25); }
 
 /* --- UI重构：模式选择选项卡 --- */
 .modern-option-cards { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
 .option-card { display: flex; align-items: center; padding: 20px; border-radius: 20px; border: 2px solid var(--sn-slate-light); background: var(--sn-surface); cursor: pointer; transition: all 0.3s cubic-bezier(0.2, 0, 0, 1); position: relative; }
 .option-card:hover { border-color: var(--sn-border); background: var(--sn-slate-light); transform: translateY(-2px); }
-.option-card.is-selected { border-color: var(--sn-primary); background: rgba(13, 148, 136, 0.03); box-shadow: 0 8px 24px rgba(13, 148, 136, 0.06); }
+.option-card.is-selected { border-color: var(--sn-primary); background: rgba(10, 127, 206, 0.03); box-shadow: 0 8px 24px rgba(10, 127, 206, 0.06); }
 .card-icon { width: 48px; height: 48px; border-radius: 50%; background: var(--sn-slate-light); display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--sn-text-secondary); margin-right: 16px; transition: 0.3s; }
 .option-card.is-selected .card-icon { background: var(--sn-primary); color: var(--sn-surface); }
 .card-text h4 { margin: 0 0 6px 0; font-size: 17px; font-weight: 800; color: var(--sn-text); }

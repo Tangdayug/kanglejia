@@ -437,7 +437,7 @@ function formatTime(dateStr) {
 }
 
 .detail-toggle-btn:hover {
-  background: rgba(13, 148, 136, 0.06);
+  background: rgba(10, 127, 206, 0.06);
 }
 
 /* === Sources & Time === */
